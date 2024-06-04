@@ -1,0 +1,8 @@
+.donateButton{
+    border: none;
+    height: 50px;
+    width: 200px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    background-color: crimson;
+}

@@ -1,0 +1,31 @@
+.homePageCharityBlogGrid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.homePageCharityGrid{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.charityBlogHomeHeaderButton{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.charityBlogHomePageChoice{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 150%;
+}
+
+.charityHomePageChoice{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 150%;
+}
+
+.charityHomeHeaderButton{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,52 @@
+.activityGrid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.activityOne{
+    height: 200px;
+    width: 200px;
+    border-radius: 25%;
+    border: solid;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #16463F;
+}
+
+.donationNumber{
+    color: aliceblue;
+}
+
+.activityTwo{
+    height: 200px;
+    width: 200px;
+    border-radius: 25%;
+    border: solid;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #16463F;
+}
+
+.donationRaised{
+    color: aliceblue;
+}
+
+.activityThree{
+    height: 200px;
+    width: 200px;
+    border-radius: 25%;
+    border: solid;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #16463F;
+}
+
+.blogNumber{
+    color: aliceblue;
+}

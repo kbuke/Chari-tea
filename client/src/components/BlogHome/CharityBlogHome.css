@@ -1,0 +1,48 @@
+.charityBlogHomeGrid{
+    display: grid;
+    margin-top: 20px;
+    display: grid;
+}
+
+.charityBlogHomeContainer{
+    height: 500px;
+    /* border: solid; */
+    border-radius: 5%;
+    width: 300px;
+    align-items: center;
+    /* background-color: #16463f; */
+    background-color: white;
+    text-align: center;
+}
+
+.charityHomeImg{
+    height: 250px;
+    width: 250px;
+    margin-top: 15px;
+    border-radius: 25%;
+}
+
+.charityBlogHomeTilte{
+    /* color: white; */
+    font-size: x-large;
+    color: black;
+}
+
+.charityBlogHomeInfo{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.charityImgBlogHome{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.charityHomeBlogViews{
+    color: black;
+}
+
+.charityHomePublishedBlog{
+    color: black;
+}

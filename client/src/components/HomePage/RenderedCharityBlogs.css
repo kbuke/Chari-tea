@@ -1,0 +1,49 @@
+.homePageCharityBlogContainer {
+    height: 350px;
+    border-radius: 5%;
+    align-items: center;
+    width: 250px;
+    position: relative;
+    display: inline-block;
+}
+
+.homePageBlogImg {
+    height: 350px;
+    width: 250px;
+    border-radius: 5%;
+    display: block;
+    opacity: 0.5;
+}
+
+.homePageBlogImg:hover {
+    opacity: 1;
+}
+
+.homePageBlogTitleContainer {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1em; /* Adjusted font size */
+    background-color: #EE3F46;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    max-height: 100px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.homePageBlogTitle {
+    color: black;
+    margin: 0;
+    padding: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+

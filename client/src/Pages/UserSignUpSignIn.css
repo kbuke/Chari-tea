@@ -1,0 +1,16 @@
+.signUpInForm{
+    margin-left: 250px;
+    text-align: center;
+}
+
+.signUpContainer{
+    height: 700px;
+    border: solid;
+    margin: auto;
+    margin-top: 60px;
+    background-color: aliceblue;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    width: 1000px;
+}

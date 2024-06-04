@@ -1,0 +1,23 @@
+.chariTeaHomePage{
+    margin-left: 250px;
+    padding: 20px;
+}
+
+.charityHomePgHeader{
+    text-align: center;
+    margin-bottom: 70px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 500%;
+}
+
+.userHomePgHeader{
+    text-align: center;
+    margin-bottom: 50px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 500%;
+    margin-top: 100px;
+    border-top: solid;
+}
+
+
+

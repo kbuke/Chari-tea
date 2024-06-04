@@ -1,0 +1,26 @@
+.homePageUserBlogGrid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.homePgUserGrid{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.userBlogHomeHeaderButton{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.userBlogHomePgChoice{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 150%;
+}
+
+.userHomeHeaderButton{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 30px;   
+    margin-top: 50px;
+}

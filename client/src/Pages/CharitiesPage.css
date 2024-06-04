@@ -1,0 +1,105 @@
+.mainContent {
+    margin-left: 250px; /* Same width as your navbar */
+    padding: 20px; /* Optional padding for better layout */
+}
+
+
+
+.charityDescription {
+    border-bottom: solid;
+}
+
+.relationHeader{
+    margin-bottom: 50px;
+}
+
+
+
+.amountRaised{
+    border-radius: 25px;
+    border: 2px solid black;
+    height: 120px;
+    width: 220px;
+    max-height: 70%; /* Ensure the image takes up most of the card */
+    object-fit: contain;
+    margin-bottom: 10px; /* Space between image and title */
+    background-color: blue;
+    color: aliceblue;
+    text-align: center;
+}
+
+.donationHeader{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: dashed;
+    margin-bottom: 50px;
+}
+
+.allDonationsGrid{
+    border-bottom: solid;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
+}
+
+.donorImg{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+
+
+.blogGrid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
+    border-bottom: solid;
+}
+
+.charityBlogContainer {
+    display: flex; /* Use flexbox layout */
+    flex-direction: column; /* Arrange items vertically */
+    justify-content: flex-start; /* Align items to the start of the container */
+    align-items: center; /* Center items horizontally */
+    height: 250px;
+    width: 300px; /* Adjust width as needed */
+    overflow: hidden;
+    gap: 10px; /* Add space between the title and image */
+}
+
+.blogTitle {
+    margin-top: auto; /* Push the title to the top */
+}
+
+.blogImg {
+    height: 200px; /* Adjust height as needed */
+    width: 100%; /* Take up full width */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+    border-radius: 10px;
+}
+
+.paginationButtons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-left: 50%;
+    margin-right: 50%;
+  }
+  
+  .paginationButtons button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .paginationButtons button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }

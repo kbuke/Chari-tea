@@ -1,0 +1,17 @@
+.blogTitle{
+    text-align: center;
+}
+
+.subHeaderGrid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    color: crimson;
+}
+
+.blogAuthorImg{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin-left: 130px;
+}

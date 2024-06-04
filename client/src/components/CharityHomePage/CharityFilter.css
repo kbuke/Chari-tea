@@ -1,0 +1,10 @@
+.filterSection{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border-bottom: dotted;
+    border-top: dotted;
+    background-color: grey;
+    color: white;
+    margin-bottom: 10px;
+}
+

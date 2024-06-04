@@ -1,0 +1,22 @@
+.userProfileContainer{
+    margin-left: 250px;
+    padding: 20px;
+}
+
+.activityHeader{
+    border-bottom: solid;
+}
+
+.donationsHeader{
+    border-bottom: solid;
+}
+
+.charityDonationGrid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.userBlogsGrid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}

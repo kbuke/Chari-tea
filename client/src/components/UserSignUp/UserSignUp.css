@@ -1,0 +1,45 @@
+.emailSignUp{
+    opacity: 0.5;
+    width: 1000px;
+}
+
+.emailSignUp:hover{
+    opacity: 1;
+}
+
+.emailLabel{
+    font-size: xx-large;
+}
+
+.emailSignUpInput{
+    margin-left: 40px;
+    border: none;
+    border-bottom: solid;
+    width: 600px;
+    font-size: xx-large;
+    background-color: aliceblue;
+    text-align: center;
+}
+
+.userNameSignUp{
+    opacity: 0.5;
+    width: 1000px;
+}
+
+.userNameSignUp:hover{
+    opacity: 1;
+}
+
+.userNameLabel{
+    font-size: xx-large;
+}
+
+.userNameSignupInput{
+    margin-left: 40px;
+    border: none;
+    border-bottom: solid;
+    width: 600px;
+    font-size: xx-large;
+    background-color: aliceblue;
+    text-align: center;
+}

@@ -1,0 +1,15 @@
+.charitiesHomeContainer{
+    margin-left: 250px;
+}
+
+.userHomeTitle{
+    text-align: center;
+}
+
+.usersGrid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}

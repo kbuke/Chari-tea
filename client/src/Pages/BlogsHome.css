@@ -1,0 +1,68 @@
+.blogHomePageContainer{
+    margin-left: 250px;
+    padding: 20px;
+    display: grid;
+}
+
+.blogHomePageHeader{
+    text-align: center;
+}
+
+.charityBlogHomeHeader{
+    margin-top: 50px;
+}
+
+.charityBlogHomeRendered{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-left: 20px;
+}
+
+.prevButton{
+    height: 50px;
+    width: 100px;
+    margin-top: 60px;
+    margin-left: 400px;
+}
+
+.nextButton{
+    height: 50px;
+    width: 100px;
+}
+
+.charityBlogsSection{
+    border-bottom: solid;
+}
+
+.userBlogHomeHeader{
+    margin-top: 50px;
+}
+
+.userBlogsSection{
+    border-bottom: solid;
+}
+
+.userBlogHomeRendered{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-left: 20px;
+}
+
+.userPrevButton{
+    height: 50px;
+    width: 100px;
+    margin-top: 60px;
+    margin-left: 400px;
+}
+
+.userNextButton{
+    height: 50px;
+    width: 100px;
+}
+
+
+
+
+
+
+

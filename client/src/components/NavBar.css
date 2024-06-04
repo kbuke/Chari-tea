@@ -1,0 +1,47 @@
+.navBarContainer{
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #008080;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 20px;
+}
+
+.logo{
+    padding-top: 0%;
+    width: 8cm;
+    height: 6cm;
+}
+
+.navBarOptions{
+    padding-top: 2cm;
+}
+
+.charityButton{
+    border: 0cap;
+    background-color: aliceblue;
+    font: 100;
+    color: white;
+    text-align: center;
+}
+
+
+.userButton{
+    border: 0cap;
+    text-align: center;
+    color: aliceblue;
+}
+
+.fundraisingButton{
+    border: 0cap;
+    background-color: aliceblue;
+    color: white;
+    text-align: center;
+}
