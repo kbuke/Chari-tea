@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 // import { Switch, Route } from "react-router-dom";
 
 import NavBar from "./NavBar";
+import { Outlet, useNavigate } from "react-router-dom";
 // import Home from "../Pages/Home";
 // import About from "../Pages/About";
 // import CharitiesPage from "../Pages/CharitiesPage";
@@ -59,6 +60,13 @@ function App() {
   return (
     <div>
       <NavBar />
+      <Outlet context={
+        {
+          charities: charities,
+          blogs: blogs,
+          users: users
+        }
+      }/>
 
       {/* <Switch>
         <Route exact path="/" render={() => <Home charities={charities} blogs={blogs} users={users}/>} />

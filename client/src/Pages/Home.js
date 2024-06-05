@@ -1,12 +1,23 @@
 
-import { useState } from "react";
+
 import "./Home.css";
+
+import { useOutletContext } from "react-router-dom";
 
 import CharityInfo from "../components/HomePage/CharityInfo";
 import UserInfoHomePage from "../components/HomePage/UserInfoHomePage";
 
 
-function Home({ charities, blogs, users}) {
+function Home() {
+
+  const appData = useOutletContext()
+
+  const blogs = appData.blogs
+
+  const charities = appData.charities
+
+  const users=appData.users
+
   const charityBlogs = blogs.filter(blog => blog.charity)
 
   const userBlogs = blogs.filter(blog => blog.user)

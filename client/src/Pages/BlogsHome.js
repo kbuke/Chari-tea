@@ -1,5 +1,7 @@
 import "./BlogsHome.css"
 
+import { useOutletContext } from "react-router-dom"
+
 import CharityBlogHome from "../components/BlogHome/CharityBlogHome"
 import CharityBlogHomeFilter from "../components/BlogHome/CharityBlogHomeFilter"
 import UserBlogHomeFilter from "../components/BlogHome/UserBlogHomeFilter"
@@ -7,7 +9,10 @@ import UserBlogHome from "../components/BlogHome/UserBlogHome"
 
 import { useState } from "react"
 
-function BlogsHome({blogs}) {
+function BlogsHome() {
+
+    const appData = useOutletContext()
+    const blogs = appData.blogs
 
     const [charitySearchBar, setCharitySearchBar] = useState("")
     const [userSearchBar, setUserSearchBar] = useState("")

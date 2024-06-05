@@ -1,12 +1,12 @@
 import App from "./components/App";
 import Home from "./Pages/Home";
-import CharityHome from "./Pages/CharityHome";
 import CharitiesPage from "./Pages/CharitiesPage";
 import BlogPost from "./Pages/BlogPost";
 import User from "./Pages/User";
 import UsersHome from "./Pages/UsersHome";
 import BlogsHome from "./Pages/BlogsHome";
 import UserSignUpSignIn from "./Pages/UserSignUpSignIn";
+import CharitiesHome from "./Pages/CharitiesHome";
 
 const routes = [
     {
@@ -19,7 +19,7 @@ const routes = [
             },
             {
                 path: "/charities",
-                element: <CharityHome />
+                element: <CharitiesHome />
             },
             {
                 path: "/charities/:id",

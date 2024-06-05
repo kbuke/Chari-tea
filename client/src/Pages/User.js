@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom/cjs/react-router-dom.min"
+import { useParams } from "react-router-dom"
+import { useOutletContext } from "react-router-dom"
 
 import "./User.css"
 
@@ -8,7 +9,12 @@ import UserActivity from "../components/UserPage/UserActivity"
 import UserDonations from "../components/UserPage/UserDonations"
 import UserBlogs from "../components/UserPage/UserBlogs"
 
-function User({users}){
+function User(){
+
+    const appData = useOutletContext()
+
+    const users = appData.users
+
     const params = useParams()
     const specificUser = users.find(user => user.id === parseInt(params.id))
 

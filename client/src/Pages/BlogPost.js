@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router"
+import { useOutletContext } from "react-router-dom"
 
 import "./BlogPost.css"
 
 import BlogPostHeader from "../components/Blogs/BlogPostHeader.js"
 
 
-function BlogPost({blogs}){
+function BlogPost(){
+    const appData = useOutletContext()
+    const blogs = appData.blogs
+    
     const params = useParams()
     const specificBlog = blogs.find(blog => blog.id === parseInt(params.id))
 

@@ -21,9 +21,33 @@
     text-align: center;
 }
 
+.passwordSignUp{
+    opacity: 0.5;
+    width: 1000px;
+}
+
+.passwordSignUp:hover{
+    opacity: 1;
+}
+
+.passwordLabel{
+    font-size: xx-large;
+}
+
+.passwordSignUpInput{
+    margin-left: 40px;
+    border: none;
+    border-bottom: solid;
+    width: 600px;
+    font-size: xx-large;
+    background-color: aliceblue;
+    text-align: center;
+}
+
 .userNameSignUp{
     opacity: 0.5;
     width: 1000px;
+    margin-top: 50px;
 }
 
 .userNameSignUp:hover{
@@ -42,4 +66,37 @@
     font-size: xx-large;
     background-color: aliceblue;
     text-align: center;
+}
+
+.userImgSignUp{
+    opacity: 0.5;
+    width: 1000px;
+    margin-top: 50px;
+}
+
+.userImgSignUp:hover{
+    opacity: 1;
+}
+
+.userIconLabel{
+    font-size: xx-large;
+}
+
+.userIconSignupInput{
+    margin-left: 40px;
+    border: none;
+    border-bottom: solid;
+    width: 600px;
+    font-size: xx-large;
+    background-color: aliceblue;
+    text-align: center;
+}
+
+.signUpFormButton{
+    margin-top: 50px;
+    margin-left: 100px;
+    height: 100px;
+    width: 200px;
+    border-radius: 5%;
+    font-size: 300%;
 }

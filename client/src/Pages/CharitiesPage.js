@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import './CharitiesPage.css';
 
 import CharityLogo from "../components/CharityPage/CharityLogo.js";
@@ -7,7 +8,10 @@ import Relations from "../components/CharityPage/Relations.js";
 import Donations from "../components/CharityPage/Donations.js";
 import BlogPosts from "../components/CharityPage/BlogPosts.js";
 
-function CharitiesPage({ charities }) {
+function CharitiesPage() {
+  const appData = useOutletContext()
+  const charities = appData.charities
+
   const params = useParams();
   const specificCharity = charities.find(charity => charity.id === parseInt(params.id));
 

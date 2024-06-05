@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom/cjs/react-router-dom.min"
+// import { Link } from "react-router-dom/cjs/react-router-dom.min"
 import "./UserDonations.css"
+import { Link } from "react-router-dom"
 
 function UserDonations({charityImg, charityId}){
     console.log(charityImg)

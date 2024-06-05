@@ -1,12 +1,14 @@
 import "./UsersHome.css"
+import { useOutletContext } from "react-router-dom"
 
 import UserLinks from "../components/UsersHomePage/UserLinks"
 import User from "./User"
 import FilterUsers from "../components/UsersHomePage/FilterUsers"
 import { useState } from "react"
 
-function UsersHome({users}){
-    console.log(users)
+function UsersHome(){
+    const appData = useOutletContext()
+    const users = appData.users
 
     const[searchUser, setSearchUser] = useState("")
 
