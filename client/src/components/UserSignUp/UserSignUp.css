@@ -1,102 +1,94 @@
-.emailSignUp{
+.signUpForm{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    background-color: aliceblue;
+}
+
+.usernameSignUp{
+    margin-left: 200px;
+    width: 100%;
+    text-align: center;
     opacity: 0.5;
-    width: 1000px;
-}
-
-.emailSignUp:hover{
-    opacity: 1;
-}
-
-.emailLabel{
-    font-size: xx-large;
-}
-
-.emailSignUpInput{
-    margin-left: 40px;
     border: none;
     border-bottom: solid;
-    width: 600px;
-    font-size: xx-large;
-    background-color: aliceblue;
-    text-align: center;
+    font-size: 200%;
+    color: black;
 }
 
-.passwordSignUp{
-    opacity: 0.5;
-    width: 1000px;
-}
-
-.passwordSignUp:hover{
+.usernameSignUp:hover{
     opacity: 1;
+    background-color: yellow;
 }
 
-.passwordLabel{
-    font-size: xx-large;
+.usernameError{
+    color: red;
+    margin-left: 200px;
 }
 
-.passwordSignUpInput{
-    margin-left: 40px;
+.userEmailSignUp{
+    margin-left: 200px;
+    width: 100%;
+    text-align: center;
+    opacity: 0.5;
     border: none;
     border-bottom: solid;
-    width: 600px;
-    font-size: xx-large;
-    background-color: aliceblue;
-    text-align: center;
-}
-
-.userNameSignUp{
-    opacity: 0.5;
-    width: 1000px;
+    font-size: 200%;
+    color: black;
     margin-top: 50px;
 }
 
-.userNameSignUp:hover{
+.userEmailSignUp:hover{
     opacity: 1;
+    background-color: yellow;
 }
 
-.userNameLabel{
-    font-size: xx-large;
+.emailError{
+    color: red;
+    margin-left: 200px;
 }
 
-.userNameSignupInput{
-    margin-left: 40px;
+.userPasswordSignUp{
+    margin-left: 200px;
+    margin-top: 50px;
+    width: 100%;
+    text-align: center;
+    opacity: 0.5;
     border: none;
     border-bottom: solid;
-    width: 600px;
-    font-size: xx-large;
-    background-color: aliceblue;
-    text-align: center;
+    font-size: 200%;
+    color: black;
+}
+
+.userPasswordSignUp:hover{
+    opacity: 1;
+    background-color: yellow;
 }
 
 .userImgSignUp{
-    opacity: 0.5;
-    width: 1000px;
+    margin-left: 200px;
     margin-top: 50px;
+    width: 100%;
+    text-align: center;
+    opacity: 0.5;
+    border: none;
+    border-bottom: solid;
+    font-size: 200%;
+    color: black;
 }
 
 .userImgSignUp:hover{
     opacity: 1;
+    background-color: yellow;
 }
 
-.userIconLabel{
-    font-size: xx-large;
-}
-
-.userIconSignupInput{
-    margin-left: 40px;
-    border: none;
-    border-bottom: solid;
-    width: 600px;
-    font-size: xx-large;
-    background-color: aliceblue;
-    text-align: center;
-}
-
-.signUpFormButton{
-    margin-top: 50px;
-    margin-left: 100px;
+.submitNewUser{
+    opacity: 0.5;
+    margin-top: 100px;
     height: 100px;
-    width: 200px;
-    border-radius: 5%;
-    font-size: 300%;
+    width: 150px;
+    margin-left: 450px;
+}
+
+.signupConfirmed{
+    text-align: center;
 }

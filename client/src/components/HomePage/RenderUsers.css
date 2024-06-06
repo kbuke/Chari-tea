@@ -4,6 +4,8 @@
     border-radius: 50%;
     border: solid;
     overflow: hidden;
+    object-fit: contain;
+    margin-top: 20px;
 }
 
 .homePgUserImg{

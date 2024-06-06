@@ -7,6 +7,9 @@ import UsersHome from "./Pages/UsersHome";
 import BlogsHome from "./Pages/BlogsHome";
 import UserSignUpSignIn from "./Pages/UserSignUpSignIn";
 import CharitiesHome from "./Pages/CharitiesHome";
+import UserSignIn from "./Pages/UserSignIn";
+import CharitySignUp from "./Pages/CharitySignUp";
+import CharitySignIn from "./Pages/CharitySignIn";
 
 const routes = [
     {
@@ -42,8 +45,20 @@ const routes = [
                 element: <BlogsHome />
             },
             {
-                path: "/signup", 
+                path: "/usersignup", 
                 element: <UserSignUpSignIn />
+            },
+            {
+                path: "/usersignin",
+                element: <UserSignIn />
+            },
+            {
+                path: "/charitysignup",
+                element: <CharitySignUp />
+            },
+            {
+                path: "/charitysignin",
+                element: <CharitySignIn />
             }
         ]
     }

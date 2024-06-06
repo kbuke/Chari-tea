@@ -6,113 +6,99 @@ import "./UserSignUp.css"
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function UserSignUp(){
+function UserSignUp() {
 
-    const [refreshPage, setRefreshPage] = useState(false)
-    const [users, setUsers] = useState([])
-
-    useEffect(() => {
-        fetch("/users")
-            .then((res) => res.json())
-            .then((data) => {
-                setUsers(data)
-            })
-    }, [refreshPage])
-    console.log(users)
+    const [refreshPage, setRefreshPage] = useState(false);
+    const [signedUp, setSignedUp] = useState(false)
 
     const formSchema = yup.object().shape({
-        email: yup.string().email("Invalid email").required("Must enter email"),
-        username: yup.string().required("Must enter a username").max(15),
-        password: yup.string().required("Must enter a password").min(8)
-    })
+        username: yup.string()
+            .min(3, "Username must be at least 3 characters")
+            .max(50, "Username must be less than 50 characters")
+            .required("Must enter a username"),
+        email: yup.string()
+            .email("Invalid email")
+            .required("Must enter email"),
+        password: yup.string()
+            .min(6, "Password must be at least 6 characters")
+            .required("Must enter a password"),
+        userImg: yup.string()
+            .url("Invalid URL for user image")
+            .required("Must enter a user image")
+    });
 
     const formik = useFormik({
         initialValues: {
-          email: "",
-          username: "",
-          user_icon: "",
-          password: ""
+            username: "",
+            email: "",
+            password: "",
+            userImg: ""
         },
         validationSchema: formSchema,
-        onSubmit: (values, { resetForm }) => {
-          fetch("/users", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(values)
-          })
-            .then((res) => {
-              if (res.status === 200) {
-                setRefreshPage(!refreshPage);
-                resetForm();
-              }
-            })
-            .catch((error) => {
-              console.error("Error:", error);
+        onSubmit: (values) => {
+            fetch("/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values),
+            }).then((res) => {
+                if (res.status === 200) {
+                    setRefreshPage(!refreshPage);
+                }
+                setSignedUp(!signedUp)
             });
         }
-      });
+    });
+    console.log(formik.values.username)
 
-
-    return(
-        <form onSubmit={formik.handleSubmit}>
-            <div className="emailSignUp">
-                <label className="emailLabel">Email Address</label>
-                <input 
-                    className="emailSignUpInput"
-                    type="text"
-                    name="email"
-                    placeholder="Please Enter Your Email Address"
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
-                />
-            </div>
-
-            <br/>
-
-            <div className="passwordSignUp">
-                <label className="passwordLabel">Password</label>
-                <input 
-                    className="passwordSignUpInput"
-                    type="text"
-                    name="password"
-                    placeholder="Please Enter Your Password"
-                    onChange={formik.handleChange}
-                    value={formik.values.password}
-                />
-            </div>
-
-            <br/>
-
-            <div className="userNameSignUp">
-                <label className="userNameLabel">Username</label>
-                <input 
-                    className="userNameSignupInput"
+    return (
+        <div>
+            <div className="signupConfirmed">{signedUp? `${formik.values.username} has successfully created an account`:null}</div>
+            <form onSubmit={formik.handleSubmit} className="signUpForm">
+                <input
                     type="text"
                     name="username"
-                    placeholder="Please Enter Desired Username"
-                    onChange={formik.handleChange}
+                    className="usernameSignUp"
                     value={formik.values.username}
-                />
-            </div>
-
-            <br/>
-
-            <div className="userImgSignUp">
-                <label className="userIconLabel">User Image</label>
-                <input 
-                    className="userIconSignupInput"
-                    type="text"
-                    name="user_icon"
-                    placeholder="Please Enter your Profile Picture"
                     onChange={formik.handleChange}
-                    value={formik.values.user_icon}
+                    placeholder="Enter Your Username"
                 />
-            </div>
-
-            <button type="submit" className="signUpFormButton">Submit</button>
-        </form>
-    )
+                {formik.errors.username && <div className="usernameError">{formik.errors.username}</div>}
+                <br/>
+                <input
+                    type="email"
+                    name="email"
+                    className="userEmailSignUp"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    placeholder="Email"
+                />
+                {formik.errors.email && <div className="emailError">{formik.errors.email}</div>}
+                <br/>
+                <input
+                    type="password"
+                    name="password"
+                    className="userPasswordSignUp"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    placeholder="Password"
+                />
+                {formik.errors.password && <div>{formik.errors.password}</div>}
+                <br/>
+                <input
+                    type="text"
+                    name="userImg"
+                    className="userImgSignUp"
+                    value={formik.values.userImg}
+                    onChange={formik.handleChange}
+                    placeholder="User Image URL"
+                />
+                {formik.errors.userImg && <div>{formik.errors.userImg}</div>}
+                <button type="submit" className="submitNewUser">Submit</button>
+            </form>
+        </div>
+    );
 }
-export default UserSignUp
+
+export default UserSignUp;

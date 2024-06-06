@@ -1,47 +1,128 @@
-.navBarContainer{
+.navBarConatiner {
     height: 100%;
     width: 250px;
     position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #008080;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    padding-top: 20px;
+    background-color: #008080;
 }
 
-.logo{
-    padding-top: 0%;
-    width: 8cm;
-    height: 6cm;
+.logoContainer {
+    border: solid;
+    margin-top: 10px;
+    height: 200px;
 }
 
-.navBarOptions{
-    padding-top: 2cm;
+.charityNavContainer,
+.userNavContainer,
+.blogNavContainer,
+.logOutContainer,
+.charitySignUpContainer {
+    border: none;
+    height: 60px;
+    border-radius: 5%;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 20px;
+    display: flex; /* Changed to flex */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    overflow: hidden;
+    text-decoration: none;
+    background-color: transparent; /* Ensure background is transparent by default */
 }
 
-.charityButton{
-    border: 0cap;
-    background-color: aliceblue;
-    font: 100;
-    color: white;
-    text-align: center;
+.charityNavContainer:hover,
+.userNavContainer:hover,
+.blogNavContainer:hover,
+.logOutContainer:hover,
+.userSignUpContainer:hover,
+.charitySignUpContainer:hover,
+.userSignInContainer:hover,
+.charitySignUpContainer:hover,
+.charitySignInContainer:hover {
+    background-color: #A9A9A9;
 }
 
+.charityNavContainer:active {
+    background-color: red;
+}
 
-.userButton{
-    border: 0cap;
-    text-align: center;
+.charityNavText,
+.userNavText,
+.blogsNavText,
+.logOutNavText,
+.charitySignUpText,
+.userSignUpText,
+.userSignInText,
+.charitySignUpText,
+.charitySignInText {
+    text-decoration: none;
+    font-family: 'Courier New', monospace;
     color: aliceblue;
+    margin: 0; /* Ensure no default margins */
+    text-align: center;
+    vertical-align: middle;
 }
 
-.fundraisingButton{
-    border: 0cap;
-    background-color: aliceblue;
-    color: white;
-    text-align: center;
+.charityIconNav,
+.userIconNav,
+.blogIconNav,
+.logoutIconNav {
+    font-size: 150%;
+    margin-left: 10px; /* Adjust margin if needed for spacing */
+}
+
+.charityNavText .active{
+    color: red;
+}
+
+.loggedInIcon{
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    border: solid;
+    overflow: hidden;
+    margin-left: 90px;
+    opacity: 0.5;
+}
+
+.loggedInIcon:hover{
+    opacity: 1;
+}
+
+.userCharitySignInSignUp{
+    display: grid;
+    height: 200px;
+    grid-template-columns: 50% 50%;
+}
+
+.userSignUpContainer,
+.userSignInContainer{
+    border: none;
+    height: 60px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 20px;
+    display: flex; /* Changed to flex */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    overflow: hidden;
+    text-decoration: none;
+    background-color: transparent;
+    border-right: solid;
+}
+
+.charitySignUpContainer,
+.charitySignInContainer{
+    border: none;
+    height: 60px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 20px;
+    display: flex; /* Changed to flex */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    overflow: hidden;
+    text-decoration: none;
+    background-color: transparent;
 }

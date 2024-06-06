@@ -39,8 +39,10 @@ function UserInfoHomePage({userBlogs, users}){
         setUserDonations(!userDonations)
     }
 
-    const sortUserDate = users.sort((a, b) => b.signup_date - a.signup_date)
-    const fiveUserDates = sortUserDate.slice(0, 5)
+    const usersCopy = users.slice(); // Create a shallow copy of users array
+    const sortUserDateDesc = usersCopy.sort((a, b) => new Date(b.signup_date) - new Date(a.signup_date));
+
+    const tenUserDates = sortUserDateDesc.slice(0, 10)
 
     //Create a new attribute total_donations
     users.forEach(user => {
@@ -48,15 +50,15 @@ function UserInfoHomePage({userBlogs, users}){
     })
 
     const sortUserDonations = users.sort((a, b) => b.total_donations - a.total_donations)
-    const fiveUserDonations = sortUserDonations.slice(0, 5)
+    const tenUserDonations = sortUserDonations.slice(0, 10)
 
-    const renderedUsers = userDonations? fiveUserDonations.map((users, index) => (
+    const renderedUsers = userDonations? tenUserDonations.map((users, index) => (
         <div key={index}>
             <RenderUsers users={users}/>
         </div>
     ))
     :
-    fiveUserDates.map((users, index) => (
+    tenUserDates.map((users, index) => (
         <div key={index}>
             <RenderUsers users={users}/>
         </div>

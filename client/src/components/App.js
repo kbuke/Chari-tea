@@ -1,17 +1,7 @@
 import React, { useEffect, useState } from "react";
-// import { Switch, Route } from "react-router-dom";
 
 import NavBar from "./NavBar";
 import { Outlet, useNavigate } from "react-router-dom";
-// import Home from "../Pages/Home";
-// import About from "../Pages/About";
-// import CharitiesPage from "../Pages/CharitiesPage";
-// import CharitiesHome from "../Pages/CharitiesHome";
-// import BlogPost from "../Pages/BlogPost";
-// import User from "../Pages/User";
-// import UsersHome from "../Pages/UsersHome";
-// import BlogsHome from "../Pages/BlogsHome";
-// import UserSignUpSignIn from "../Pages/UserSignUpSignIn";
 
 import "./App.css"
 
@@ -19,6 +9,8 @@ function App() {
   const [charities, setCharities] = useState([])
   const [blogs, setBlogs] = useState([])
   const [users, setUsers] = useState([])
+  const [userLogin, setUserLogin] = useState(false)
+  const [charityLogin, setCharityLogin] = useState(false)
 
   //Get All Charities
   useEffect(() => {
@@ -59,26 +51,16 @@ function App() {
 
   return (
     <div>
-      <NavBar />
+      <NavBar userLogin={userLogin} setUserLogin={setUserLogin} charityLogin={charityLogin} setCharityLogin={setCharityLogin}/>
       <Outlet context={
         {
           charities: charities,
           blogs: blogs,
-          users: users
+          users: users,
+          userLogin: userLogin,
+          setUserLogin: setUserLogin
         }
       }/>
-
-      {/* <Switch>
-        <Route exact path="/" render={() => <Home charities={charities} blogs={blogs} users={users}/>} />
-        <Route exact path="/charities/:id" render={() => <CharitiesPage charities={charities} />}/>
-        <Route exact path="/about" render={() => <About />} />
-        <Route exact path="/charities" render={() => <CharitiesHome charities={charities}/>}/>
-        <Route exact path="/blogpost/:id" render={() => <BlogPost blogs={blogs}/>}/>
-        <Route exact path="/users/:id" render={() => <User users={users}/>}/>
-        <Route exact path="/users" render={() => <UsersHome users={users}/>}/>
-        <Route exact path="/blogs" render={() => <BlogsHome blogs={blogs}/>}/>
-        <Route exact path="/signup" render={() => <UserSignUpSignIn />}/>
-      </Switch> */}
     </div>
   )
 }
