@@ -22,6 +22,7 @@ function UserSignIn(){
             body: JSON.stringify({username, userPassword}),
         })
         .then((r) => {
+            console.log(r)
             if(r.ok) {
                 return r.json()
             } else {

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./UserSignUp.css"
 
@@ -10,6 +11,7 @@ function UserSignUp() {
 
     const [refreshPage, setRefreshPage] = useState(false);
     const [signedUp, setSignedUp] = useState(false)
+    const navigate = useNavigate()
 
     const formSchema = yup.object().shape({
         username: yup.string()
@@ -43,8 +45,9 @@ function UserSignUp() {
                 },
                 body: JSON.stringify(values),
             }).then((res) => {
-                if (res.status === 200) {
+                if (res.status === 201) {
                     setRefreshPage(!refreshPage);
+                    navigate('/usersignin')
                 }
                 setSignedUp(!signedUp)
             });

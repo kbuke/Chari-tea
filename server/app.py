@@ -80,9 +80,9 @@ class Users(Resource):
             new_user = User(
                 username=json.get("username"),
                 user_icon=json.get("userImg"),
-                _password_hash=json.get("password"),
                 email=json.get("email")
             )
+            new_user.password_hash=json.get("password")
             db.session.add(new_user)
             db.session.commit()
             return new_user.to_dict(), 201 
@@ -188,11 +188,13 @@ class Login(Resource):
     def post(self):
         username = request.get_json()['username']
         user = User.query.filter(User.username == username)
+        print(user)
 
         password = request.get_json()['userPassword']
         if user.authenticate(password):
             session['user_id'] = user.id
             return user.to_dict(), 200
+        print(password)
         return {'error': 'Invalid username or password'}, 401
 
     
