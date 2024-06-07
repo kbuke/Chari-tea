@@ -76,7 +76,7 @@
     color: red;
 }
 
-.loggedInIcon{
+.loggedInImg{
     height: 60px;
     width: 60px;
     border-radius: 50%;
@@ -86,7 +86,7 @@
     opacity: 0.5;
 }
 
-.loggedInIcon:hover{
+.loggedInImg:hover{
     opacity: 1;
 }
 

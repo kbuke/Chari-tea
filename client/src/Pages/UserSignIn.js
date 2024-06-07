@@ -1,20 +1,25 @@
 import { useState } from "react"
 import "./UserSignIn.css"
 import { useOutletContext } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 function UserSignIn(){
+
+    const navigate = useNavigate()
 
     const appData = useOutletContext()
     
     const userLogin = appData.userLogin
     const setUserLogin = appData.setUserLogin
 
+    const setLoggedInUser = appData.setLoggedInUser
+
     const [username, setUsername] = useState("")
     const [userPassword, setUserPassword] = useState("")
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        fetch('/login', {
+        fetch('/userlogin', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -24,6 +29,8 @@ function UserSignIn(){
         .then((r) => {
             console.log(r)
             if(r.ok) {
+                setUserLogin(!userLogin)
+                navigate("/")
                 return r.json()
             } else {
                 throw new Error("Invalid login")
@@ -31,6 +38,7 @@ function UserSignIn(){
         })
         .then((user) => {
             console.log(user)
+            setLoggedInUser(user)
         })
         .catch((error) => console.error(error))
     }

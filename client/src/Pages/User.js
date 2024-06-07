@@ -14,10 +14,16 @@ function User(){
     const appData = useOutletContext()
 
     const users = appData.users
+    const loggedInUser = appData.loggedInUser
+    const loggedInUserId = loggedInUser.id
+    
 
     const params = useParams()
     const specificUser = users.find(user => user.id === parseInt(params.id))
+    const specificUserId = specificUser.id 
 
+    const userCheck = loggedInUserId == specificUserId? true : false
+    
     const[userInfo, setUserInfo] = useState([])
 
     useEffect(() => {
@@ -55,7 +61,7 @@ function User(){
 
     return(
         <div className="userProfileContainer">
-            <UserInfo userImg={specificUser.user_icon} userName={userInfo.username}/>
+            <UserInfo userImg={specificUser.user_icon} userName={userInfo.username} userCheck={userCheck}/>
             <div className="activityHeader">
                 <h1>{userInfo.username} Activity</h1>
                 <UserActivity donations={userInfo.donations} username={userInfo.username} userBlogs={userInfo.blogs}/>

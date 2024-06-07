@@ -16,6 +16,7 @@ class Charity(db.Model, SerializerMixin):
     charity_location = db.Column(db.String, nullable=False)
     charity_icon = db.Column(db.String, nullable=True)
     charity_signup = db.Column(db.DateTime, server_default=db.func.now())
+    _password_hash = db.Column(db.String, nullable=False)
 
     #Add relationships
     donations = db.relationship("Donation", backref="charity", lazy=True)
@@ -24,6 +25,20 @@ class Charity(db.Model, SerializerMixin):
 
     #Add serialize rules
     serialize_rules = ("-donations.charity", "-reviews.charity", "-blog_posts.charity",)
+
+    @hybrid_property
+    def password_hash(self):
+        raise Exception('Password hashes may not be viewed.')
+
+    @password_hash.setter
+    def password_hash(self, password):
+        password_hash = bcrypt.generate_password_hash(
+            password.encode('utf-8'))
+        self._password_hash = password_hash.decode('utf-8')
+
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(
+            self._password_hash, password.encode('utf-8'))
 
     def __repr__(self):
         return f'<Charity {self.id} => {self.charity_name} in {self.charity_location} {self.charity_description}'

@@ -1,13 +1,25 @@
 import "./NavBar.css";
-import {useState} from "react"
 
 import logo from "../assets/logo.png"
 import { NavLink } from "react-router-dom";
 
-function NavBar({userLogin, setUserLogin, charityLogin, setCharityLogin}){
+function NavBar({userLogin, setUserLogin, charityLogin, setCharityLogin, loggedInUser, loggedInCharity}){
 
     const handleUserLogOut = () => {
-        setUserLogin(!userLogin)
+        fetch("/userlogout", {
+            method: "DELETE"
+        })
+        .then((r) => {
+            if (r.ok) {
+                setUserLogin(false);
+            } else {
+                // Handle the error appropriately
+                console.error("Logout failed");
+            }
+        })
+        .catch((error) => {
+            console.error("Error during logout:", error);
+        });
     }
 
     const handleCharityLogOut = () => {
@@ -64,10 +76,10 @@ function NavBar({userLogin, setUserLogin, charityLogin, setCharityLogin}){
                     </div>
                 </NavLink>
                 <br/>
-                <NavLink>
-                    <div className="loggedInIcon">
-                        <img />
-                    </div>
+                <NavLink
+                    to={`/users/${loggedInUser.id}`}
+                >
+                    <img src={loggedInUser.user_icon} className="loggedInImg"/>
                 </NavLink>
             </div>
         )
@@ -122,9 +134,11 @@ function NavBar({userLogin, setUserLogin, charityLogin, setCharityLogin}){
                     </div>
                 </NavLink>
                 <br/>
-                <NavLink>
+                <NavLink
+                    to={`/charities/${loggedInCharity.id}`}
+                >
                     <div className="loggedInIcon">
-                        <img />
+                        <img className="loggedInImg" src={loggedInCharity.charity_icon}/>
                     </div>
                 </NavLink>
             </div>

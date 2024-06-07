@@ -80,12 +80,15 @@ if __name__ == '__main__':
             charity_location="Johannesburg, South Africa",
             charity_icon="https://media.licdn.com/dms/image/C4D0BAQF-AXUWrPPoqw/company-logo_200_200/0/1630554770346?e=2147483647&v=beta&t=M474TLimXMbye8PmeLAQ1MtkBzFWVswJ0SCHDCJ0x5g"
         )
+        solving7.password_hash="solving71"
+
         unicef = Charity(
             charity_name="Unicef",
             charity_description="Provides humanitarian aid for children globally",
             charity_location="New York, USA",
             charity_icon = "https://www.un.org/youthenvoy/wp-content/uploads/2014/09/unicef_twitter1.png"
         )
+        unicef.password_hash="unicef1"
 
         wwf = Charity(
             charity_name="WWF",
@@ -93,6 +96,7 @@ if __name__ == '__main__':
             charity_location="New York, USA",
             charity_icon = "https://miro.medium.com/v2/resize:fit:2400/1*8BESPUAu2wa47d2gw10cgQ.jpeg"
         )
+        wwf.password_hash="wwf1"
 
         shooting_Star = Charity(
             charity_name="Shooting Star",
@@ -100,6 +104,8 @@ if __name__ == '__main__':
             charity_location="London, UK",
             charity_icon="https://www.shootingstar.org.uk/app/uploads/2023/09/websitereversednewlogo2.png"
         )
+        shooting_Star.password_hash="shootingstar1"
+
         db.session.add_all([solving7, unicef, wwf, shooting_Star])
         db.session.commit()
 

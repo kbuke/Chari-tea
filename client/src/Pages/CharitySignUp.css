@@ -1,0 +1,57 @@
+.charitySignUpPage{
+    margin-left: 250px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.charitySignUpForm{
+    height: 750px;
+    width: 700px;
+    border: solid;
+    background-color: aliceblue;
+    margin-left: 15%;
+}
+
+.charityNameSignUp,
+.charityPasswordSignUp,
+.charityDescritptionText,
+.charityLocationText,
+.charityIconText{
+    border: none;
+    border-bottom: solid;
+    margin-top: 40px;
+    width: 650px;
+    height: 50px;
+    background-color: aliceblue;
+    color: black;
+    font-size: 200%;
+    opacity: 0.5;
+}
+
+.charityNameSignUp:hover,
+.charityPasswordSignUp:hover,
+.charityDescritptionText:hover,
+.charityLocationText:hover,
+.charityIconText:hover{
+    opacity: 1;
+    background-color: white;
+}
+
+.charityNameSignUp:active,
+.charityPasswordSignUp:active,
+.charityDescritptionText:active,
+.charityLocationText:active,
+.charityIconText:active{
+    opacity: 1;
+    background-color: white;
+}
+
+.charitySignUpSubmit{
+    margin-top: 20px;
+    height: 70px;
+}
+
+.charitySignUpSubmit:active{
+    background-color: red;
+}
