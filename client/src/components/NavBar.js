@@ -3,8 +3,59 @@ import "./NavBar.css";
 import logo from "../assets/logo.png"
 import { NavLink } from "react-router-dom";
 
-function NavBar({userLogin, setUserLogin, charityLogin, setCharityLogin, loggedInUser, loggedInCharity}){
+function NavBar({
+    userLogin, 
+    setUserLogin, 
+    charityLogin, 
+    setCharityLogin, 
+    loggedInUser, 
+    loggedInCharity, 
+    setLoggedInUser, 
+    setLoggedInCharity,
+    charityLink,
+    setCharityLink,
+    userLink,
+    setUserLink,
+    blogLink,
+    setBlogLink,
+    charityIcon,
+    setCharityIcon
+}){
 
+    console.log(blogLink)
+
+    const handleLogoClick = () => {
+        setCharityLink(false)
+        setUserLink(false)
+        setBlogLink(false)
+        setCharityIcon(false)
+    }
+
+    const handleCharityLogoClick = () => {
+        setCharityLink(false)
+        setUserLink(false)
+        setBlogLink(false)
+        setCharityIcon(true)
+    }
+
+    const handleCharityLink = () => {
+        setCharityLink(true)
+        setUserLink(false)
+        setBlogLink(false)
+    }
+
+    const handleUserLink = () => {
+        setCharityLink(false)
+        setUserLink(true)
+        setBlogLink(false)
+    }
+
+    const handleBlogLink = () => {
+        setCharityLink(false)
+        setUserLink(false)
+        setBlogLink(true)
+    }
+    
     const handleUserLogOut = () => {
         fetch("/userlogout", {
             method: "DELETE"
@@ -12,6 +63,7 @@ function NavBar({userLogin, setUserLogin, charityLogin, setCharityLogin, loggedI
         .then((r) => {
             if (r.ok) {
                 setUserLogin(false);
+                setLoggedInUser(!loggedInUser)
             } else {
                 // Handle the error appropriately
                 console.error("Logout failed");
@@ -21,9 +73,24 @@ function NavBar({userLogin, setUserLogin, charityLogin, setCharityLogin, loggedI
             console.error("Error during logout:", error);
         });
     }
+    console.log(loggedInCharity)
 
     const handleCharityLogOut = () => {
-        setCharityLogin(!charityLogin)
+        fetch('/charitylogout', {
+            method: "DELETE"
+        })
+        .then((r) => {
+            if(r.ok) {
+                setCharityLogin(false);
+                setLoggedInCharity(!loggedInCharity)
+            } else {
+                console.error("Logout failed")
+            }
+        })
+        // setCharityLogin(!charityLogin)
+        .catch((error) => {
+            console.error("Error during logout:", error)
+        })
     }
 
     if(userLogin && !charityLogin){
@@ -32,7 +99,7 @@ function NavBar({userLogin, setUserLogin, charityLogin, setCharityLogin, loggedI
                 <NavLink
                     to="/"
                 >
-                    <div className="logoContainer">
+                    <div className="logoContainer" onClick={handleLogoClick}>
                         
                     </div>
                 </NavLink>
@@ -41,7 +108,7 @@ function NavBar({userLogin, setUserLogin, charityLogin, setCharityLogin, loggedI
                     to="/charities"
                     className="nav-link"
                 >
-                    <div className="charityNavContainer">
+                    <div onClick={handleCharityLink} className={charityLink? "selectedNav" : "charityNavContainer"}>
                         <h3 className="charityNavText">View Charities</h3>
                         <h3 className="charityIconNav">🕊️</h3>
                     </div>
@@ -51,7 +118,7 @@ function NavBar({userLogin, setUserLogin, charityLogin, setCharityLogin, loggedI
                     to="/users"
                     className="nav-link"
                 >
-                    <div className="userNavContainer">
+                    <div onClick={handleUserLink} className={userLink? "selectedNav" : "userNavContainer"}>
                         <h3 className="userNavText">View Users</h3>
                         <h3 className="userIconNav">👤</h3>
                     </div>
@@ -61,7 +128,7 @@ function NavBar({userLogin, setUserLogin, charityLogin, setCharityLogin, loggedI
                     to="/blogs"
                     className="nav-link"
                 >
-                    <div className="blogNavContainer">
+                    <div onClick={handleBlogLink} className={blogLink? "selectedNav" : "blogNavContainer"}>
                         <h3 className="blogsNavText">View Blogs</h3>
                         <h3 className="blogIconNav">📝</h3>
                     </div>
@@ -90,7 +157,7 @@ function NavBar({userLogin, setUserLogin, charityLogin, setCharityLogin, loggedI
                 <NavLink
                     to="/"
                 >
-                    <div className="logoContainer">
+                    <div className="logoContainer" onClick={handleLogoClick}>
                         
                     </div>
                 </NavLink>
@@ -99,7 +166,7 @@ function NavBar({userLogin, setUserLogin, charityLogin, setCharityLogin, loggedI
                     to="/charities"
                     className="nav-link"
                 >
-                    <div className="charityNavContainer">
+                    <div className={charityLink? "selectedNav" : "charityNavContainer"} onClick={handleCharityLink}>
                         <h3 className="charityNavText">View Charities</h3>
                         <h3 className="charityIconNav">🕊️</h3>
                     </div>
@@ -109,7 +176,7 @@ function NavBar({userLogin, setUserLogin, charityLogin, setCharityLogin, loggedI
                     to="/users"
                     className="nav-link"
                 >
-                    <div className="userNavContainer">
+                    <div className={userLink? "selectedNav" : "userNavContainer"} onClick={handleUserLink}>
                         <h3 className="userNavText">View Users</h3>
                         <h3 className="userIconNav">👤</h3>
                     </div>
@@ -119,7 +186,7 @@ function NavBar({userLogin, setUserLogin, charityLogin, setCharityLogin, loggedI
                     to="/blogs"
                     className="nav-link"
                 >
-                    <div className="blogNavContainer">
+                    <div className={blogLink? "selectedNav" : "blogNavContainer"} onClick={handleBlogLink}>
                         <h3 className="blogsNavText">View Blogs</h3>
                         <h3 className="blogIconNav">📝</h3>
                     </div>
@@ -137,8 +204,8 @@ function NavBar({userLogin, setUserLogin, charityLogin, setCharityLogin, loggedI
                 <NavLink
                     to={`/charities/${loggedInCharity.id}`}
                 >
-                    <div className="loggedInIcon">
-                        <img className="loggedInImg" src={loggedInCharity.charity_icon}/>
+                    <div className= "loggedInIcon" onClick={handleCharityLogoClick}>
+                        <img className={charityIcon? "charityIconSelect" : "loggedInImg"} src={loggedInCharity.charity_icon}/>
                     </div>
                 </NavLink>
             </div>

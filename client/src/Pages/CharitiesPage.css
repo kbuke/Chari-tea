@@ -35,13 +35,13 @@
     margin-bottom: 50px;
 }
 
-.allDonationsGrid{
+/* .allDonationsGrid{
     border-bottom: solid;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-items: center;
     align-items: center;
-}
+} */
 
 .donorImg{
     height: 100px;
@@ -103,3 +103,20 @@
     background-color: #cccccc;
     cursor: not-allowed;
   }
+
+  .donorInfoShow{
+    margin-left: 420px;
+    height: 50px;
+    width: 200px;
+    margin-top: 10px;
+  }
+
+  .reviewsHeader{
+    border-bottom: solid;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    align-items: center; /* Center items vertically if needed */
+  }
+
+
+  

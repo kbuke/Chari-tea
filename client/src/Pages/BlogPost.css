@@ -1,4 +1,7 @@
 .blogPostContainer{
     margin-left: 250px;
-    border-bottom: solid;
+}
+
+.blogContent{
+    margin-left: 10px;
 }

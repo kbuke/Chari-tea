@@ -170,13 +170,15 @@ if __name__ == '__main__':
 
         print("Seeding Reviews")
         s7_review = CharityReview(
+            review_title = "Best Desks in Town",
             charity_review="Great desks, really helped my shcools education",
             charity_id=1,
             user_id=1
         )
 
         unicef_review = CharityReview(
-            charity_review="delivered aid brilliantly",
+            review_title = "Delivered Aid Brilliantly",
+            charity_review="Really helped in a dire situation. Very thankful for them",
             charity_id=2,
             user_id=1
         )
@@ -240,14 +242,6 @@ if __name__ == '__main__':
             charity_id=2
         )
 
-        kbuke13_blog = BlogPost(
-            blog_title="Travels in Africa",
-            blog_content = "Test again",
-            cover_img="https://outandabout.africa/wp-content/uploads/2024/04/Indaba-3-002-scaled.jpg",
-            blog_views = 10,
-            user_id=1
-        )
-
         kbuke13_blog2 = BlogPost(
             blog_title="Hi",
             blog_content="mehhhh",
@@ -295,7 +289,7 @@ if __name__ == '__main__':
             blog_views=1000,
             user_id=6
         )
-        db.session.add_all([s7Blog, s7Blog2, s7Blog3, unicefBlog, wwfBlog, shootingStarBlog, kbuke13_blog, kbuke13_blog2, unicefBlog2, zhirji15_blog, kmcror11_blog, vbuke07_blog, abuke28_blog, gbuke64_blog])
+        db.session.add_all([s7Blog, s7Blog2, s7Blog3, unicefBlog, wwfBlog, shootingStarBlog, kbuke13_blog2, unicefBlog2, zhirji15_blog, kmcror11_blog, vbuke07_blog, abuke28_blog, gbuke64_blog])
         db.session.commit()
 
         print("Seeding complete!")

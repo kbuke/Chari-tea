@@ -10,6 +10,7 @@ import CharitiesHome from "./Pages/CharitiesHome";
 import UserSignIn from "./Pages/UserSignIn";
 import CharitySignUp from "./Pages/CharitySignUp";
 import CharitySignIn from "./Pages/CharitySignIn";
+import NewBlog from "./Pages/NewBlog";
 
 const routes = [
     {
@@ -59,6 +60,10 @@ const routes = [
             {
                 path: "/charitysignin",
                 element: <CharitySignIn />
+            },
+            {
+                path: "/newblog",
+                element: <NewBlog />
             }
         ]
     }

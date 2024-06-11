@@ -1,0 +1,52 @@
+.newBlogPost{
+    margin-left: 250px;
+    border: solid;
+}
+
+.newBlogPageHeader{
+    border: solid;
+    text-align: center;
+}
+
+.newBlogTitle,
+.newBlogImg,
+.newBlogContent{
+    margin-top: 20px;
+    height: 50px;
+    width: 700px;
+    text-align: center;
+    border: none;
+    border-bottom: solid;
+    font-size: 150%;
+    margin-left: 200px;
+    opacity: 0.5;
+    background-color: #E7E1D5;
+}
+
+.newBlogTitle:hover, 
+.newBlogImg:hover,
+.newBlogContent:hover{
+    opacity: 1;
+    background-color: white;
+    font-weight: bold;
+}
+
+.writeContent{
+    width: 700px;
+    margin-left: 200px;
+    opacity: 1;
+    background-color: #E7E1D5;
+    text-align: left;
+    margin-top: 20px;
+    background-color: white;
+    height: 300px;
+    text-align: initial;
+}
+
+.publishBlogButton{
+    width: 150px;
+    margin-left: 470px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 50px;
+}

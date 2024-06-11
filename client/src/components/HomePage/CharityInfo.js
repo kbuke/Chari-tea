@@ -39,24 +39,27 @@ function CharityInfo({charities, charityBlogs, userBlogs}){
         setCharityDonations(!charityDonations)
     }
 
-    const sortCharityDate = charities.sort((a, b) => b.charity_signup - a.charity_signup)
-    const fiverCharityDates = sortCharityDate.slice(0, 5)
+    const charityCopy = charities.slice()
+    const sortCharitiesDatesDesc = charityCopy.sort((a, b) => new Date(b.charity_signup) - new Date(a.charity_signup))
+
+    // const sortCharityDate = charities.sort((a, b) => b.charity_signup - a.charity_signup)
+    const tenCharityDates = sortCharitiesDatesDesc.slice(0, 10)
 
     //create new attribute, total_donations
     charities.forEach(charity => {
         charity.total_donations = charity.donations.reduce((sum, donation) => sum + donation.amount_donated, 0);
     });
 
-    const sortCharityDonations = charities.sort((a, b) => b.total_donations - a.total_donations)
-    const fiveCharityDonations = sortCharityDonations.slice(0, 5)
+    const sortCharityDonations = charityCopy.sort((a, b) => b.total_donations - a.total_donations)
+    const tenCharityDonations = sortCharityDonations.slice(0, 10)
     
-    const renderedCharities = charityDonations? fiveCharityDonations.map((charity, index) => (
+    const renderedCharities = charityDonations? tenCharityDonations.map((charity, index) => (
         <div key={index}>
             <RenderedCharities charity={charity}/>
         </div>
     ))
     :
-    fiverCharityDates.map((charity, index) => (
+    tenCharityDates.map((charity, index) => (
         <div key={index}>
             <RenderedCharities charity={charity}/>
         </div>
@@ -64,7 +67,7 @@ function CharityInfo({charities, charityBlogs, userBlogs}){
 
 
     return(
-        <>
+        <div className="charityInfoHome">
             <div className="charityBlogHomeHeaderButton">
                 <h2 className="charityBlogHomePageChoice">{charityBlogViews?`Most Popular Charity Blogs` : `Most Recent Charity Blogs`}</h2>
                 <CharityBlogButton handleCharityBlogs={handleCharityBlogs} charityBlogViews={charityBlogViews}/>
@@ -80,7 +83,7 @@ function CharityInfo({charities, charityBlogs, userBlogs}){
             <div className="homePageCharityGrid">
                 {renderedCharities}
             </div>
-        </>
+        </div>
     )
     
     

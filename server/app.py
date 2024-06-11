@@ -100,7 +100,7 @@ class UsersId(Resource):
     def get(self, id):
         user = User.query.filter(User.id==id).first()
         if user:
-            return make_response(user.to_dict(rules=("-donations.charity.reviews", "-donations.charity.charity_signup", "-donations.charity.charity_name", "donations.charity.charity_name", "-donations.charity.charity_location",  "-donations.charity_id", "-donations.date_of_donation", "-donations.id", "-donations.user_id", "-donations.charity.charity_description",  "-reviews.charity",)), 200)
+            return make_response(user.to_dict(rules=("-donations.charity.reviews", "-donations.charity.charity_signup", "-donations.charity.charity_name", "donations.charity.charity_name", "-donations.charity.charity_location",  "-donations.charity_id", "-donations.date_of_donation", "-donations.id", "-donations.user_id", "-donations.charity.charity_description",  "-reviews.charity", "-donations.charity._password_hash",)), 200)
         return {
             "error": "user not found"
         }, 404
@@ -123,19 +123,40 @@ class UsersId(Resource):
             "error": "User doesn't exist"
         }, 404
 
+class Donations(Resource):
+    def get(self):
+        donation = [donations.to_dict(rules=("-user", "-charity", )) for donations in Donation.query.all()]
+        return donation, 200
+    
+    def post(self):
+        json = request.get_json()
+        try:
+            new_donation = Donation(
+                amount_donated = json.get("floatDonation"),
+                user_id = json.get("userId"),
+                charity_id = json.get("charityId")
+            )
+            db.session.add(new_donation)
+            db.session.commit()
+            return new_donation.to_dict(), 201
+        except ValueError:
+            return {
+                "error": ["Validation error"]
+            }, 400
 
 class Reviews(Resource):
     def get(self):
-        review = [reviews.to_dict(rules=("-charity", "-user",)) for reviews in CharityReview.query.all()]
+        review = [reviews.to_dict(rules=("-charity", "-user.email", "-user.signup_date", "-user.id", "-user._password_hash",)) for reviews in CharityReview.query.all()]
         return review, 200
     
     def post(self):
         json = request.get_json()
         try:
             new_review = CharityReview(
-                charity_review=json.get("charity_review"),
-                user_id=json.get("user_id"),
-                charity_id=json.get("charity_id")
+                review_title=json.get("reviewTitle"),
+                charity_review=json.get("reviewContent"),
+                user_id=json.get("userId"),
+                charity_id=json.get("charityId")
             )
             db.session.add(new_review)
             db.session.commit()
@@ -173,10 +194,41 @@ class ReviewsId(Resource):
             "error": "Review not found"
         }, 404
 
+    def delete(self, id):
+        review = CharityReview.query.filter(CharityReview.id == id).first()
+        if review:
+            db.session.delete(review)
+            db.session.commit()
+            return{
+                "message": "Review Deleted Successfully"
+            }, 200
+        return {
+            "error": "Review not Found"
+        }, 404
+
 class Blog(Resource):
     def get(self):
         blogs = [blog.to_dict() for blog in BlogPost.query.all()]
         return blogs, 200
+    
+    def post(self):
+        json_data = request.get_json()
+        try:
+            new_blog = BlogPost(
+                blog_title=json_data.get("blogTitle"),
+                blog_content = json_data.get("blogContent"),
+                cover_img = json_data.get("blogImg"),
+                blog_views = json_data.get("blogViews"),
+                user_id = json_data.get("userId"),
+                charity_id = json_data.get("charityId")
+            )
+            db.session.add(new_blog)
+            db.session.commit()
+            return new_blog.to_dict(), 201
+        except ValueError:
+            return {
+                "error": ["Validation Error"]
+            }, 400
 
 class BlogById(Resource):
     def get(self, id):
@@ -186,6 +238,18 @@ class BlogById(Resource):
                  "-charity.charity_location", "-charity.charity_signup",)), 200)
         return {
             "error": "charity not found"
+        }, 404
+    
+    def delete(self, id):
+        blog = BlogPost.query.filter(BlogPost.id == id).first()
+        if blog:
+            db.session.delete(blog)
+            db.session.commit()
+            return {
+                "message": "Blog deleted successfully"
+            }, 200
+        return {
+            "error": "Blog not found"
         }, 404
 
 class CheckUserSession(Resource):
@@ -269,6 +333,7 @@ api.add_resource(CheckUserSession, '/usercheck_session')
 api.add_resource(CheckCharitySession, '/charitycheck_session')
 api.add_resource(UserLogout, '/userlogout')
 api.add_resource(CharityLogout, '/charitylogout')
+api.add_resource(Donations, '/donations')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

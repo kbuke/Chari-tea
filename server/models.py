@@ -103,7 +103,9 @@ class CharityReview(db.Model, SerializerMixin):
     __tablename__ = "charity_reviews"
 
     id = db.Column(db.Integer, primary_key=True)
+    review_title = db.Column(db.String)
     charity_review = db.Column(db.String)
+    review_date = db.Column(db.DateTime, server_default=db.func.now())
 
     #Add relationships
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))

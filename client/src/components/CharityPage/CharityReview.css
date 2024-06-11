@@ -1,0 +1,21 @@
+.donationHeaderGrid{
+    display: grid;
+    grid-template-columns: 10% 70% 20%;
+    border-bottom: dotted;
+    margin-top: 20px;
+    background-color: white;
+    width: 100%;
+}
+
+.reviewerImg{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-top: 10px;
+}
+
+.reviewContentGrid{
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    border-bottom: solid;
+}

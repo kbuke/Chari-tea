@@ -1,3 +1,7 @@
+.charityInfoHome{
+    margin-bottom: 20px;
+}
+
 .homePageCharityBlogGrid{
     display: grid;
     grid-template-columns: repeat(4, 1fr);

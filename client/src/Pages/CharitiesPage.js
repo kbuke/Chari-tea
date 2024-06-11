@@ -7,20 +7,37 @@ import CharityLogo from "../components/CharityPage/CharityLogo.js";
 import Relations from "../components/CharityPage/Relations.js";
 import Donations from "../components/CharityPage/Donations.js";
 import BlogPosts from "../components/CharityPage/BlogPosts.js";
+import CharityReview from "../components/CharityPage/CharityReview.js";
 
 function CharitiesPage() {
   const appData = useOutletContext()
   const charities = appData.charities
 
+  const loggedInUser = appData.loggedInUser
+
+  const loggedInCharity = appData.loggedInCharity
+
+  const charityReviews = appData.reviews
+  console.log(charityReviews)
+
   const params = useParams();
   const specificCharity = charities.find(charity => charity.id === parseInt(params.id));
+  
+  const charityId = specificCharity.id
 
   const [charityInfo, setCharityInfo] = useState({});
   const [donationInfo, setDonationInfo] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
   const [donate, setDonate] = useState(false)
+  const [allDonors, setAllDonors] = useState(false)
+  const [writeReview, setWriteReview] = useState(false)
+
 
   const itemsPerPage = 6;
+
+  const handleDonationClick = (e) => {
+    e.preventDefault()
+    setAllDonors(!allDonors)
+  }
 
   useEffect(() => {
     if (specificCharity) {
@@ -41,10 +58,12 @@ function CharitiesPage() {
     }
   }, [specificCharity]);
 
+  console.log(specificCharity)
+
+
   const donatedAmount = donationInfo.map((donor) => donor.amount_donated);
   const donatedSum = donatedAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
-  const userInfo = donationInfo ? donationInfo.map((donorInfo) => donorInfo.user) : [];
 
   const charityBlogs = charityInfo.blogs ? charityInfo.blogs : [];
 
@@ -57,15 +76,40 @@ function CharitiesPage() {
   const charityDate = charityInfo ? charityInfo.charity_signup : '';
   const formattedDate = charityDate ? charityDate.substring(0, 10) : '';
 
-  const startIndex = currentPage * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentDonors = userInfo.slice(startIndex, endIndex);
+  const donationInfoCopy = donationInfo.slice()
+  const sortDonationInfoDesc = donationInfoCopy.sort((a, b) => new Date(b.date_of_donation) - new Date(a.date_of_donation))
 
-  const donorInfo = currentDonors.map((user, index) => (
+
+  const allDonorInfo = sortDonationInfoDesc.map((donor, index) => (
     <div key={index}>
-      <Donations userImg={user.user_icon} userName={user.username} userId={user.id} donated={donatedAmount[startIndex + index].toFixed(2)} />
+      <Donations 
+        dateOfDonation={donor.date_of_donation}
+        userImg={donor.user.user_icon}
+        userId={donor.user.id}
+        donated={donor.amount_donated.toFixed(2)}
+        userName={donor.user.username}
+        allDonors={allDonors}
+        setAllDonors={setAllDonors}
+      />
     </div>
   ));
+
+  const mosetRecentDonors = sortDonationInfoDesc.slice(0, itemsPerPage)
+
+  const filteredDonorInfo = mosetRecentDonors.map((donor, index) => (
+    <div key={index}>
+      <Donations 
+        dateOfDonation={donor.date_of_donation}
+        userImg={donor.user.user_icon}
+        userId={donor.user.id}
+        donated={donor.amount_donated.toFixed(2)}
+        userName={donor.user.username}
+        allDonors={allDonors}
+        setAllDonors={setAllDonors}
+      />
+    </div>
+  ))
+
 
   const blogInfo = charityBlogs.map((blog, index) => (
     <div key={index}>
@@ -73,22 +117,33 @@ function CharitiesPage() {
     </div>
   ));
 
-  const handleNextPage = () => {
-    if ((currentPage + 1) * itemsPerPage < userInfo.length) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
+  const relevantReviews = charityReviews.filter(review => review.charity_id == specificCharity.id)
 
-  const handlePrevPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
+  const sortReviewDates = relevantReviews.sort((a, b) => new Date(b.review_date) - (a.review_date))
+  
+  const specificCharityReview = sortReviewDates.map((review, index) => (
+    <div key={index}>
+      <CharityReview review={review} loggedInUser={loggedInUser}/>
+    </div>
+  ))
+
 
   return (
     <div className="mainContent">
       <div className="mainInfo">
-        <CharityLogo chairtyPic={charityIcon} charityLocation={charityInfo.charity_location} charityName={charityName} charityDescription={charityDescription} donate={donate} setDonate={setDonate} />
+        <CharityLogo 
+          chairtyPic={charityIcon}    
+          charityLocation={charityInfo.charity_location} 
+          charityName={charityName} 
+          charityDescription={charityDescription} 
+          donate={donate} 
+          setDonate={setDonate} 
+          charityId={charityId} 
+          loggedInUser={loggedInUser}
+          loggedInCharity={loggedInCharity}
+          writeReview = {writeReview}
+          setWriteReview = {setWriteReview}
+        />
       </div>
 
       <div className="retlationHeader">
@@ -100,14 +155,13 @@ function CharitiesPage() {
         <div className="donationHeader">
           <h1>Donations</h1>
         </div>
-
-        <div className="allDonationsGrid">
-          {donorInfo}
-          <div className="paginationButtons">
-            <button onClick={handlePrevPage} disabled={currentPage === 0}>Previous</button>
-            <button onClick={handleNextPage} disabled={(currentPage + 1) * itemsPerPage >= userInfo.length}>Next</button>
-          </div>
-        </div>
+        {allDonors? allDonorInfo : filteredDonorInfo}
+        <button 
+          className="donorInfoShow"
+          onClick={handleDonationClick}
+        >
+          {allDonors? "Show Most Recent Donations" : "Show All Donations"}
+        </button>
       </>
 
       <>
@@ -115,6 +169,13 @@ function CharitiesPage() {
         <div className="blogGrid">
           {blogInfo}
         </div>
+      </>
+
+      <>
+        <div className="reviewsHeader">
+          <h1>{charityName} Reviews</h1>
+        </div>
+        {specificCharityReview}
       </>
     </div>
   );

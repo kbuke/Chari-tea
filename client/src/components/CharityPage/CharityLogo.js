@@ -1,11 +1,54 @@
-import { useState } from "react"
+
 import "./CharityLogo.css"
+import { useNavigate } from "react-router-dom"
 
-function CharityLogo({chairtyPic, charityLocation, charityDescription, charityName, donate, setDonate}){
+import MakeDonation from "./MakeDonation"
+import WriteReview from "./WriteReview"
+import { useState } from "react"
 
-    const handleClick = () => {
+function CharityLogo({
+    chairtyPic, 
+    charityLocation, 
+    charityDescription, 
+    charityName, 
+    donate, 
+    setDonate, 
+    charityId, 
+    loggedInUser,
+    loggedInCharity,
+    writeReview,
+    setWriteReview, 
+}){
+
+    const navigate = useNavigate()
+
+    const handleDonateClick = () => {
         setDonate(!donate)
+        setWriteReview(false)
     }
+
+    const handleReviewClick = () => {
+        setWriteReview(!writeReview)
+        setDonate(false)
+    }
+
+    const handleBlogClick = () => {
+        navigate("/newblog")
+    }
+
+    const newDonation = donate? 
+        <MakeDonation charityId={charityId} loggedInUser={loggedInUser}/>
+        :
+        null;
+
+    const newReview = writeReview?
+        <WriteReview 
+            charityId={charityId} 
+            userId={loggedInUser.id}
+        />
+        :
+        null
+    
 
     return(
         <div className="mainInfoContainer">
@@ -16,14 +59,40 @@ function CharityLogo({chairtyPic, charityLocation, charityDescription, charityNa
             <div className="charityInfo">
                 <h2>{charityDescription}</h2>
                 <h2>📍 {charityLocation}</h2>
-                <button className="donateButton" onClick={handleClick}>
-                    {donate?
-                        <h2>Cancel Donation to {charityName}</h2>
-                        :
-                        <h2>Donate to {charityName}</h2>
-                    }
-                </button>
+                {loggedInUser? 
+                    <div>
+                        <button className={donate? "selectedButton" : "donateButton"} onClick={handleDonateClick}>
+                            {donate?
+                                <h2>Cancel Donation to {charityName}</h2>
+                                :
+                                <h2>Donate to {charityName}</h2>
+                            }
+                        </button>
+
+                        <button className={writeReview? "selectedButton" : "reviewButton"} onClick={handleReviewClick}>
+                            {writeReview?
+                                <h2>Stop Reviewing</h2>
+                                :
+                                <h2>Write a Review for {charityName}</h2>
+                            }
+                        </button>
+                    </div>
+                    :
+                    null
+                }
+                {loggedInCharity.id == charityId?
+                    <button onClick={handleBlogClick}>
+                        Write New Blog
+                    </button>
+                    :
+                    null
+                }
             </div>
+
+            <>
+                {newDonation}
+                {newReview}
+            </>
         </div>
     )
 }

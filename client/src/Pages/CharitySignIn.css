@@ -1,3 +1,36 @@
 .charityLoginPage{
     margin-left: 250px;
 }
+
+.charityLoginForm{
+    height: 500px;
+    width: 600px;
+    margin-left: 250px;
+    margin-top: 20px;
+}
+
+.charityNameText,
+.charityPasswordText{
+    height: 100px;
+    margin-top: 20px;
+    width: 450px;
+    text-align: center;
+    font-size: 200%;
+    background-color: #E7E1D5;
+    border: none;
+    border-bottom: solid;
+    margin-left: 80px;
+}
+
+.charityPasswordButton{
+    border: none;
+    background-color: #E7E1D5;
+    font-size: 150%;
+}
+
+.charityLoginButton{
+    height: 50px;
+    width: 150px;
+    margin-left: 220px;
+    margin-top: 20px;
+}

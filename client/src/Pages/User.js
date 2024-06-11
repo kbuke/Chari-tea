@@ -15,16 +15,24 @@ function User(){
 
     const users = appData.users
     const loggedInUser = appData.loggedInUser
-    const loggedInUserId = loggedInUser.id
+    const loggedInUserId = loggedInUser? loggedInUser.id : []
     
 
     const params = useParams()
     const specificUser = users.find(user => user.id === parseInt(params.id))
     const specificUserId = specificUser.id 
 
+    const showCharities = 6
+
     const userCheck = loggedInUserId == specificUserId? true : false
     
     const[userInfo, setUserInfo] = useState([])
+    const [allCharities, setAllCharities] = useState(false)
+
+    const handleClick = (e) => {
+        e.preventDefault()
+        setAllCharities(!allCharities)
+    }
 
     useEffect(() => {
         if(specificUser) {
@@ -44,8 +52,17 @@ function User(){
   const userDonations = userInfo.donations
 
   const charityDonations = userDonations? userDonations.map(charityInfo => charityInfo.charity) : null
+  console.log(charityDonations)
+
+  const sixCharities = charityDonations? charityDonations.slice(0, showCharities) : null
 
   const specificCharity = charityDonations? charityDonations.map((charity, index) => (
+    <div key={index}>
+        <UserDonations charityId={charity.id} charityImg={charity.charity_icon}/>
+    </div>
+  )) : []
+
+  const specific6Charities = sixCharities? sixCharities.map((charity, index) => (
     <div key={index}>
         <UserDonations charityId={charity.id} charityImg={charity.charity_icon}/>
     </div>
@@ -70,8 +87,10 @@ function User(){
             <div className="donationsHeader">
                 <h1>{userInfo.username}'s Chosen Charities</h1>
                 <div className="charityDonationGrid">
-                    {specificCharity}
+                    {/* {specificCharity} */}
+                    {allCharities? specificCharity : specific6Charities}
                 </div>
+                <button className="charityShowButton" onClick={handleClick}>{allCharities? "Show Most Recent Charities":"Show All Charities"}</button>
             </div>
 
             <div className="blogsHeader">

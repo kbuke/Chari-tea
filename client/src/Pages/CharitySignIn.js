@@ -15,6 +15,12 @@ function CharitySignIn(){
 
     const [charityName, setCharityName] = useState("")
     const [charityPassword, setCharityPassword] = useState("")
+    const [showPassword, setShowPassword] = useState(false)
+
+    const handlePassword = (e) => {
+        e.preventDefault()
+        setShowPassword(!showPassword)
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -44,20 +50,29 @@ function CharitySignIn(){
 
     return(
         <div className="charityLoginPage">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="charityLoginForm">
                 <input
                     type="text"
                     value={charityName}
                     onChange={(e) => setCharityName(e.target.value)}
+                    className="charityNameText"
+                    placeholder="Enter Charities Name"
                 />
                 <br/>
-                <input 
-                    type="password"
-                    value={charityPassword}
-                    onChange={(e) => setCharityPassword(e.target.value)}
-                />
+                <div className="passwordSelection">
+                    <input 
+                        type={showPassword? "text" : "password"}
+                        value={charityPassword}
+                        onChange={(e) => setCharityPassword(e.target.value)}
+                        className="charityPasswordText"
+                        placeholder="Enter Charities Password"
+                    />
+                    <button onClick={handlePassword} className="charityPasswordButton">
+                        <h3>👁️</h3>
+                    </button>
+                </div>
                 <br/>
-                <button type="submit">Charity Login</button>
+                <button type="submit" className="charityLoginButton">Charity Login</button>
             </form>
         </div>
     )

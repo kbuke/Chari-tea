@@ -14,6 +14,8 @@ function BlogsHome() {
     const appData = useOutletContext()
     const blogs = appData.blogs
 
+    const setBlogLink = appData.setBlogLink
+
     const [charitySearchBar, setCharitySearchBar] = useState("")
     const [userSearchBar, setUserSearchBar] = useState("")
 
@@ -40,7 +42,10 @@ function BlogsHome() {
 
     const renderedCharities = charityCurrentBlogs.map((charity, index) => (
         <div key={index}>
-            <CharityBlogHome charityBlogs={charity} />
+            <CharityBlogHome 
+                charityBlogs={charity} 
+                setBlogLink={setBlogLink}
+            />
         </div>
     ))
 
@@ -76,7 +81,10 @@ function BlogsHome() {
 
     const renderedUsers = userCurrentBlogs.map((user, index) => (
         <div key={index}>
-            <UserBlogHome userBlogs={user}/>
+            <UserBlogHome 
+                userBlogs={user}
+                setBlogLink={setBlogLink}
+            />
         </div>
     ))
 

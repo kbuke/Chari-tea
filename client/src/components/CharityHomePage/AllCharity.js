@@ -3,7 +3,7 @@ import CharityFilter from "./CharityFilter.js"
 import AllCharityCards from "./AllCharityCards.js"
 import { useState } from "react"
 
-function AllCharity({charities}){
+function AllCharity({charities, setCharityLink}){
 
     const[searchBox, setSearchBox] = useState("")
 
@@ -21,7 +21,7 @@ function AllCharity({charities}){
         <div className="allCharityContainer">
             <h2>Show All Charities</h2>
             <CharityFilter handleSearch={handleSearch}/>
-            <AllCharityCards charities={filterCharities}/>  
+            <AllCharityCards charities={filterCharities} setCharityLink={setCharityLink}/>  
         </div>
     )
 }

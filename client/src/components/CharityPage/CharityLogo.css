@@ -28,12 +28,26 @@
     margin-left: 0cm;
 }
 
-.donateButton{
-    border-radius: 35%;
-    background-color: red;
-    width: 50%;
+.donateButton,
+.reviewButton{
+    border-radius: 7%;
+    background-color: green;
+    color: white;
+    width: 300px
 }
 
 .donateText{
     color: white;
+}
+
+.reviewButton{
+    margin-left: 10px;
+}
+
+.selectedButton{
+    border-radius: 7%;
+    background-color: red;
+    width: 300px;
+    color: white;
+    margin-left: 10px;
 }

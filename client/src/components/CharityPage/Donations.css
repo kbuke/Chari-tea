@@ -1,5 +1,19 @@
+
+
+.donorInfo{
+    border-bottom: dotted;
+    margin-bottom: 10px;
+}
+
+.donorInfo{
+    display: grid;
+    grid-template-columns: 10% 70% 20%;
+}
+
 .donorImg{
-    height: 100px;
-    width: 100px;
+    height: 40px;
+    width: 40px;
     border-radius: 50%;
 }
+
+

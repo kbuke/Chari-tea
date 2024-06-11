@@ -126,3 +126,30 @@
     text-decoration: none;
     background-color: transparent;
 }
+
+.selectedNav{
+    background-color: #A9A9A9;
+    border: none;
+    height: 60px;
+    border-radius: 5%;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 20px;
+    display: flex; /* Changed to flex */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    overflow: hidden;
+    text-decoration: none;
+    opacity: 1;
+}
+
+.charityIconSelect{
+    opacity: 1;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    border: solid;
+    overflow: hidden;
+    margin-left: 90px;
+}
+

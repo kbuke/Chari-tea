@@ -6,7 +6,6 @@ import "./BlogPost.css"
 
 import BlogPostHeader from "../components/Blogs/BlogPostHeader.js"
 
-
 function BlogPost(){
     const appData = useOutletContext()
     const blogs = appData.blogs
@@ -15,6 +14,8 @@ function BlogPost(){
     const specificBlog = blogs.find(blog => blog.id === parseInt(params.id))
 
     const [blogInfo, setBlogInfo] = useState([])
+
+    const blogUserId = appData.loggedInUser.id
 
     useEffect(() => {
         if (specificBlog) {
@@ -31,12 +32,17 @@ function BlogPost(){
             .catch((error) => console.error("Error fetching charity info:", error));
         }
       }, [specificBlog]);
-    
+
     return(
         <div className="blogPostContainer">
-            <BlogPostHeader blogInfo={blogInfo}/>
+            <BlogPostHeader blogInfo={blogInfo} blogUserId={blogUserId}/>
+            <div className="blogContent">
+                {blogInfo.blog_content && blogInfo.blog_content.split('\n').map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                ))}
+            </div>
         </div>
     )
-    
 }
+
 export default BlogPost

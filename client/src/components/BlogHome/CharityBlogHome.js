@@ -2,13 +2,17 @@ import "./CharityBlogHome.css"
 import { Link } from "react-router-dom";
 
 
-function CharityBlogHome({charityBlogs}){
+function CharityBlogHome({
+    charityBlogs,
+    setBlogLink
+}){
 
     return(
         <div className="charityBlogHomeGrid">
             <div className="charityBlogHomeContainer">
                 <Link
                     to={`/blogpost/${charityBlogs.id}`}
+                    onClick={() => setBlogLink(false)}
                 >
                     <img src={charityBlogs.cover_img} className="charityHomeImg"/>
                     <h4 className="charityBlogHomeTilte">{charityBlogs.blog_title}</h4>
@@ -16,6 +20,7 @@ function CharityBlogHome({charityBlogs}){
                 <div className="charityBlogHomeInfo">
                     <Link
                         to={`/charities/${charityBlogs.charity.id}`}
+                        onClick={() => setBlogLink(false)}
                     >
                         <img className="charityImgBlogHome" src={charityBlogs.charity.charity_icon}/>
                     </Link>

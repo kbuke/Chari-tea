@@ -12,6 +12,8 @@ function UsersHome(){
 
     const[searchUser, setSearchUser] = useState("")
 
+    const setUserLink = appData.setUserLink
+
     const handleSearch = (e) => {
         e.preventDefault()
         setSearchUser(e.target.value)
@@ -26,7 +28,12 @@ function UsersHome(){
 
     const userInfo = filteredUsers.map((user, index) => (
         <div key={index}>
-            <UserLinks userImg={user.user_icon} userName={user.username} userId={user.id}/>
+            <UserLinks 
+                userImg={user.user_icon} 
+                userName={user.username} 
+                userId={user.id}
+                setUserLink={setUserLink}
+            />
         </div>
     ))
     return(
