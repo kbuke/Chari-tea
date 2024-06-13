@@ -18,6 +18,10 @@ function CharityLogo({
     loggedInCharity,
     writeReview,
     setWriteReview, 
+    reviewTitle, 
+    setReviewTitle,
+    reviewContent,
+    setReviewContent
 }){
 
     const navigate = useNavigate()
@@ -45,6 +49,10 @@ function CharityLogo({
         <WriteReview 
             charityId={charityId} 
             userId={loggedInUser.id}
+            reviewTitle = {reviewTitle}
+            setReviewTitle = {setReviewTitle}
+            reviewContent = {reviewContent}
+            setReviewContent = {setReviewContent}
         />
         :
         null

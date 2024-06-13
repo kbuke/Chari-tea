@@ -5,8 +5,11 @@ import "./NewBlog.css"
 function NewBlog(){
     const appData = useOutletContext()
     const loggedUser = appData.loggedInUser
-    const userId = loggedUser.id
-    const charityId = appData.loggedInCharity.id
+    const loggedCharity = appData.loggedInCharity
+    // const userId = loggedUser.id
+    // const charityId = appData.loggedInCharity.id
+    const userId = loggedUser? loggedUser.id : null
+    const charityId = loggedCharity? loggedCharity.id : null
 
     const navigate = useNavigate()
 

@@ -15,14 +15,34 @@
     border-radius: 50%;
 }
 
-.deleteUserBlog{
+.deleteUserBlog,
+.stopEditButton{
     height: 50px;
     margin-top: 20px;
     margin-bottom: 10px;
-    margin-left: 430px;
+    margin-left: 335px;
     width: 200px;
 }
 
 .blogHeading{
     border-bottom: solid;
 }
+
+.editUserBlog,
+.submitEditBlog{
+    height: 50px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 200px;
+    margin-left: 10px;
+}
+
+.updateHeaderText{
+    width: 300px;
+    margin-left: 370px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 150%;
+}
+

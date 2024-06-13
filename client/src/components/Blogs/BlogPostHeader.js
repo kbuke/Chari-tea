@@ -1,8 +1,17 @@
+import React, { useEffect } from "react";
 import "./BlogPostHeader.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-function BlogPostHeader({ blogInfo, blogUserId }) {
+function BlogPostHeader({ 
+    blogInfo, 
+    blogUserId,
+    handleEdit,
+    setUpdatedHeader,
+    currentTitle,
+    editProgress,
+    setEditProgress 
+}) {
 
     const navigate = useNavigate()
 
@@ -18,6 +27,21 @@ function BlogPostHeader({ blogInfo, blogUserId }) {
 
     const profilePic = userBlog?.user_icon || charityBlog?.charity_icon;
     const profileLink = userBlog ? `/users/${userBlog.id}` : `/charities/${charityBlog?.id}`;
+
+    const turnEditOn = (e) => {
+        e.preventDefault()
+        setEditProgress(true)
+    }
+
+    const turnEditOff = (e) => {
+        e.preventDefault()
+        setEditProgress(false)
+    }
+
+    const updatedHeader = (e) => {
+        e.preventDefault()
+        setUpdatedHeader(e.target.value)
+    }
 
     const handleDelete = (e) => {
         e.preventDefault();
@@ -40,10 +64,30 @@ function BlogPostHeader({ blogInfo, blogUserId }) {
         });
     };
 
+    useEffect(() => {
+        // Increment blog views by 1
+        fetch(`/blogs/${blogId}/increment-views`, {
+            method: 'POST'
+        })
+        .then(response => {
+            if (!response.ok) {
+                console.error('Failed to increment the blog views');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }, [blogId]);
 
     return (
         <div className="blogHeading">
-            <h1 className="blogTitle">{blogTitle}</h1>
+            {editProgress? 
+                <textarea onChange={updatedHeader} className="updateHeaderText">
+                    {currentTitle}
+                </textarea>
+                :
+                <h1 className="blogTitle">{blogTitle}</h1>
+            }
             <div className="subHeaderGrid">
                 <h3>Published: {publishedDate}</h3>
                 <Link to={profileLink}>
@@ -52,9 +96,27 @@ function BlogPostHeader({ blogInfo, blogUserId }) {
                 <h3>{blogViews} Views 👀</h3>
             </div>
             {publishUserId == blogUserId ? 
-                <button className="deleteUserBlog" onClick={handleDelete}>
-                    Delete Blog
-                </button>
+                <div>
+                    {editProgress?
+                        <div> 
+                            <button className="stopEditButton" onClick={turnEditOff}>Cancel Edit</button>
+                            <button className="submitEditBlog" onClick={handleEdit}>Submit Edit</button>
+                        </div>
+                        :
+                        <>
+                            <button className="deleteUserBlog" onClick={handleDelete}>
+                                Delete Blog
+                            </button>
+
+                            <button 
+                                className="editUserBlog"
+                                onClick={turnEditOn}
+                            >
+                                Edit Blog
+                            </button>
+                        </>
+                    }
+                </div>
                 :
                 null
             }

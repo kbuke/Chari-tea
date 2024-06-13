@@ -14,7 +14,9 @@ function UserInfoHomePage({userBlogs, users}){
     const sortUserBlogViews = userBlogs.sort((a, b) => b.blog_views - a.blog_views)
     const fourUserBlogViews = sortUserBlogViews.slice(0, 4)
 
-    const sortUserBlogDate = userBlogs.sort((a, b) => b.blog_date - a.blog_date)
+    // const sortUserBlogDate = userBlogs.sort((a, b) => b.blog_date - a.blog_date)
+    // const fourUserBlogDate = sortUserBlogDate.slice(0, 4)
+    const sortUserBlogDate = userBlogs.sort((a, b) => new Date(b.blog_date) - new Date(a.blog_date))
     const fourUserBlogDate = sortUserBlogDate.slice(0, 4)
 
     const handleUserBlogRender = () => {

@@ -19,3 +19,8 @@
     grid-template-columns: 20% 60% 20%;
     border-bottom: solid;
 }
+
+.newReview{
+    margin-bottom: 10px;
+    margin-right: 10px;
+}

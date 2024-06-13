@@ -214,17 +214,31 @@ class Blog(Resource):
     def post(self):
         json_data = request.get_json()
         try:
-            new_blog = BlogPost(
-                blog_title=json_data.get("blogTitle"),
-                blog_content = json_data.get("blogContent"),
-                cover_img = json_data.get("blogImg"),
-                blog_views = json_data.get("blogViews"),
-                user_id = json_data.get("userId"),
-                charity_id = json_data.get("charityId")
-            )
-            db.session.add(new_blog)
-            db.session.commit()
-            return new_blog.to_dict(), 201
+            user_id = json_data.get("userId")
+            charity_id = json_data.get("charityId")
+            if user_id != None:
+                new_blog = BlogPost(
+                    blog_title=json_data.get("blogTitle"),
+                    blog_content = json_data.get("blogContent"),
+                    cover_img = json_data.get("blogImg"),
+                    blog_views = int(json_data.get("blogViews")),
+                    user_id = json_data.get("userId"),
+                    # charity_id = json_data.get("charityId")
+                )
+                db.session.add(new_blog)
+                db.session.commit()
+                return new_blog.to_dict(), 201
+            elif charity_id:
+                new_blog = BlogPost(
+                    blog_title=json_data.get("blogTitle"),
+                    blog_content = json_data.get("blogContent"),
+                    cover_img = json_data.get("blogImg"),
+                    blog_views = int(json_data.get("blogViews")),
+                    charity_id = json_data.get("charityId")
+                )
+                db.session.add(new_blog)
+                db.session.commit()
+                return new_blog.to_dict(), 201
         except ValueError:
             return {
                 "error": ["Validation Error"]
@@ -238,6 +252,24 @@ class BlogById(Resource):
                  "-charity.charity_location", "-charity.charity_signup",)), 200)
         return {
             "error": "charity not found"
+        }, 404
+
+    def patch(self, id):
+        data=request.get_json()
+        updated_blog = BlogPost.query.filter(BlogPost.id==id).first()
+        if updated_blog:
+            try:
+                for attr in data:
+                    setattr(updated_blog, attr, data[attr])
+                db.session.add(updated_blog)
+                db.session.commit()
+                return make_response(updated_blog.to_dict(), 202)
+            except ValueError:
+                return {
+                    "error": ["Validation error"]
+                }, 400
+        return {
+            "error": "Blog not found"
         }, 404
     
     def delete(self, id):
@@ -318,6 +350,17 @@ class CharityLogout(Resource):
             return {}, 204
         return {"message": "Unauthorized"}, 401
 
+class IncrementBlogViews(Resource):
+    def post(self, id):
+        blog = BlogPost.query.filter(BlogPost.id == id).first()
+        if blog:
+            blog.blog_views += 1
+            db.session.commit()
+            return blog.to_dict(), 200
+        return {
+            "error": "Blog not found"
+        }, 404
+
     
 api.add_resource(Charities, "/charities")
 api.add_resource(CharityId, "/charities/<int:id>")
@@ -334,6 +377,7 @@ api.add_resource(CheckCharitySession, '/charitycheck_session')
 api.add_resource(UserLogout, '/userlogout')
 api.add_resource(CharityLogout, '/charitylogout')
 api.add_resource(Donations, '/donations')
+api.add_resource(IncrementBlogViews, '/blogs/<int:id>/increment-views')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

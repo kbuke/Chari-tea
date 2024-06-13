@@ -6,9 +6,13 @@ import { useNavigate } from "react-router-dom"
 function WriteReview({
     charityId, 
     userId,
+    reviewTitle,
+    setReviewTitle,
+    reviewContent,
+    setReviewContent
 }){
-    const [reviewTitle, setReviewTitle] = useState("")
-    const [reviewContent, setReviewContent] = useState("")
+    // const [reviewTitle, setReviewTitle] = useState("")
+    // const [reviewContent, setReviewContent] = useState("")
     const [activeReview, setActiveReview] = useState(false)
 
     const navigate = useNavigate()

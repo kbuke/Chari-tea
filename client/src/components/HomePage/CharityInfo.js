@@ -7,7 +7,7 @@ import RenderedCharities from "./RenderedCharities"
 
 import "./CharityInfo.css"
 
-function CharityInfo({charities, charityBlogs, userBlogs}){
+function CharityInfo({charities, charityBlogs}){
 
     const[charityBlogViews, setCharityBlogsViews] = useState(false)
     const[charityDonations, setCharityDonations] = useState(false)
@@ -19,7 +19,10 @@ function CharityInfo({charities, charityBlogs, userBlogs}){
     const sortCharityBlogViews = charityBlogs.sort((a, b) => b.blog_views - a.blog_views)
     const fourCharityBlogViews = sortCharityBlogViews.slice(0, 4)
 
-    const sortCharityBlogDate = charityBlogs.sort((a, b) => b.blog_date - a.blog_date)
+    // const sortCharityBlogDate = charityBlogs.sort((a, b) => b.blog_date - a.blog_date)
+    // const fourCharityBlogDate = sortCharityBlogDate.slice(0, 4)
+    const sortCharityBlogDate = charityBlogs.sort((a, b) => new Date(b.blog_date) - new Date(a.blog_date))
+    console.log(sortCharityBlogDate)
     const fourCharityBlogDate = sortCharityBlogDate.slice(0, 4)
 
     const renderedCharityBlogs = charityBlogViews? fourCharityBlogViews.map((blogs, index) => (

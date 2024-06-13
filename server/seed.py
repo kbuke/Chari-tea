@@ -190,7 +190,7 @@ if __name__ == '__main__':
             blog_title="The Difficulty of Making Desks",
             blog_content="Test Difficulty",
             cover_img="https://solving7.green/wp-content/uploads/2020/11/DSC8314.jpg",
-            blog_views = 25,
+            blog_views = 0,
             charity_id=1
         )
 
@@ -198,7 +198,7 @@ if __name__ == '__main__':
             blog_title="The Inspiration for our Desks",
             blog_content="Hello Inspiration",
             cover_img="https://www.unicef.org/croatia/sites/unicef.org.croatia/files/styles/media_large_image/public/%C2%A9%20UNICEF_UN0231191_Ramasomanana.jpg.webp?itok=_MVuhCVk",
-            blog_views=20,
+            blog_views=0,
             charity_id=1
         )
 
@@ -214,7 +214,7 @@ if __name__ == '__main__':
             blog_title="1st Post",
             blog_content="hi",
             cover_img="https://www.unicef.org/sites/default/files/styles/hero_mobile/public/UN0310595-bluewash.jpg.webp?itok=fxCr4aYg",
-            blog_views=100,
+            blog_views=0,
             charity_id=2
         )
 
@@ -222,7 +222,7 @@ if __name__ == '__main__':
             blog_title="Saving Animals",
             blog_content="hello again",
             cover_img="https://c402277.ssl.cf1.rackcdn.com/photos/3140/images/original/Panda_257801_Home-Sockjpg.jpg?1356003605",
-            blog_views=100000,
+            blog_views=0,
             charity_id=3
         )
 
@@ -230,7 +230,7 @@ if __name__ == '__main__':
             blog_title="What can be done?",
             blog_content="test",
             cover_img="https://www.shootingstar.org.uk/app/uploads/2022/10/Evie-Hospice-respite-stay-2022-1024x600.jpg",
-            blog_views=200000000,
+            blog_views=0,
             charity_id=4
         )
 
@@ -238,7 +238,7 @@ if __name__ == '__main__':
             blog_title="More Blogs",
             blog_content="another test",
             cover_img="https://www.unicef.org/wca/sites/unicef.org.wca/files/styles/hero_mobile/public/UN0487642.JPG.webp?itok=6jayLRGo",
-            blog_views=15,
+            blog_views=0,
             charity_id=2
         )
 
@@ -246,7 +246,7 @@ if __name__ == '__main__':
             blog_title="Hi",
             blog_content="mehhhh",
             cover_img="https://static.independent.co.uk/2023/03/17/01/Iraq_War_Anniversary_20393.jpg?quality=75&width=640&height=614&fit=bounds&format=pjpg&crop=16%3A9%2Coffset-y0.5&auto=webp",
-            blog_views=20,
+            blog_views=0,
             user_id=1
         )
 
@@ -254,7 +254,7 @@ if __name__ == '__main__':
             blog_title="I love my boyfriend",
             blog_content="hes the best",
             cover_img="https://i.ytimg.com/vi/vbz8-xSXfzQ/sddefault.jpg",
-            blog_views=100000000,
+            blog_views=0,
             user_id=2
         )
 
@@ -262,7 +262,7 @@ if __name__ == '__main__':
             blog_title="My son is way better than my daughter",
             blog_content="Alara isn't cool",
             cover_img="https://martockclass5.weebly.com/uploads/4/3/0/0/43008713/5791663_orig.jpg",
-            blog_views=20000000,
+            blog_views=0,
             user_id=3
         )
 
@@ -270,7 +270,7 @@ if __name__ == '__main__':
             blog_title="My Brother is my hero",
             blog_content="He's awesome",
             cover_img="https://i.pinimg.com/originals/71/d3/6a/71d36abaa8206d82a8e6f2a0a97aa934.jpg",
-            blog_views=5,
+            blog_views=0,
             user_id=4
         )
 
@@ -278,7 +278,7 @@ if __name__ == '__main__':
             blog_title="My son the king",
             blog_content="Kaan is the best",
             cover_img="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1567199149l/52810836.jpg",
-            blog_views=100,
+            blog_views=0,
             user_id=5
         )
 
@@ -286,7 +286,7 @@ if __name__ == '__main__':
             blog_title="My brother in law is too cool",
             blog_content="Kaan just rules",
             cover_img="https://cdn3.vectorstock.com/i/1000x1000/30/57/gifts-for-brother-in-law-you-are-best-vector-28603057.jpg",
-            blog_views=1000,
+            blog_views=0,
             user_id=6
         )
         db.session.add_all([s7Blog, s7Blog2, s7Blog3, unicefBlog, wwfBlog, shootingStarBlog, kbuke13_blog2, unicefBlog2, zhirji15_blog, kmcror11_blog, vbuke07_blog, abuke28_blog, gbuke64_blog])

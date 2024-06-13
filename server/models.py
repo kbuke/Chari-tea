@@ -130,8 +130,8 @@ class BlogPost(db.Model, SerializerMixin):
     img5 = db.Column(db.String, nullable=True)
 
     #Add relationships
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
-    charity_id = db.Column(db.Integer, db.ForeignKey("charities.id"), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    charity_id = db.Column(db.Integer, db.ForeignKey("charities.id"))
 
     #Serialize Rules
     serialize_rules = ("-user.blogs", "-user.donations", "-user.reviews", "-charity.blogs", "-charity.donations", "-charity.reviews",)

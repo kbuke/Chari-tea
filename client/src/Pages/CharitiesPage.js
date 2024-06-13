@@ -30,6 +30,8 @@ function CharitiesPage() {
   const [donate, setDonate] = useState(false)
   const [allDonors, setAllDonors] = useState(false)
   const [writeReview, setWriteReview] = useState(false)
+  const [reviewTitle, setReviewTitle] = useState("")
+  const [reviewContent, setReviewContent] = useState("")
 
 
   const itemsPerPage = 6;
@@ -123,7 +125,14 @@ function CharitiesPage() {
   
   const specificCharityReview = sortReviewDates.map((review, index) => (
     <div key={index}>
-      <CharityReview review={review} loggedInUser={loggedInUser}/>
+      <CharityReview 
+        review={review} 
+        loggedInUser={loggedInUser}
+        reviewTitle = {reviewTitle}
+        setReviewTitle={setReviewTitle}
+        reviewContent={reviewContent}
+        setReviewContent={setReviewContent}
+      />
     </div>
   ))
 
@@ -143,6 +152,10 @@ function CharitiesPage() {
           loggedInCharity={loggedInCharity}
           writeReview = {writeReview}
           setWriteReview = {setWriteReview}
+          reviewTitle = {reviewTitle}
+          setReviewTitle = {setReviewTitle}
+          reviewContent = {reviewContent}
+          setReviewContent = {setReviewContent}
         />
       </div>
 
