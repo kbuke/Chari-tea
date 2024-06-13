@@ -1,3 +1,37 @@
 .userLoginPage{
     margin-left: 250px;
 }
+
+.userLoginForm{
+    height: 500px;
+    width: 600px;
+    margin-left: 250px;
+    margin-top: 20px;
+}
+
+.userNameText,
+.userPasswordText{
+    height: 100px;
+    margin-top: 20px;
+    width: 450px;
+    text-align: center;
+    font-size: 200%;
+    background-color: #E7E1D5;
+    border: none;
+    border-bottom: solid;
+    margin-left: 80px;
+}
+
+
+.userPasswordButton{
+    border: none;
+    background-color: #E7E1D5;
+    font-size: 150%;
+}
+
+.userLoginButton{
+    height: 50px;
+    width: 150px;
+    margin-left: 220px;
+    margin-top: 20px;
+}

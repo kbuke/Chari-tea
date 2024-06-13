@@ -25,6 +25,7 @@ function BlogPost(){
     }
 
     const blogUserId = appData.loggedInUser.id
+    const blogCharityId = appData.loggedInCharity.id
 
     useEffect(() => {
         if (specificBlog) {
@@ -82,6 +83,7 @@ function BlogPost(){
               currentTitle = {currentTitle}
               editProgress = {editProgress}
               setEditProgress={setEditProgress}
+              blogCharityId={blogCharityId}
             />
             {editProgress? 
               <textarea className="editContentText" onChange={handleContentEdit}>

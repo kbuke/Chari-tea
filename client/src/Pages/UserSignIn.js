@@ -16,6 +16,12 @@ function UserSignIn(){
 
     const [username, setUsername] = useState("")
     const [userPassword, setUserPassword] = useState("")
+    const [showPassword, setShowPassword] = useState(false)
+
+    const handlePassword = (e) => {
+        e.preventDefault()
+        setShowPassword(!showPassword)
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -45,20 +51,29 @@ function UserSignIn(){
 
     return(
         <div className="userLoginPage">
-            <form onSubmit={handleSubmit}>
-                <input 
+            <form onSubmit={handleSubmit} className="userLoginForm">
+                <input
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    className="userNameText"
+                    placeholder="Enter Users Name"
                 />
                 <br/>
-                <input 
-                    type="text"
-                    value={userPassword}
-                    onChange={(e) => setUserPassword(e.target.value)}
-                />
+                <div className="passwordSelection">
+                    <input 
+                        type={showPassword? "text" : "password"}
+                        value={userPassword}
+                        onChange={(e) => setUserPassword(e.target.value)}
+                        className="userPasswordText"
+                        placeholder="Enter Charities Password"
+                    />
+                    <button onClick={handlePassword} className="userPasswordButton">
+                        <h3>👁️</h3>
+                    </button>
+                </div>
                 <br/>
-                <button type="submit">Login</button>
+                <button type="submit" className="userLoginButton">User Login</button>
             </form>
         </div>
     )

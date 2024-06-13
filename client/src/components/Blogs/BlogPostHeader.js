@@ -10,12 +10,15 @@ function BlogPostHeader({
     setUpdatedHeader,
     currentTitle,
     editProgress,
-    setEditProgress 
+    setEditProgress,
+    blogCharityId 
 }) {
+
 
     const navigate = useNavigate()
 
     const publishUserId = blogInfo.user_id
+    const publishCharityId = blogInfo.charity_id
 
     const publishedDate = blogInfo.blog_date;
     const blogTitle = blogInfo.blog_title;
@@ -27,6 +30,11 @@ function BlogPostHeader({
 
     const profilePic = userBlog?.user_icon || charityBlog?.charity_icon;
     const profileLink = userBlog ? `/users/${userBlog.id}` : `/charities/${charityBlog?.id}`;
+
+    console.log("publishUserId:", publishUserId);
+    console.log("blogUserId:", blogUserId);
+    console.log("publishCharityId:", publishCharityId);
+    console.log("blogCharityId:", blogCharityId);
 
     const turnEditOn = (e) => {
         e.preventDefault()
@@ -95,7 +103,7 @@ function BlogPostHeader({
                 </Link>
                 <h3>{blogViews} Views 👀</h3>
             </div>
-            {publishUserId == blogUserId ? 
+            {(publishUserId === blogUserId || (publishCharityId && blogCharityId && publishCharityId === blogCharityId)) ?  
                 <div>
                     {editProgress?
                         <div> 
