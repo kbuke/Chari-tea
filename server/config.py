@@ -26,12 +26,14 @@ db = SQLAlchemy(metadata=metadata)
 migrate = Migrate(app, db)
 db.init_app(app)
 
+#Instantiate Bcrypt
+bcrypt = Bcrypt(app)
+
 # Instantiate REST API
 api = Api(app)
 
 # Instantiate CORS
 CORS(app)
 
-#Instantiate Bcrypt
-bcrypt = Bcrypt(app)
+
 
