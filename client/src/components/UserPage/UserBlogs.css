@@ -1,21 +1,17 @@
-.usersBlogContainer{
-    display: flex; /* Use flexbox layout */
-    flex-direction: column; /* Arrange items vertically */
-    justify-content: flex-start; /* Align items to the start of the container */
-    align-items: center; /* Center items horizontally */
-    height: 250px;
-    width: 300px; /* Adjust width as needed */
-    overflow: hidden;
-    gap: 10px; /* Add space between the title and image */
+.userBlogContainers{
+    margin-left: 20px;
 }
+
 
 .blogImg{
     height: 200px; /* Adjust height as needed */
     width: 100%; /* Take up full width */
     object-fit: cover; /* Maintain aspect ratio and cover the container */
     border-radius: 10px; 
+
 }
 
 .blogTitle{
     margin-top: auto;
+    text-align: center;
 }

@@ -1,10 +1,13 @@
 import "./CharityButton.css"
 
-function CharityButton({handleCharityDonations, charityDonations}){
+function CharityButton({
+    handleCharities,
+    charitySignUpDate
+}){
     return(
         <div className="charityHomeButtonContainer">
-            <button onClick={handleCharityDonations} className="HomePageCharityRenderButton">
-                {charityDonations? `Show Most Recent Charities` : `Show Most Popular Charities`}
+            <button onClick={handleCharities} className="HomePageCharityRenderButton">
+                {charitySignUpDate ? `Show Most Popular Charities` : `Show Most Recent Charities`}
             </button>
         </div>
     )

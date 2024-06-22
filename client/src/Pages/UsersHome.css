@@ -1,15 +1,27 @@
-.charitiesHomeContainer{
+.userHomePageContainer{
     margin-left: 250px;
 }
 
-.userHomeTitle{
+.userHomeHeader{
+    margin-top: 0px;
+    margin-left: 20px;
     text-align: center;
 }
 
-.usersGrid{
+.userHomeSearchBar{
+    border: none;
+    border-bottom: solid;
+    margin-left: 20px;
+    width: 900px;
+    font-size: 400%;
+    background-color: #E7E1D5;
+    height: 100px;
+}
+
+.userHomeGrid{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
 }

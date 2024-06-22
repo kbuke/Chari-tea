@@ -1,103 +1,151 @@
-import { useState, useEffect } from "react"
-import { useParams } from "react-router"
-import { useOutletContext } from "react-router-dom"
+import { useState, useEffect } from "react";
+import { useParams } from "react-router";
+import { useOutletContext } from "react-router-dom";
 
-import "./BlogPost.css"
+import "./BlogPost.css";
 
-import BlogPostHeader from "../components/Blogs/BlogPostHeader.js"
+import BlogPostHeader from "../components/Blogs/BlogPostHeader.js";
+import AuthorButtons from "../components/Blogs/AuthorButtons.js";
+import BlogContent from "../components/Blogs/BlogContent.js";
+import EditBlog from "../components/Blogs/EditBlog.js";
 
-function BlogPost(){
-    const appData = useOutletContext()
-    const blogs = appData.blogs
-    
-    const params = useParams()
-    const specificBlog = blogs.find(blog => blog.id === parseInt(params.id))
+function BlogPost() {
+  const appData = useOutletContext();
+  const params = useParams();
 
-    const [blogInfo, setBlogInfo] = useState([])
-    const [editProgress, setEditProgress] = useState(false)
-    const [editedHeader, setUpdatedHeader] = useState()
-    const [editedContent, setEditedContent] = useState()
+  const [blogInfo, setBlogInfo] = useState([]);
+  const [editBlog, setEditBlog] = useState(false);
+  const [deleteBlog, setDeleteBlog] = useState(false);
 
+  const allBlogs = appData.blogs;
+  const setAllBlogs = appData.setBlogs;
 
-    const handleContentEdit = (e) => {
-      e.preventDefault()
-      setEditedContent(e.target.value)
-    }
+  const userLoggedIn = appData.userLoggedIn;
+  const charityLoggedIn = appData.charityLoggedIn;
 
-    const blogUserId = appData.loggedInUser.id
-    const blogCharityId = appData.loggedInCharity.id
+  const loggedUser = appData.user;
+  const loggedCharity = appData.charity;
 
-    useEffect(() => {
-        if (specificBlog) {
-          fetch(`http://127.0.0.1:5555/blogs/${specificBlog.id}`)
-            .then((r) => {
-              if (r.ok) {
-                return r.json();
-              }
-              throw r;
-            })
-            .then((blogInfo) => {
-              setBlogInfo(blogInfo);
-            })
-            .catch((error) => console.error("Error fetching charity info:", error));
-        }
-      }, [specificBlog]);
+  const specificBlog = allBlogs.find((blog) => blog.id === parseInt(params.id));
 
-    const currentTitle = specificBlog.blog_title
-    const currentContent = specificBlog.blog_content
-
-    console.log(editedContent)
-    console.log(currentContent)
-
-
-    const HandleEdit = () => {
-        fetch(`/blogs/${specificBlog.id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            blog_title: editedHeader? editedHeader : currentTitle,
-            blog_content: editedContent? editedContent : currentContent
-          })
-        })
+  useEffect(() => {
+    if (specificBlog) {
+      fetch(`/blogs/${specificBlog.id}`)
         .then((r) => {
-          if(r.ok) {
-            console.log("Blog Updated")
-          } else {
-            console.error("Failed to update blog")
+          if (r.ok) {
+            return r.json();
           }
+          throw r;
         })
-        .catch((error) => {
-          console.error("Error", error)
+        .then((blogInfo) => {
+          setBlogInfo(blogInfo);
         })
-      }
+        .catch((error) => console.error("Error fetching charity info:", error));
+    }
+  }, [specificBlog]);
 
-    return(
-        <div className="blogPostContainer">
-            <BlogPostHeader 
-              blogInfo={blogInfo} 
-              blogUserId={blogUserId} 
-              handleEdit={HandleEdit}
-              setUpdatedHeader = {setUpdatedHeader}
-              currentTitle = {currentTitle}
-              editProgress = {editProgress}
-              setEditProgress={setEditProgress}
-              blogCharityId={blogCharityId}
-            />
-            {editProgress? 
-              <textarea className="editContentText" onChange={handleContentEdit}>
-                {currentContent}
-              </textarea>
-              :
-              <div className="blogContent">
-                {blogInfo.blog_content && blogInfo.blog_content.split('\n').map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
-                ))}
-              </div>
-            }
-        </div>
-    )
+  console.log(specificBlog);
+
+  //Get info for blog header
+  const blogTitle = specificBlog?.blog_title || null;
+  const blogDate = specificBlog?.blog_date || null;
+  const blogViews = specificBlog?.blog_views || null;
+  const blogId = specificBlog?.id || null;
+
+  const authorId = specificBlog?.user_id ?? specificBlog?.charity_id;
+
+  const authorImg =
+    specificBlog?.user?.user_icon ?? specificBlog?.charity?.charity_icon;
+
+  const authorName =
+    specificBlog?.user?.username ?? specificBlog?.charity?.charity_name;
+
+  //Handle Blog Content Info
+  const blogContent = specificBlog?.blog_content || null;
+
+  const [editBlogTitle, setEditBlogTitle] = useState(blogTitle);
+  const [editBlogContext, setEditBlogContext] = useState(blogContent);
+
+  const renderBlog = (
+    <BlogContent
+      blogContent={blogContent}
+      blogTitle={blogTitle}
+      authorName={authorName}
+    />
+  );
+
+  const editBlogComp = (
+    <EditBlog
+      blogTitle={blogTitle}
+      blogContent={blogContent}
+      allBlogs={allBlogs}
+      setAllBlogs={setAllBlogs}
+      setEditBlogTitle={setEditBlogTitle}
+      setEditBlogContext={setEditBlogContext}
+    />
+  );
+
+  console.log(loggedCharity);
+  console.log(loggedUser);
+
+  const userBlogs = loggedUser ? loggedUser.blogs : null;
+  const userBlogTitles = userBlogs
+    ? userBlogs.map((blog) => blog.blog_title)
+    : null;
+  const specificUserBlogTitle = userBlogTitles
+    ? userBlogTitles.filter((blog) => blog === blogTitle)
+    : null;
+
+  const charityBlogs = loggedCharity ? loggedCharity.blogs : null;
+  const charityBlogTitles = charityBlogs
+    ? charityBlogs.map((blog) => blog.blog_title)
+    : null;
+  const specificCharityBlogTitle = charityBlogTitles
+    ? charityBlogTitles.filter((blog) => blog === blogTitle)
+    : null;
+
+  //Handle logic for author buttons
+  const authorButtons =
+    (loggedUser &&
+      loggedUser.id === authorId &&
+      specificUserBlogTitle &&
+      specificUserBlogTitle[0] === blogTitle) ||
+    (loggedCharity &&
+      loggedCharity.id === authorId &&
+      specificCharityBlogTitle &&
+      specificCharityBlogTitle[0] === blogTitle) ? (
+      <AuthorButtons
+        editBlog={editBlog}
+        setEditBlog={setEditBlog}
+        deleteBlog={deleteBlog}
+        setDeleteBlog={setDeleteBlog}
+        allBlogs={allBlogs}
+        setAllBlogs={setAllBlogs}
+        blogId={specificBlog.id}
+        editBlogTitle={editBlogTitle}
+        editBlogContext={editBlogContext}
+        userLoggedIn={userLoggedIn}
+        authorId={authorId}
+      />
+    ) : null;
+
+  console.log(allBlogs);
+  console.log(setAllBlogs);
+
+  return (
+    <div className="blogPostContainer">
+      <BlogPostHeader
+        specificBlog={specificBlog}
+        blogDate={blogDate}
+        blogViews={blogViews}
+        blogId={blogId}
+        authorId={authorId}
+        authorImg={authorImg}
+      />
+      {authorButtons}
+      {editBlog ? editBlogComp : renderBlog}
+    </div>
+  );
 }
 
-export default BlogPost
+export default BlogPost;

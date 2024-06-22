@@ -1,200 +1,341 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useOutletContext } from "react-router-dom";
-import './CharitiesPage.css';
+import { useEffect, useState } from "react";
+import { useOutletContext, useParams } from "react-router-dom";
 
 import CharityLogo from "../components/CharityPage/CharityLogo.js";
-import Relations from "../components/CharityPage/Relations.js";
-import Donations from "../components/CharityPage/Donations.js";
 import BlogPosts from "../components/CharityPage/BlogPosts.js";
+import Donations from "../components/CharityPage/Donations.js";
 import CharityReview from "../components/CharityPage/CharityReview.js";
+import NewDonation from "../components/CharityPage/NewDonation.js";
+import NewReview from "../components/CharityPage/NewReview.js";
+
+import "./CharitiesPage.css";
 
 function CharitiesPage() {
-  const appData = useOutletContext()
-  const charities = appData.charities
+    const appData = useOutletContext();
+    const charities = appData.charities;
+    const charityAmountsArray = appData.charityAmountsArray;
+    const userLoggedIn = appData.userLoggedIn;
+    const loggedInUser = appData.user;
+    const loggedUserId = loggedInUser ? loggedInUser.id : null;
+    const loggedInCharity = appData.charity;
+    const loggedInCharityId = loggedInCharity ? loggedInCharity.id : null;
+    const params = useParams();
 
-  const loggedInUser = appData.loggedInUser
+    const specificCharity = charities ? charities.find(charity => charity.id === parseInt(params.id)) : null;
 
-  const loggedInCharity = appData.loggedInCharity
+    const [charityInfo, setCharityInfo] = useState([]);
+    let [blogNumber, setBlogNumber] = useState(0);
+    let [donorNumber, setDonorNumber] = useState(0);
+    let [reviewNumber, setReviewNumber] = useState(0);
 
-  const charityReviews = appData.reviews
-  console.log(charityReviews)
+    const [donation, setDonation] = useState(false);
+    const [writeReview, setWriteReview] = useState(false);
 
-  const params = useParams();
-  const specificCharity = charities.find(charity => charity.id === parseInt(params.id));
-  
-  const charityId = specificCharity.id
+    useEffect(() => {
+        if (specificCharity) {
+            fetch(`http://127.0.0.1:5555/charities/${specificCharity.id}`)
+                .then((r) => {
+                    if (r.ok) {
+                        return r.json();
+                    }
+                    throw r;
+                })
+                .then((charityInfo) => setCharityInfo(charityInfo))
+                .catch(error => {
+                    console.error("Error fetching charity info:", error);
+                });
+        }
+    }, [specificCharity]);
 
-  const [charityInfo, setCharityInfo] = useState({});
-  const [donationInfo, setDonationInfo] = useState([]);
-  const [donate, setDonate] = useState(false)
-  const [allDonors, setAllDonors] = useState(false)
-  const [writeReview, setWriteReview] = useState(false)
-  const [reviewTitle, setReviewTitle] = useState("")
-  const [reviewContent, setReviewContent] = useState("")
+    console.log('Charity Info:', charityInfo);
 
+    // Get variables for the top of the charity page
+    const charityName = charityInfo ? charityInfo.charity_name : null;
+    const charityLogo = charityInfo ? charityInfo.charity_icon : null;
+    const charityLocation = charityInfo ? charityInfo.charity_location : null;
+    const charityDescription = charityInfo ? charityInfo.charity_description : null;
+    const charitySignUp = charityInfo ? charityInfo.charity_signup : null;
+    const charityId = charityInfo ? charityInfo.id : null;
 
-  const itemsPerPage = 6;
+    // Handle Blog Posts
+    const blogsPerPage = 3;
 
-  const handleDonationClick = (e) => {
-    e.preventDefault()
-    setAllDonors(!allDonors)
-  }
+    const nextPage = () => {
+        setBlogNumber(blogNumber -= blogsPerPage);
+    };
 
-  useEffect(() => {
-    if (specificCharity) {
-      fetch(`http://127.0.0.1:5555/charities/${specificCharity.id}`)
-        .then((r) => {
-          if (r.ok) {
-            return r.json();
-          }
-          throw r;
-        })
-        .then((charityInfo) => {
-          setCharityInfo(charityInfo);
+    const prevPage = () => {
+        setBlogNumber(blogNumber += blogsPerPage);
+    };
 
-          const donorInfo = charityInfo.donations ? charityInfo.donations : [];
-          setDonationInfo(donorInfo);
-        })
-        .catch((error) => console.error("Error fetching charity info:", error));
-    }
-  }, [specificCharity]);
+    const charityBlogs = charityInfo.blogs;
+    const numberBlogs = charityBlogs ? charityBlogs.length : 0;
 
-  console.log(specificCharity)
+    const sortBlogDate = charityBlogs ? 
+        charityBlogs.sort((a, b) => new Date(b.blog_date) - new Date(a.blog_date))
+        : null;
+    
+    const sliceBlogs = sortBlogDate ? 
+        sortBlogDate.slice(blogNumber, blogNumber + blogsPerPage) 
+        : null;
 
+    const renderCharityBlogs = sliceBlogs ? 
+        sliceBlogs.map((blog, index) => (
+            <div key={index}>
+                <BlogPosts 
+                    blogImg={blog.cover_img} 
+                    blogTitle={blog.blog_title} 
+                    blogId={blog.id}
+                    userLoggedIn={userLoggedIn}
+                />
+            </div>
+        )) : null;
 
-  const donatedAmount = donationInfo.map((donor) => donor.amount_donated);
-  const donatedSum = donatedAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    // Calculate how much each specific charity has raised
+    const specificCharityRaise = charityAmountsArray.filter(charity => charity.charity_id === (specificCharity ? specificCharity.id : null));
+    const specificCharityAmount = specificCharityRaise.map(charity => charity.amount_raised);
 
+    const donorsPerPage = 5;
+    const allDonations = appData.donations;
+    const setAllDonations = appData.setDonations;
 
-  const charityBlogs = charityInfo.blogs ? charityInfo.blogs : [];
+    const moreDonors = () => {
+        setDonorNumber(donorNumber += donorsPerPage);
+    };
 
-  const charityName = charityInfo ? charityInfo.charity_name : [];
+    const lessDonors = () => {
+        setDonorNumber(donorNumber -= donorsPerPage);
+    };
 
-  const charityIcon = charityInfo ? charityInfo.charity_icon : [];
+    const charityDonations = charityInfo.donations;
+    const numberDonations = charityDonations ? charityDonations.length : 0;
 
-  const charityDescription = charityInfo ? charityInfo.charity_description : [];
+    const sortedDonations = charityDonations ? 
+        charityDonations.sort((a, b) => new Date(b.date_of_donation) - new Date(a.date_of_donation))
+        : null;
 
-  const charityDate = charityInfo ? charityInfo.charity_signup : '';
-  const formattedDate = charityDate ? charityDate.substring(0, 10) : '';
+    const sliceDonations = sortedDonations ? 
+        sortedDonations.slice(0, donorNumber + donorsPerPage) 
+        : null;
 
-  const donationInfoCopy = donationInfo.slice()
-  const sortDonationInfoDesc = donationInfoCopy.sort((a, b) => new Date(b.date_of_donation) - new Date(a.date_of_donation))
+    const renderedDonors = sliceDonations ? 
+        sliceDonations.map((donor, index) => (
+            <div key={index}>
+                <Donations 
+                    donatedAmount={donor.amount_donated}
+                    donationDate={donor.date_of_donation}
+                    userId={donor.user_id}
+                    userImg={donor.user.user_icon}
+                    userName={donor.user.username}
+                />
+            </div>
+        )) : null;
 
-
-  const allDonorInfo = sortDonationInfoDesc.map((donor, index) => (
-    <div key={index}>
-      <Donations 
-        dateOfDonation={donor.date_of_donation}
-        userImg={donor.user.user_icon}
-        userId={donor.user.id}
-        donated={donor.amount_donated.toFixed(2)}
-        userName={donor.user.username}
-        allDonors={allDonors}
-        setAllDonors={setAllDonors}
-      />
-    </div>
-  ));
-
-  const mosetRecentDonors = sortDonationInfoDesc.slice(0, itemsPerPage)
-
-  const filteredDonorInfo = mosetRecentDonors.map((donor, index) => (
-    <div key={index}>
-      <Donations 
-        dateOfDonation={donor.date_of_donation}
-        userImg={donor.user.user_icon}
-        userId={donor.user.id}
-        donated={donor.amount_donated.toFixed(2)}
-        userName={donor.user.username}
-        allDonors={allDonors}
-        setAllDonors={setAllDonors}
-      />
-    </div>
-  ))
-
-
-  const blogInfo = charityBlogs.map((blog, index) => (
-    <div key={index}>
-      <BlogPosts blogImg={blog.cover_img} blogTitle={blog.blog_title} blog={blog}/>
-    </div>
-  ));
-
-  const relevantReviews = charityReviews.filter(review => review.charity_id == specificCharity.id)
-
-  const sortReviewDates = relevantReviews.sort((a, b) => new Date(b.review_date) - (a.review_date))
-  
-  const specificCharityReview = sortReviewDates.map((review, index) => (
-    <div key={index}>
-      <CharityReview 
-        review={review} 
-        loggedInUser={loggedInUser}
-        reviewTitle = {reviewTitle}
-        setReviewTitle={setReviewTitle}
-        reviewContent={reviewContent}
-        setReviewContent={setReviewContent}
-      />
-    </div>
-  ))
-
-
-  return (
-    <div className="mainContent">
-      <div className="mainInfo">
-        <CharityLogo 
-          chairtyPic={charityIcon}    
-          charityLocation={charityInfo.charity_location} 
-          charityName={charityName} 
-          charityDescription={charityDescription} 
-          donate={donate} 
-          setDonate={setDonate} 
-          charityId={charityId} 
-          loggedInUser={loggedInUser}
-          loggedInCharity={loggedInCharity}
-          writeReview = {writeReview}
-          setWriteReview = {setWriteReview}
-          reviewTitle = {reviewTitle}
-          setReviewTitle = {setReviewTitle}
-          reviewContent = {reviewContent}
-          setReviewContent = {setReviewContent}
-        />
-      </div>
-
-      <div className="retlationHeader">
-        <h1 className="relationTitle">{charityName} & Chari-Tea</h1>
-        <Relations charityName={charityName} donatedAmount={donatedAmount} donatedSum={donatedSum} formattedDate={formattedDate} />
-      </div>
-
-      <>
-        <div className="donationHeader">
-          <h1>Donations</h1>
-        </div>
-        {allDonors? allDonorInfo : filteredDonorInfo}
+    const canDonate = donation ? 
         <button 
-          className="donorInfoShow"
-          onClick={handleDonationClick}
+            className="cancelDonation"
+            onClick={() => setDonation(false)}
         >
-          {allDonors? "Show Most Recent Donations" : "Show All Donations"}
-        </button>
-      </>
+            Cancel Donation
+        </button> : 
+        <button 
+            className="makeDonation"
+            onClick={() => setDonation(true)}
+        >
+            Make Donation
+        </button>;
 
-      <>
-        <h1>{charityName} Blog Posts</h1>
-        <div className="blogGrid">
-          {blogInfo}
-        </div>
-      </>
+    // Handle Reviews for charity
+    const reviews = charityInfo.reviews;
+    const reviewsPerPage = 5;
 
-      <>
-        <div className="reviewsHeader">
-          <h1>{charityName} Reviews</h1>
+    const moreReviews = () => {
+        setReviewNumber(reviewNumber += reviewsPerPage);
+    };
+
+    const lessReviews = () => {
+        setReviewNumber(reviewNumber -= reviewsPerPage);
+    };
+
+    const allReviews = appData.reviews;
+    const setAllReviews = appData.setReviews;
+
+    const numberReviews = reviews ? reviews.length : null;
+    const sortReviews = numberReviews ? 
+        reviews.sort((a, b) => new Date(b.review_date) - new Date(a.review_date)) : null;
+
+    const sliceReviews = sortReviews ? 
+        sortReviews.slice(0, reviewsPerPage + reviewNumber) : null;
+
+    const renderReviewButtons = writeReview ? 
+        <button 
+            className="cancelReview"
+            onClick={() => setWriteReview(false)}
+        >
+            Cancel Review
+        </button> : 
+        <button 
+            className="writeReview"
+            onClick={() => setWriteReview(true)}
+        >
+            Write Review
+        </button>;
+
+    const renderedReviews = sliceReviews ? 
+        sliceReviews.map((charity, index) => (
+            <div key={index}>
+                <CharityReview 
+                    userId={charity ? charity.user_id : null}
+                    charityReview={charity.charity_review}
+                    reviewDate={charity.review_date}
+                    reviewTitle={charity.review_title}
+                    reviewId={charity.id}
+                    userName={charity.user.username}
+                    userImg={charity.user.user_icon}
+                    loggedUserId={loggedUserId}
+                    allReviews={allReviews}
+                    setAllReviews={setAllReviews}
+                />
+            </div>
+        )) : null;
+
+    return (
+        <div className="mainContent">
+            <CharityLogo 
+                charityName={charityName}
+                charityLogo={charityLogo}
+                charityLocation={charityLocation}
+                charityDescription={charityDescription}
+                charitySignUp={charitySignUp}
+                userLoggedIn={userLoggedIn}
+                charityId={charityId}
+                loggedInCharityId={loggedInCharityId}
+            />
+
+            <div className="charityBlogs">
+                <h2 className="blogsHeader">{charityName} Published Blogs ({numberBlogs})</h2>
+                <div className="charityBlogGrid">
+                    {renderCharityBlogs}
+                </div>
+                <div className="blogToggleButtons">
+                    {blogNumber === 0 ?
+                        <button className="noPrevButton">
+                            Recent Blogs
+                        </button> :
+                        <button 
+                            className="recentButton"
+                            onClick={nextPage}
+                        >
+                            Recent Blogs
+                        </button>
+                    }
+
+                    {numberBlogs <= blogNumber + blogsPerPage ?
+                        <button className="noNextButton">
+                            Past Blogs
+                        </button> :
+                        <button 
+                            className="previousButton"
+                            onClick={prevPage}
+                        >
+                            Past Blogs
+                        </button>
+                    }
+                </div>
+            </div>
+
+            <div className="charityDonations">
+                <div className="charityDonationsHeader">
+                    <h2 className="donorHeader">{charityName} has Received £{specificCharityAmount} so far from:</h2>
+                    {userLoggedIn ? 
+                        canDonate : 
+                        null
+                    }
+                </div>
+                {donation ? 
+                    <div className="newDonor">
+                        <NewDonation 
+                            charityId={charityInfo.id}
+                            allDonations={allDonations}
+                            setAllDonations={setAllDonations}
+                            setDonation={setDonation}
+                        />
+                    </div> : 
+                    null
+                }
+                {renderedDonors}
+                <div className="donorToggleButtons">
+                    {donorNumber === 0 ?
+                        <button className="noPrevButton">
+                            Less Donors
+                        </button> :
+                        <button 
+                            className="recentButton"
+                            onClick={lessDonors}
+                        >
+                            Less Donors
+                        </button>
+                    }
+                    {numberDonations <= donorNumber + donorsPerPage ?
+                        <button className="noNextButton">
+                            More Donors
+                        </button> :
+                        <button 
+                            className="previousButton"
+                            onClick={moreDonors}
+                        >
+                            More Donors
+                        </button>
+                    }
+                </div>
+            </div>
+
+            <div className="charityReviews">
+                <div className="reviewHeader">
+                    <h2 className="reviewHeader">{charityName} has {numberReviews} Reviews</h2>
+                    {userLoggedIn ? 
+                        renderReviewButtons : 
+                        null
+                    }
+                </div>
+                {writeReview ? 
+                    <div className="newReviewcontainer">
+                        <NewReview 
+                            allReviews={allReviews}
+                            setAllReviews={setAllReviews}
+                            charityId={charityInfo.id}
+                        />
+                    </div> : 
+                    null
+                }
+                {renderedReviews}
+                <div className="reviewToggleButtons">
+                    {reviewNumber === 0 ?
+                        <button className="noPrevButton">Less Reviews</button> :
+                        <button 
+                            className="recentButton"
+                            onClick={lessReviews}
+                        >
+                            Less Reviews
+                        </button>
+                    }
+
+                    {numberReviews <= reviewNumber + reviewsPerPage ?
+                        <button className="noNextButton">More Reviews</button> :
+                        <button
+                            className="previousButton"
+                            onClick={moreReviews}
+                        >
+                            More Reviews 
+                        </button>
+                    }
+                </div>
+            </div>
         </div>
-        {specificCharityReview}
-      </>
-    </div>
-  );
+    );
 }
-
 export default CharitiesPage;
+
 
 
 

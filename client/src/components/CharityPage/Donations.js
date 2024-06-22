@@ -1,31 +1,29 @@
 import { Link } from "react-router-dom";
 import './Donations.css'
 
-function Donations({ 
-  userImg,
-  userName, 
-  userId, 
-  donated,
-  dateOfDonation,
-  allDonors,
-  setAllDonors
-}) {
-
-    return (
-      <div className="charityDonationsBlog">
-          <div className="donationInfoGrid">
-            <div className="donorInfo">
-              <Link to={`/users/${userId}`}>
-                <img src={userImg} className="donorImg"/>
-              </Link>
-              <h3>{userName} Donated £{donated}</h3>
-              <h6>{dateOfDonation}</h6>
+function Donations({
+    donatedAmount,
+    donationDate,
+    userId,
+    userImg,
+    userName
+}){
+    return(
+        <div className="charityDonationsBlog">
+            <div className="donationInfoGrid">
+                <div className="donorInfo">
+                    <Link
+                        to={`/users/${userId}`}
+                    >
+                        <img className="donorImg" src={userImg}/>
+                    </Link>
+                    <h3>{userName} Donated £{donatedAmount}</h3>
+                    <h6>{donationDate}</h6>
+                </div>
             </div>
-          </div>
-      </div>
-    );
-  }
-  
-  export default Donations;
+        </div>
+    )
+}
+export default Donations
 
 

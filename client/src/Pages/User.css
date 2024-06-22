@@ -1,30 +1,57 @@
 .userProfileContainer{
     margin-left: 250px;
-    padding: 20px;
 }
 
-.activityHeader{
+.userBlogs{
     border-bottom: solid;
 }
 
-.donationsHeader{
-    border-bottom: solid;
-}
-
-.charityDonationGrid{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-}
-
-.userBlogsGrid{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-}
-
-.charityShowButton{
-    height: 40px;
-    width: 250px;
-    margin-top: 20px;
+.blogToggleButtons,
+.charityDonorButtons{
     margin-bottom: 20px;
-    margin-left: 350px
+}
+
+.renderedCharityDonationGrid{
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.noLess{
+    margin-left: 480px;
+    height: 40px;
+    width: 100px;
+    border: none;
+    opacity: 0.2;
+}
+
+.showLessCharities{
+    margin-left: 480px;
+    height: 40px;
+    width: 100px;
+    opacity: 1;
+}
+
+.noMore{
+    height: 40px;
+    width: 100px;
+    border: none;
+    opacity: 0.2;
+    border-left: 10px;
+}
+
+.showMoreCharities{
+    height: 40px;
+    width: 100px;
+    border: none;
+    opacity: 1;
+    border-left: 10px;
+}
+
+.userBlogsContainers{
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    margin-left: 20px;
+    margin-right: 20px;
 }

@@ -1,0 +1,19 @@
+.authorButtonContainer{
+    border-bottom: solid;
+    display: flex;
+    justify-content: center;
+}
+
+.editBlogButton, 
+.deleteBlogButton,
+.canEditBlog,
+.subEditBlog,
+.canDelBlog,
+.subDelBlog{
+    margin: 0 10px; 
+    height: 40px;
+    width: 100px;
+    margin-top: 5px;
+    margin-bottom: 5px;       
+}
+

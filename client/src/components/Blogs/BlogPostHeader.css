@@ -1,48 +1,21 @@
-.blogTitle{
+.blogHeading{
     text-align: center;
 }
 
-.subHeaderGrid{
+.blogHeadingGrid{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    text-align: center;
-    color: crimson;
+    grid-template-columns: 30% 40% 30%;
+    border-bottom: dashed;
 }
 
 .blogAuthorImg{
-    height: 50px;
-    width: 50px;
+    height: 60px;
+    width: 60px;
     border-radius: 50%;
+    margin-top: 5px;
 }
 
-.deleteUserBlog,
-.stopEditButton{
-    height: 50px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    margin-left: 335px;
-    width: 200px;
-}
-
-.blogHeading{
-    border-bottom: solid;
-}
-
-.editUserBlog,
-.submitEditBlog{
-    height: 50px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    width: 200px;
-    margin-left: 10px;
-}
-
-.updateHeaderText{
-    width: 300px;
-    margin-left: 370px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    text-align: center;
-    font-size: 150%;
+.blogAuthorName{
+    margin-top: 5px;
 }
 

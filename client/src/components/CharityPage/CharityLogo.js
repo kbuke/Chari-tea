@@ -1,107 +1,42 @@
-
-import "./CharityLogo.css"
-import { useNavigate } from "react-router-dom"
-
-import MakeDonation from "./MakeDonation"
-import WriteReview from "./WriteReview"
-import { useState } from "react"
+import { useNavigate } from 'react-router-dom'
+import './CharityLogo.css'
 
 function CharityLogo({
-    chairtyPic, 
-    charityLocation, 
-    charityDescription, 
-    charityName, 
-    donate, 
-    setDonate, 
-    charityId, 
-    loggedInUser,
-    loggedInCharity,
-    writeReview,
-    setWriteReview, 
-    reviewTitle, 
-    setReviewTitle,
-    reviewContent,
-    setReviewContent
-}){
+    charityName,
+    charityLogo,
+    charityLocation,
+    charityDescription,
+    charitySignUp,
+    charityId,
+    loggedInCharityId
+}){ 
+    const charitySignUpDate = charitySignUp? charitySignUp.slice(0, 10) : null
 
     const navigate = useNavigate()
 
-    const handleDonateClick = () => {
-        setDonate(!donate)
-        setWriteReview(false)
+    const navBlog = () => {
+        navigate('/newblog')
     }
 
-    const handleReviewClick = () => {
-        setWriteReview(!writeReview)
-        setDonate(false)
-    }
-
-    const handleBlogClick = () => {
-        navigate("/newblog")
-    }
-
-    const newDonation = donate? 
-        <MakeDonation charityId={charityId} loggedInUser={loggedInUser}/>
-        :
-        null;
-
-    const newReview = writeReview?
-        <WriteReview 
-            charityId={charityId} 
-            userId={loggedInUser.id}
-            reviewTitle = {reviewTitle}
-            setReviewTitle = {setReviewTitle}
-            reviewContent = {reviewContent}
-            setReviewContent = {setReviewContent}
-        />
+    const writeCharityBlog = loggedInCharityId == charityId ?
+        <button className='writeCharityBlog' onClick={navBlog}>
+            Write New Blog
+        </button>
         :
         null
-    
 
     return(
-        <div className="mainInfoContainer">
-            <div className="imageContainer">
-                <img className="charityPic" src={chairtyPic}/>
+        <>
+            <div className='charityLogoContainer'>
+                <img className='charityLogo' src={charityLogo}/>
+                <h1 className='charityName'>{charityName}</h1>
+                <h2 className='charityLocation'>📍 {charityLocation}</h2>
+                <h3 className='charityDescription'>{charityDescription}</h3>
+                <h3 className='charitySignUpDate'>Joined: {charitySignUpDate}</h3>
+                {writeCharityBlog}
             </div>
-
-            <div className="charityInfo">
-                <h2>{charityDescription}</h2>
-                <h2>📍 {charityLocation}</h2>
-                {loggedInUser? 
-                    <div>
-                        <button className={donate? "selectedButton" : "donateButton"} onClick={handleDonateClick}>
-                            {donate?
-                                <h2>Cancel Donation to {charityName}</h2>
-                                :
-                                <h2>Donate to {charityName}</h2>
-                            }
-                        </button>
-
-                        <button className={writeReview? "selectedButton" : "reviewButton"} onClick={handleReviewClick}>
-                            {writeReview?
-                                <h2>Stop Reviewing</h2>
-                                :
-                                <h2>Write a Review for {charityName}</h2>
-                            }
-                        </button>
-                    </div>
-                    :
-                    null
-                }
-                {loggedInCharity.id == charityId?
-                    <button onClick={handleBlogClick}>
-                        Write New Blog
-                    </button>
-                    :
-                    null
-                }
-            </div>
-
-            <>
-                {newDonation}
-                {newReview}
-            </>
-        </div>
+        </>
     )
 }
 export default CharityLogo
+

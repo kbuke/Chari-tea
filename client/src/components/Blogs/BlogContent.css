@@ -1,0 +1,30 @@
+.renderedBlog{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    border: solid;
+    background-color: white;
+    white-space: pre-wrap;
+}
+
+.blogTitleInfo{
+    border-bottom: dashed;
+    background-color: black;
+    color: white;
+}
+
+.blogTitle{
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.publishedInfo{
+    text-align: center;
+}
+
+.renderedBlogContent{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}

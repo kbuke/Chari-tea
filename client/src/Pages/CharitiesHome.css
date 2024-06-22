@@ -1,9 +1,24 @@
-.charityHomePage{
+.charityHomeContainer{
     margin-left: 250px;
-    padding: 20px;
+    margin-top: 0px;
+    text-align: center;
 }
 
-.charityHeader{
-    text-align: center;
+.charityFilterSearch{
+    border: none;
     border-bottom: solid;
+    margin-left: 20px;
+    width: 900px;
+    font-size: 400%;
+    background-color: #E7E1D5;
+    height: 100px;
+    text-align: center;
+}
+
+.charitiesHomeGrid{
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    border: none;
+    margin-top: 20px;
+    margin-left: 20px;
 }

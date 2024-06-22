@@ -1,11 +1,14 @@
 import "./RenderedCharities.css"
 import { Link } from "react-router-dom"
 
-function RenderedCharities({charity}){
+function RenderedCharities({
+    charity,
+    id
+}){
     return(
         <div className="renderedHomeCharities">
             <Link
-                to={`/charities/${charity.id}`}
+                to={`/charities/${id}`}
             >
                 <div className="homePgCharityImgContainer">
                     <img className="homePgCharityImg" src={charity.charity_icon}/>

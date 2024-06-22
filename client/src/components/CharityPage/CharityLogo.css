@@ -1,53 +1,37 @@
-.mainInfoContainer {
-    border-bottom: solid;
-    display: grid;
-    grid-template-columns: 30% 70%;
-    align-items: center; /* Center items vertically if needed */
-}
-
-.imageContainer {
-    height: 250px;
-    width: 250px;
-    border-style: solid;
+.charityLogo{
+    margin-top: 20px;
+    height: 150px;
+    width: 150px;
     border-radius: 50%;
-    overflow: hidden; /* Ensure the image does not stick out of the container */
-    margin-bottom: 20px;
+    margin-left: 50%;
 }
 
-.charityPic {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Ensure the entire image fits within the container */
-    border-radius: 50%; /* Apply rounding to the image */
+.charityName{
+    text-align: center;
+    margin-left: 150px;
 }
 
-.charityInfo{
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    width: 100%;
-    margin-left: 0cm;
+.charityLocation,
+.charityDescription,
+.charitySignUpDate{
+    text-align: center;
+    margin-left: 120px;
 }
 
-.donateButton,
-.reviewButton{
-    border-radius: 7%;
+.charityLogoContainer{
+    border: none;
+    border-bottom: solid;
+    height: 400px;
+}
+
+.writeCharityBlog{
+    margin-bottom: 10px;
+    height: 40px;
+    width: 200px;
+    margin-left: 47%;
     background-color: green;
     color: white;
-    width: 300px
+    font-weight: bold;
+    font-size: 100%;
 }
 
-.donateText{
-    color: white;
-}
-
-.reviewButton{
-    margin-left: 10px;
-}
-
-.selectedButton{
-    border-radius: 7%;
-    background-color: red;
-    width: 300px;
-    color: white;
-    margin-left: 10px;
-}

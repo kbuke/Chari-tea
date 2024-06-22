@@ -1,130 +1,259 @@
-import React, { useEffect, useState } from "react";
-
-import NavBar from "./NavBar";
-import { Outlet, useNavigate } from "react-router-dom";
-
+import { useEffect, useState } from "react"
+import { Outlet } from "react-router-dom"
+import NavBar from "./NavBar"
 import "./App.css"
+import UserSignIn from "../Pages/UserSignIn"
+import NoLogin from "../Pages/NoLogin"
 
-function App() {
+function App(){
   const [charities, setCharities] = useState([])
+  const [users, setUsers] = useState([])
   const [blogs, setBlogs] = useState([])
   const [reviews, setReviews] = useState([])
-  const [users, setUsers] = useState([])
-  const [userLogin, setUserLogin] = useState(false)
-  const [charityLogin, setCharityLogin] = useState(false)
-  const [loggedInUser, setLoggedInUser] = useState(false)
-  const [loggedInCharity, setLoggedInCharity] = useState([])
-  const[charityLink, setCharityLink] = useState(false)
-  const[userLink, setUserLink] = useState(false)
-  const[blogLink, setBlogLink] = useState(false)
-  const[charityIcon, setCharityIcon] = useState(false)
+  const [donations, setDonations] = useState([])
 
-  console.log(loggedInCharity)
+  const [userLoggedIn, setUserLoggedIn] = useState(false)
+  const [charityLoggedIn, setCharityLoggedIn] = useState(false)
 
+  const [user, setUser] = useState(null)
+  const [charity, setCharity] = useState(null)
+
+  const [selectCharity, setSelectCharity] = useState(false)
+  const [selectUser, setSelectUser] = useState(false)
+  const [selectBlogs, setSelectBlogs] = useState(false)
+  const [selectUserSignUp, setSelectUserSignUp] = useState(false)
+  const [selectUserSignIn, setSelectUserSignIn] = useState(false)
+  const [selectCharitySignUp, setSelectCharitySignUp] = useState(false)
+  const [selectCharitySignIn, setSelectCharitySignIn] = useState(false)
+
+
+  //Get all charities
   useEffect(() => {
-    //auto-login
-    fetch("http://127.0.0.1:5555/check_session").then((r) =>{
-      if(r.ok){
-        r.json().then((userLogin) => setUserLogin(userLogin))
+    fetch("http://127.0.0.1:5555/charities")
+    .then(r => {
+      if(r.ok) {
+        return r.json()
       }
+      throw r
     })
-  },[])
-
-  //Get All Charities
-  useEffect(() => {
-    fetch('http://127.0.0.1:5555/charities')
-      .then(r => {
-        if (r.ok) {
-          return r.json()
-        }
-        throw r;
-      })
-      .then((charities) => setCharities(charities))
-  },[]);
-
-  //Get all blogs
-  useEffect(() => {
-    fetch('http://127.0.0.1:5555/blogs')
-      .then(r => {
-        if (r.ok) {
-          return r.json()
-        }
-        throw r;
-      })
-      .then((blogInfo) => setBlogs(blogInfo))
-  }, []);
+    .then(charities => setCharities(charities))
+  }, [])
 
   //Get all users
   useEffect(() => {
-    fetch('http://127.0.0.1:5555/users')
-      .then(r => {
-        if (r.ok) {
-          return r.json()
-        }
-        throw r
-      })
-      .then((userInfo) => setUsers(userInfo))
-  },[])
+    fetch("http://127.0.0.1:5555/users")
+    .then(r => {
+      if(r.ok) {
+        return r.json()
+      }
+      throw r
+    })
+    .then(users => setUsers(users))
+  }, [])
+
+  //Get all blogs
+  useEffect(() => {
+    fetch("http://127.0.0.1:5555/blogs")
+    .then(r => {
+      if(r.ok) {
+        return r.json()
+      }
+      throw r
+    })
+    .then(blogs => setBlogs(blogs))
+  }, [])
 
   //Get all reviews
   useEffect(() => {
-    fetch('http://127.0.0.1:5555/reviews')
-      .then(r => {
-        if (r.ok) {
-          return r.json()
-        }
-        throw r
-      })
-      .then((userReviews) => setReviews(userReviews)) 
+    fetch("http://127.0.0.1:5555/reviews")
+    .then(r => {
+      if(r.ok) {
+        return r.json()
+      }
+      throw r
+    })
+    .then(reviews => setReviews(reviews))
   }, [])
+
+  //Get all donations
+  useEffect(() => {
+    fetch("http://127.0.0.1:5555/donations")
+    .then(r => {
+      if(r.ok) {
+        return r.json()
+      }
+      throw r
+    })
+    .then(donations => setDonations(donations))
+  }, [])
+
+  //Handle user auto sign in
+  useEffect(() => {
+    fetch("/usercheck_session")
+      .then((r) => {
+        if (!r.ok) {
+          throw new Error(`HTTP error! status: ${r.status}`);
+        }
+        return r.json();
+      })
+      .then((user) => {
+        setUser(user);
+        setUserLoggedIn(true);
+      })
+      .catch((error) => {
+        console.error("User session check error: ", error);
+      });
+  }, []);
+  
+
+  // Show Charities that have raised the most
+  const charityTotals = {};
+
+  // Aggregate the donations and charity icons
+  donations.forEach(donation => {
+    const charityId = donation.charity_id;
+    const amountDonated = donation.amount_donated;
+    const charityImg = donation.charity.charity_icon;
+
+    // If the charityId already exists in the charityTotals object, add the amount donated to its total
+    if (charityTotals[charityId]) {
+        charityTotals[charityId].amount_raised += amountDonated;
+    } else {
+        // Otherwise, initialize the total with the amount donated and set the charity icon
+        charityTotals[charityId] = {
+            amount_raised: amountDonated,
+            charity_icon: charityImg
+        };
+    }
+  });
+
+  // Step 2: Create a new array with charity ID, the total amount raised, and the charity icon
+  const charityAmountsArray = Object.keys(charityTotals).map(charityId => {
+    return {
+      charity_id: parseInt(charityId),
+      amount_raised: charityTotals[charityId].amount_raised,
+      charity_icon: charityTotals[charityId].charity_icon
+    };
+  });
+
+
+  const userTotals = {}
+
+  donations.forEach(donation => {
+    const userId = donation.user_id
+    const amountDonated = donation.amount_donated
+    const userImg = donation.user.user_icon
+
+    if(userTotals[userId]) {
+      userTotals[userId].amount_raised += amountDonated
+    } else {
+      userTotals[userId] = {
+        amount_raised: amountDonated,
+        user_icon: userImg
+      }
+    }
+  })
+  const userAmountsArray = Object.keys(userTotals).map(userId => {
+    return {
+      user_id: parseInt(userId),
+      amount_raised: userTotals[userId].amount_raised,
+      user_icon: userTotals[userId].user_icon
+    }
+  })
 
 
   return (
     <div>
       <NavBar 
-        userLogin={userLogin} 
-        setUserLogin={setUserLogin} 
-        charityLogin={charityLogin} 
-        setCharityLogin={setCharityLogin} 
-        loggedInUser={loggedInUser} 
-        loggedInCharity={loggedInCharity} 
-        setLoggedInUser={setLoggedInUser} 
-        setLoggedInCharity={setLoggedInCharity}
-        charityLink = {charityLink}
-        setCharityLink = {setCharityLink}
-        blogLink = {blogLink}
-        setBlogLink = {setBlogLink}
-        userLink = {userLink}
-        setUserLink = {setUserLink}
-        charityIcon = {charityIcon}
-        setCharityIcon = {setCharityIcon}
+        userLoggedIn={userLoggedIn}
+        setUserLoggedIn={setUserLoggedIn}
+
+        charityLoggedIn={charityLoggedIn}
+        setCharityLoggedIn={setCharityLoggedIn}
+
+        selectCharity={selectCharity}
+        setSelectCharity={setSelectCharity}
+
+        selectUser={selectUser}
+        setSelectUser={setSelectUser}
+
+        selectBlogs={selectBlogs}
+        setSelectBlogs={setSelectBlogs}
+
+        selectUserSignUp={selectUserSignUp}
+        setSelectUserSignUp={setSelectUserSignUp}
+
+        selectUserSignIn={selectUserSignIn}
+        setSelectUserSignIn={setSelectUserSignIn}
+
+        selectCharitySignUp={selectCharitySignUp}
+        setSelectCharitySignUp={setSelectCharitySignUp}
+
+        selectCharitySignIn={selectCharitySignIn}
+        setSelectCharitySignIn={setSelectCharitySignIn}
+
+        user={user}
+        setUser={setUser}
+
+        charity={charity}
+        setCharity={setCharity}
       />
 
       <Outlet context={
-        {
-          charities: charities,
-          blogs: blogs,
-          users: users,
-          reviews: reviews,
-          userLogin: userLogin,
-          setUserLogin: setUserLogin,
-          loggedInUser: loggedInUser,
-          setLoggedInUser: setLoggedInUser,
-          charityLogin: charityLogin,
-          setCharityLogin: setCharityLogin,
-          setLoggedInCharity: setLoggedInCharity,
-          setBlogLink: setBlogLink,
-          setCharityLink: setCharityLink,
-          setUserLink: setUserLink,
-          setCharityIcon: setCharityIcon,
-          loggedInCharity: loggedInCharity
-        }
-      }/>
+      {
+        charities: charities,
+        setCharities: setCharities,
+
+        users: users, 
+        setUsers: setUsers,
+
+        blogs: blogs, 
+        setBlogs: setBlogs,
+
+        reviews: reviews,
+        setReviews: setReviews,
+
+        donations: donations, 
+        setDonations: setDonations,
+
+        setSelectCharitySignUp: setSelectCharitySignUp,
+
+        setSelectUserSignUp: setSelectUserSignUp,
+
+        charityAmountsArray: charityAmountsArray,
+
+        userAmountsArray: userAmountsArray,
+
+        setSelectBlogs: setSelectBlogs,
+
+        setSelectCharity: setSelectCharity,
+
+        setSelectUser: setSelectUser,
+
+        userLoggedIn: userLoggedIn,
+
+        user: user,
+        onLogin: setUser,
+
+        setUserLoggedIn: setUserLoggedIn,
+
+        charityLoggedIn: charityLoggedIn,
+        setCharityLoggedIn: setCharityLoggedIn,
+
+        charity: charity,
+        onCharityLogin: setCharity
+      }
+    }
+      
+    />
     </div>
+   
   )
 }
-
 export default App
+
+
+
 
 
 

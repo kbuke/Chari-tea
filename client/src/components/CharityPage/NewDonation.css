@@ -1,0 +1,19 @@
+.newDonationContainer{
+    text-align: center;
+}
+
+.donationAmountInput{
+    border: none;
+    border-bottom: solid;
+    width: 900px;
+    text-align: center;
+    height: 50px;
+    font-size: 150%;
+    background-color: #E7E1D5;
+}
+
+.newDonateButton{
+    height: 70px;
+    width: 150px;
+    margin-top: 20px;
+}

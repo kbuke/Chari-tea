@@ -1,4 +1,4 @@
-// import { Link } from "react-router-dom/cjs/react-router-dom.min"
+
 import { Link } from "react-router-dom"
 
 import "./UserBlogs.css"
@@ -6,7 +6,7 @@ import "./UserBlogs.css"
 
 function UserBlogs({blogImg, blogTitle, blogId}){
     return(
-        <div className="usersBlogContainer">
+        <div className="userBlogContainers">
             <Link
                 to={`/blogpost/${blogId}`}
             >

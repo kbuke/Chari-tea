@@ -1,55 +1,60 @@
-import "./UsersHome.css"
-import { useOutletContext } from "react-router-dom"
+import { useOutletContext } from "react-router-dom";
+import "./UsersHome.css";
+import { useState } from "react";
 
-import UserLinks from "../components/UsersHomePage/UserLinks"
-import User from "./User"
-import FilterUsers from "../components/UsersHomePage/FilterUsers"
-import { useState } from "react"
+import RenderedUsers from "../components/UsersHomePage/RenderedUsers";
 
-function UsersHome(){
-    const appData = useOutletContext()
-    const users = appData.users
+function UsersHome() {
+    const [searchBar, setSearchBar] = useState("");
+    const [hoveredUserId, setHoveredUserId] = useState(null); // State to keep track of hovered user ID
 
-    const[searchUser, setSearchUser] = useState("")
+    // Handle Search Bar
+    const handleUserSearch = (e) => {
+        e.preventDefault();
+        setSearchBar(e.target.value);
+    };
 
-    const setUserLink = appData.setUserLink
+    const appData = useOutletContext();
 
-    const handleSearch = (e) => {
-        e.preventDefault()
-        setSearchUser(e.target.value)
-    }
+    //Get the selectUsers bar
+    const setSelectUser = appData.setSelectUser
 
-    const filteredUsers = users.filter(user => {
-        const userName = user.username.toLowerCase()
-        if(userName.includes(searchUser.toLowerCase())) return userName
-    })
+    // Get all users
+    const users = appData.users;
 
-    console.log(filteredUsers)
+    // Handle filter system
+    const filterUsers = users
+        ? users.filter((user) => user.username.includes(searchBar))
+        : null;
 
-    const userInfo = filteredUsers.map((user, index) => (
-        <div key={index}>
-            <UserLinks 
-                userImg={user.user_icon} 
-                userName={user.username} 
-                userId={user.id}
-                setUserLink={setUserLink}
+    // Handle the render of users
+    const renderUsers = filterUsers
+        ? filterUsers.map((user, index) => (
+              <div key={index}>
+                  <RenderedUsers
+                      userId={user.id}
+                      userImg={user.user_icon}
+                      userName={user.username}
+                      hoveredUserId={hoveredUserId}
+                      setHoveredUserId={setHoveredUserId}
+                      setSelectUser={setSelectUser}
+                  />
+              </div>
+          ))
+        : null;
+
+    return (
+        <div className="userHomePageContainer">
+            <h1 className="userHomeHeader">Available Users on Chari-Tea</h1>
+            <input
+                className="userHomeSearchBar"
+                placeholder="Search for users on Chari-Tea"
+                onChange={handleUserSearch}
             />
+            <div className="userHomeGrid">{renderUsers}</div>
         </div>
-    ))
-    return(
-        <div className="charitiesHomeContainer">
-            <div className="userHomeTitle">
-                <h1>All Users</h1>
-            </div>
-
-            <div className="filterUsers">
-                <FilterUsers handleSearch={handleSearch}/>
-            </div>
-
-            <div className="usersGrid">
-                {userInfo}
-            </div>
-        </div>
-    )
+    );
 }
-export default UsersHome
+
+export default UsersHome;
+

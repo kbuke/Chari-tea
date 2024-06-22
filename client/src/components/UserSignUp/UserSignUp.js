@@ -7,7 +7,12 @@ import "./UserSignUp.css"
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function UserSignUp() {
+function UserSignUp({
+    users,
+    setUsers,
+    setSelectUserSignUp
+}) {
+    console.log(users)
 
     const [refreshPage, setRefreshPage] = useState(false);
     const [signedUp, setSignedUp] = useState(false)
@@ -46,14 +51,20 @@ function UserSignUp() {
                 body: JSON.stringify(values),
             }).then((res) => {
                 if (res.status === 201) {
-                    setRefreshPage(!refreshPage);
-                    navigate('/usersignin')
+                    return res.json(); // Parse the JSON response
                 }
-                setSignedUp(!signedUp)
+                throw new Error('Failed to create user');
+            }).then((newUser) => {
+                setUsers([...users, newUser]) // Update the state with the new user
+                setSelectUserSignUp(false)
+                setRefreshPage(!refreshPage);
+                setSignedUp(true);
+                navigate('/')
+            }).catch((error) => {
+                console.error("Error creating user:", error);
             });
         }
     });
-    console.log(formik.values.username)
 
     return (
         <div>

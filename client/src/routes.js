@@ -11,6 +11,7 @@ import UserSignIn from "./Pages/UserSignIn";
 import CharitySignUp from "./Pages/CharitySignUp";
 import CharitySignIn from "./Pages/CharitySignIn";
 import NewBlog from "./Pages/NewBlog";
+import NoLogin from "./Pages/NoLogin";
 
 const routes = [
     {
@@ -64,6 +65,10 @@ const routes = [
             {
                 path: "/newblog",
                 element: <NewBlog />
+            },
+            {
+                path: '/nologin',
+                element: <NoLogin />
             }
         ]
     }

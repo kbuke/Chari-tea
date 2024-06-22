@@ -1,0 +1,9 @@
+.charityHomeImgContainer{
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    margin-top: 70px;
+    background-color: green;
+    text-align: center;
+}
+

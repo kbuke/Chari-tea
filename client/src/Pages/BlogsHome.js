@@ -1,138 +1,156 @@
-import "./BlogsHome.css"
-
 import { useOutletContext } from "react-router-dom"
-
-import CharityBlogHome from "../components/BlogHome/CharityBlogHome"
-import CharityBlogHomeFilter from "../components/BlogHome/CharityBlogHomeFilter"
-import UserBlogHomeFilter from "../components/BlogHome/UserBlogHomeFilter"
-import UserBlogHome from "../components/BlogHome/UserBlogHome"
-
+import "./BlogsHome.css"
 import { useState } from "react"
 
-function BlogsHome() {
+import UserBlogs from "../components/BlogHome/UserBlogs"
+import CharityBlogs from "../components/BlogHome/CharityBlogs"
 
-    const appData = useOutletContext()
-    const blogs = appData.blogs
+function BlogsHome(){
+    const [userBlogButton, setUserBlogButton] = useState(true)
+    const [searchBar, setSearchBar] = useState("")
 
-    const setBlogLink = appData.setBlogLink
+    //Sort the selected blog category
+    const handleBlogSelection = () => {
+        setUserBlogButton(!userBlogButton)
+    }
 
-    const [charitySearchBar, setCharitySearchBar] = useState("")
-    const [userSearchBar, setUserSearchBar] = useState("")
-
-    const [currentCharityBlogsPage, setCurrentCharityBlogsPage] = useState(0);
-    const [currentUserBlogPage, setCurrentUserBlogPage] = useState(0)
-
-    const handleCharityBlogSearch = (e) => {
+    //Handle blog search
+    const handleSearch = (e) => {
         e.preventDefault()
-        setCharitySearchBar(e.target.value)
+        setSearchBar(e.target.value)
     }
 
-    const charityBlogs = blogs.filter(blog => blog.charity)
+    const appData=useOutletContext()
 
-    const filteredCharityBlog = charityBlogs.filter((charityBlog) => {
-        const charityName = charityBlog.charity.charity_name.toLowerCase()
-        return charityName.includes(charitySearchBar.toLowerCase())
-    })
+    //Get all blogs
+    const allBlogs = appData.blogs 
+    console.log(allBlogs)
 
-    const itemsPerPage = 6;
+    //Filter Blogs
+    const filterBlogs = allBlogs ? 
+        allBlogs.filter(blog => {
+            const blogTitleLower = blog.blog_title.toLowerCase()
+            return blogTitleLower.includes(searchBar.toLowerCase())
+        })
+        :
+        null
+    console.log(filterBlogs)
 
-    const charityStartIndex = currentCharityBlogsPage * itemsPerPage;
-    const charityEndIndex = charityStartIndex + itemsPerPage;
-    const charityCurrentBlogs = filteredCharityBlog.slice(charityStartIndex, charityEndIndex);
+    //Handles highlight blogs
+    const setSelectBlogs = appData.setSelectBlogs
 
-    const renderedCharities = charityCurrentBlogs.map((charity, index) => (
-        <div key={index}>
-            <CharityBlogHome 
-                charityBlogs={charity} 
-                setBlogLink={setBlogLink}
-            />
-        </div>
-    ))
-
-    const handleCharityBlogNextPage = () => {
-        if((currentCharityBlogsPage + 1) * itemsPerPage < filteredCharityBlog.length){
-            setCurrentCharityBlogsPage(currentCharityBlogsPage + 1)
-        }
+    const handleBlogSelect = () => {
+        setSelectBlogs(false)
     }
 
-    const handleCharityBlogPrevPage = () => {
-        if (currentCharityBlogsPage > 0) {
-            setCurrentCharityBlogsPage(currentCharityBlogsPage - 1)
-        }
-    }
+    //Sort by user blogs and charities blogs
+    const charityBlogs = filterBlogs.filter(blogs => blogs.charity_id)
 
-    //-------------------------------User Blogs-----------------------------------
-    const handleUserBlogSearch = (e) => {
-        e.preventDefault()
-        setUserSearchBar(e.target.value)
-    }
+    const userBlogs = filterBlogs.filter(blogs => blogs.user_id)
 
-    const userBlogs = blogs.filter(blog => blog.user)
-    console.log(userBlogs)
-
-    const filteredUsers = userBlogs.filter(userBlog => {
-        const userName = userBlog.user.username.toLowerCase()
-        return userName.includes(userSearchBar.toLowerCase())
-    })
-
-    const userStartIndex = currentUserBlogPage * itemsPerPage;
-    const userEndIndex = userStartIndex + itemsPerPage;
-    const userCurrentBlogs = filteredUsers.slice(userStartIndex, userEndIndex);
-
-    const renderedUsers = userCurrentBlogs.map((user, index) => (
-        <div key={index}>
-            <UserBlogHome 
-                userBlogs={user}
-                setBlogLink={setBlogLink}
-            />
-        </div>
-    ))
-
-    const handleUserBlogNextPage = () => {
-        if((currentUserBlogPage + 1) * itemsPerPage < filteredUsers.length) {
-            setCurrentUserBlogPage(currentUserBlogPage + 1)
-        }
-    }
-
-    const handleUserBlogPrevPage = () => {
-        if(currentUserBlogPage > 0) {
-            setCurrentUserBlogPage(currentUserBlogPage - 1)
-        }
-    }
-
+    //Handle User Blogs
+   
+    //Sort by Blog Dates
+    const userBlogDates = userBlogs ? 
+        userBlogs.sort((a, b) => new Date(b.blog_date) - new Date(a.blog_date))
+        :
+        null
     
+    const renderedUserBlogs = userBlogDates ?
+        userBlogDates.map((userBlog, index) => (
+            <div key={index}>
+                <UserBlogs 
+                    blogId={userBlog.id}
+                    blogTitle={userBlog.blog_title}
+                    blogViews={userBlog.blog_views}
+                    blogImg={userBlog.cover_img}
+                    blogDate={userBlog.blog_date}
+                    userId={userBlog.user_id}
+                    userImg={userBlog.user? userBlog.user.user_icon : null}
+                    handleBlogSelect={handleBlogSelect}
+                />
+            </div>
+        ))
+        :
+        null
+    
+    //Handle Charity Blogs
+    console.log(charityBlogs)
+    //Sort by  Blog Dates
+    const charityBlogDates = charityBlogs ? 
+        charityBlogs.sort((a, b) => new Date(b.blog_date) - new Date(a.blog_date))
+        :
+        null
+    
+        console.log(charityBlogDates)
+    
+    const renderedCharityBlogs = charityBlogDates ? 
+        charityBlogDates.map((blog, index) => (
+            <div key={index}>
+                <CharityBlogs 
+                    blogId={blog.id}
+                    blogName={blog.blog_title}
+                    blogDate={blog.blog_date}
+                    blogViews={blog.blog_views}
+                    blogImg={blog.cover_img}
+                    charityId={blog.charity_id}
+                    charityImg={blog.charity.charity_icon}
+                    handleBlogSelect={handleBlogSelect}
+                />
+            </div>
+        ))
+        :
+        null
 
     return(
-        <div className="blogHomePageContainer">
-            <h1 className="blogHomePageHeader">All Blogs</h1>
+        <div className="blogsHomeContainer">
+            <h1 className="blogsHomeHeader">Blogs Home</h1>
+            <div className="blogsShowCase">
+                <div className="userCharityBlogButton">
+                    {userBlogButton ? 
+                        <button className="selectedBlogs">
+                            User Blogs
+                        </button>
+                        :
+                        <button 
+                            className="deselectedBlogs"
+                            onClick={handleBlogSelection}
+                        >
+                            User Blogs
+                        </button>
+                    }
+                    {userBlogButton ? 
+                        <button 
+                            className="deselectedBlogs"
+                            onClick={handleBlogSelection}
+                        >
+                            Charity Blogs
+                        </button>
+                        :
+                        <button className="selectedBlogs">
+                            Charity Blogs
+                        </button>
+                    }
+                </div>
 
-            <h2 className="charityBlogHomeHeader">Available Charity Blogs</h2>
-            <CharityBlogHomeFilter onSearch={handleCharityBlogSearch}/>
-            <div className="charityBlogsSection">
-                <div className="charityBlogHomeRendered">
-                    {renderedCharities}
-                </div>
-                <div className="charityBlogPaginationButtons">
-                    <button onClick={handleCharityBlogPrevPage} disabled={currentCharityBlogsPage === 0} className="prevButton">Previous</button>
-                    <button onClick={handleCharityBlogNextPage} disabled={(currentCharityBlogsPage + 1) * itemsPerPage >= charityBlogs.length} className="nextButton">Next</button>
-                </div>
-            </div>
+                <input 
+                    className="filterBlogs"
+                    placeholder={`Search ${userBlogButton ? "User" : "Charity"} Blogs`}
+                    onChange={handleSearch}
+                />
 
-            <h2 className="userBlogHomeHeader">Available User Blogs</h2>
-            <UserBlogHomeFilter onSearch={handleUserBlogSearch}/>
-            <div className="userBlogsSection">
-                <div className="userBlogHomeRendered">
-                    {renderedUsers}
-                </div>
-                <div className="userBlogPaginationButtons">
-                    <button onClick={handleUserBlogPrevPage} disabled={currentUserBlogPage === 0} className="userPrevButton">Previous</button>
-                    <button onClick={handleUserBlogNextPage} disabled={(currentUserBlogPage + 1) * itemsPerPage >= userBlogs.length} className="userNextButton">Next</button>
+                <div className="renderBlogs">
+                    {userBlogButton ? 
+                        renderedUserBlogs
+                        :
+                        renderedCharityBlogs
+                    }
                 </div>
             </div>
         </div>
     )
-
-
+    
 }
 export default BlogsHome
+
 

@@ -1,65 +1,60 @@
-.blogHomePageContainer{
+.blogsHomeContainer{
     margin-left: 250px;
-    padding: 20px;
-    display: grid;
 }
 
-.blogHomePageHeader{
+.blogsHomeHeader{
     text-align: center;
 }
 
-.charityBlogHomeHeader{
-    margin-top: 50px;
-}
-
-.charityBlogHomeRendered{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+.blogsShowCase{
     margin-left: 20px;
+    margin-right: 20px;
 }
 
-.prevButton{
-    height: 50px;
-    width: 100px;
-    margin-top: 60px;
-    margin-left: 400px;
+.selectedBlogs{
+    opacity: 1;
+    height: 60px;
+    width: 200px;
+    font-size: 100%;
+    background-color: darkgray;
+    border: none;
+    font-weight: bold;
+    text-decoration: underline;
 }
 
-.nextButton{
-    height: 50px;
-    width: 100px;
+.deselectedBlogs{
+    opacity: 0.5;
+    height: 60px;
+    width: 200px;
+    border: none;
+    background-color: darkgray;
 }
 
-.charityBlogsSection{
-    border-bottom: solid;
-}
-
-.userBlogHomeHeader{
-    margin-top: 50px;
-}
-
-.userBlogsSection{
-    border-bottom: solid;
-}
-
-.userBlogHomeRendered{
+.renderBlogs{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    margin-left: 20px;
+    grid-template-columns: 33% 33% 33%;
 }
 
-.userPrevButton{
-    height: 50px;
-    width: 100px;
-    margin-top: 60px;
-    margin-left: 400px;
+.userCharityBlogButton{
+    margin-left: 30px;
+    height: 70px;
+    margin-right: 50px;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    background-color: darkgray;
 }
 
-.userNextButton{
-    height: 50px;
-    width: 100px;
+.filterBlogs{
+    margin-top: 20px;
+    margin-left: 30px;
+    border: none;
+    background-color: #E7E1D5;
+    height: 100px;
+    border-bottom: solid;
+    margin-right: 100px;
+    width: 800px;
+    font-size: 400%;
 }
-
 
 
 

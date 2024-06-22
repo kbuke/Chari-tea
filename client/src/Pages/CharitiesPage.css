@@ -1,122 +1,88 @@
-.mainContent {
-    margin-left: 250px; /* Same width as your navbar */
-    padding: 20px; /* Optional padding for better layout */
-}
-
-
-
-.charityDescription {
+.charityBlogs{
+    margin-left: 250px;
+    height: 350px;
     border-bottom: solid;
 }
 
-.relationHeader{
-    margin-bottom: 50px;
-}
 
-
-
-.amountRaised{
-    border-radius: 25px;
-    border: 2px solid black;
-    height: 120px;
-    width: 220px;
-    max-height: 70%; /* Ensure the image takes up most of the card */
-    object-fit: contain;
-    margin-bottom: 10px; /* Space between image and title */
-    background-color: blue;
-    color: aliceblue;
+.charityBlogGrid{
+    margin-left: 50px;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
     text-align: center;
 }
 
-.donationHeader{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border-bottom: dashed;
-    margin-bottom: 50px;
-}
-
-/* .allDonationsGrid{
-    border-bottom: solid;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
-    align-items: center;
-} */
-
-.donorImg{
-    height: 100px;
+.recentButton{
+    margin-left: 480px;
+    height: 40px;
     width: 100px;
-    border-radius: 50%;
 }
 
-
-
-.blogGrid{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
-    align-items: center;
-    border-bottom: solid;
+.previousButton{
+    margin-left: 10px;
+    height: 40px;
+    width: 100px
 }
 
-.charityBlogContainer {
-    display: flex; /* Use flexbox layout */
-    flex-direction: column; /* Arrange items vertically */
-    justify-content: flex-start; /* Align items to the start of the container */
-    align-items: center; /* Center items horizontally */
-    height: 250px;
-    width: 300px; /* Adjust width as needed */
-    overflow: hidden;
-    gap: 10px; /* Add space between the title and image */
-}
-
-.blogTitle {
-    margin-top: auto; /* Push the title to the top */
-}
-
-.blogImg {
-    height: 200px; /* Adjust height as needed */
-    width: 100%; /* Take up full width */
-    object-fit: cover; /* Maintain aspect ratio and cover the container */
-    border-radius: 10px;
-}
-
-.paginationButtons {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    margin-left: 50%;
-    margin-right: 50%;
-  }
-  
-  .paginationButtons button {
-    background-color: #007bff;
+.noPrevButton{
+    margin-left: 480px;
+    height: 40px;
+    width: 100px;
     border: none;
-    color: white;
-    padding: 10px 20px;
-    margin: 0 10px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .paginationButtons button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
+    opacity: 0.2;
+}
 
-  .donorInfoShow{
-    margin-left: 420px;
-    height: 50px;
-    width: 200px;
-    margin-top: 10px;
-  }
+.noNextButton{
+    margin-left: 10px;
+    height: 40px;
+    width: 100px;
+    border: none;
+    opacity: 0.2;
+}
 
-  .reviewsHeader{
+.charityDonations,
+.charityReviews{
     border-bottom: solid;
+    margin-left: 250px;
+}
+
+.donorToggleButtons{
+    margin-bottom: 10px;
+}
+
+.charityDonationsHeader,
+.reviewHeader{
     display: grid;
-    grid-template-columns: 30% 70%;
-    align-items: center; /* Center items vertically if needed */
-  }
+    grid-template-columns: 75% 25%;
+}
+
+.makeDonation,
+.writeReview{
+    height: 40px;
+    margin-top: 5px;
+    margin-right: 20px;
+    background-color: green;
+    color: white;
+}
+
+.cancelDonation,
+.cancelReview{
+    height: 40px;
+    margin-top: 5px;
+    margin-right: 20px;
+    background-color: red;
+    color: white;
+}
+
+.newReviewcontainer{
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 20px;
+    height: 250px;
+    margin-top: 0px;
+    border-bottom: solid;
+}
+
 
 
   

@@ -1,130 +1,160 @@
 
-import { Link } from "react-router-dom"
-import "./CharityReview.css"
-import { useState } from "react"
+import { Link } from "react-router-dom";
+import "./CharityReview.css";
+import { useState } from "react";
 
 function CharityReview({
-    review, 
-    loggedInUser,
+    userId,
+    charityReview,
+    reviewDate,
     reviewTitle,
-    setReviewTitle,
-    reviewContent,
-    setReviewContent
+    reviewId,
+    userName,
+    userImg,
+    loggedUserId,
+    allReviews, 
+    setAllReviews
 }){
+    const[editingReview, setEditingReview] = useState(false)
+    const[deletingReview, setDeletingReview] = useState(false)
+    const[editTitle, setEditTitle] = useState(reviewTitle)
+    const[editContent, setEditContent] = useState(charityReview)
 
-    const[updateReview, setUpdateReview] = useState(false)
-
-    const handleReviewTitleChange = (e) => {
-        e.preventDefault()
-        setReviewTitle(e.target.value)
-    }
-
-    const handleReviewContentChange = (e) => {
-        e.preventDefault()
-        console.log(e.target)
-        setReviewContent(e.target.value)
-    }
-
-    const handleDeleteReview = (e) => {
-        e.preventDefault()
-
-        fetch(`/reviews/${review.id}`, {
-            method: "DELETE"
+    const checkUser = userId == loggedUserId ? true : false 
+    
+    //Handle Edit
+    const handleReviewEdit = () => {
+        fetch(`/reviews/${reviewId}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                review_title: editTitle,
+                charity_review: editContent
+            })
         })
         .then((r) => {
             if(r.ok) {
-                console.log("Review Deleted")
+                return r.json()
             } else {
-                console.error("Failed to delete this review")
+                console.error("Failed to update review")
             }
         })
-        .catch((error) => {
-            console.error("Error:", error)
-        })
+        .then((newReview) => 
+        setAllReviews(allReviews.map(oldReviews =>
+            oldReviews.id === newReview.id ? newReview : oldReviews
+        )))
+        window.location.reload();
     }
 
+    //Set up editing buttons for blog author
+    const userReviewEdit = editingReview ? 
+        <>
+            <button
+                className="canEdit"
+                onClick={() => setEditingReview(!editingReview)}
+            >
+                Cancel Edit
+            </button>  
 
-    const handleUpdateReview = () => {
-        setUpdateReview(!updateReview)
-        if (updateReview){
-            fetch(`/reviews/${review.id}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    review_title: reviewTitle ? reviewTitle : review.review_title,
-                    charity_review: reviewContent ? reviewContent : review.charity_review
-                }),
-            })
-            .then((r) => {
-                if(r.ok) {
-                    console.log("Review Updated")
-                } else {
-                    console.error("Failed to update this review")
-                }
-            })
-            .catch((error) => {
-                console.error("Error", error)
-            })
-        }
+            <button 
+                onClick={handleReviewEdit}
+                className="submitReviewEdit"
+            >
+                Submit Edit
+            </button>
+        </> 
+        :
+        <button
+            className="makeEdit"
+            onClick={() => setEditingReview(!editingReview)}
+        >
+            Make Edit
+        </button> 
+    
+    //Set up deletion buttons for blog author
+    const userReviewDelete = (deletingReview || editingReview)? 
+        null
+        :
+        <button 
+            className="deleteReview"
+            onClick={() => setDeletingReview(!deletingReview)}
+        >
+            Delete Review
+        </button>
+    
+    //Handle blog deletion
+    const handleReviewDelete = () => {
+        fetch(`/reviews/${reviewId}`, {
+            method: "DELETE"
+        })
+        .then((r) => {
+            if(r.ok){
+                setAllReviews((reviews) => 
+                    reviews.filter((review) => review.id !== reviewId))
+                    window.location.reload();
+            }
+        })
     }
 
     return(
-        <>
-            <div className="donationHeaderGrid">
+        <div className="reviewContainer">
+            <div className="userReviewHeader">
                 <Link
-                    to={`/users/${review.user_id}`}
+                    to={`/users/${userId}`}
                 >
-                    <img className="reviewerImg" src={review.user.user_icon}/>
+                    <img className="userImg" src={userImg}/>
+                    <h6 className="reviewUser">{userName}</h6>
                 </Link>
-                {updateReview? 
-                    <textarea
-                        onChange={handleReviewTitleChange}
-                    >
-                        {review.review_title}</textarea>
+                {editingReview ? 
+                    <input 
+                        className="editReviewTitle"
+                        defaultValue={reviewTitle}
+                        onChange={(e) => setEditTitle(e.target.value)}
+                    />
                     :
-                    <h2>{review.review_title}</h2>
+                    <h2>{reviewTitle}</h2>
                 }
-                <h5>{review.review_date}</h5>
+                <h4 className="postTiming">Posted {reviewDate}</h4>
             </div>
-            <br/>
-            <div className="reviewContentGrid">
-                <Link
-                    to={`/users/${review.user_id}`}
-                >
-                    <h3>{review.user.username}</h3>
-                </Link>
-                {updateReview?
-                    <textarea 
-                        className="newReview"
-                        onChange={handleReviewContentChange}
+            {checkUser ? 
+                <div className="charityReviewGrid">
+                    {editingReview? 
+                        <textarea 
+                            className="editUserReview"
+                            defaultValue={charityReview}
+                            onChange={(e) => setEditContent(e.target.value)}
+                        />
+                        :
+                        <h3 className="userCharityReview">{charityReview}</h3>
+                    }
+                    {userReviewEdit}
+                    {userReviewDelete}
+                </div>
+                :
+                <h3 className="userCharityReview">{charityReview}</h3>
+            }
+            {deletingReview ?
+                <>
+                    <button
+                        className="conDel"
+                        onClick={handleReviewDelete}
                     >
-                        {review.charity_review}
-                    </textarea>
-                    :
-                    <div className="reviewContent">
-                        {review.charity_review && review.charity_review.split('\n').map((paragraph, index) => (
-                            <p key={index}>{paragraph}</p>
-                        ))}
-                    </div>
-                }
-                {review.user_id == loggedInUser.id? 
-                    <div>
-                        <button onClick={handleUpdateReview}>
-                            {updateReview? "Cancel Edit" : "Edit Review"}
-                        </button>
-                        {updateReview? 
-                            <button onClick={handleUpdateReview}>Submit Edit</button>
-                            :
-                            <button onClick={handleDeleteReview}>Delete Review</button>
-                        }
-                    </div>
-                    :
-                    null
-                }
-            </div>
-        </>
+                        Confirm Deletion
+                    </button>
+
+                    <button
+                        className="canDel"
+                        onClick={() => setDeletingReview(!deletingReview)}
+                    >
+                        Cancel Deletion
+                    </button>
+                </>
+                :
+                null
+            }
+        </div>
     )
 }
 export default CharityReview

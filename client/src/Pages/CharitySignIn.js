@@ -1,27 +1,29 @@
+
 import "./CharitySignIn.css"
 
 import { useNavigate, useOutletContext } from "react-router-dom"
 import { useState } from "react"
 
 function CharitySignIn(){
+    const [charityNameInput, setCharityNameInput] = useState("")
+    const [charityPassword, setCharityPassword] = useState("")
+    const [errors, setErrors] = useState([])
+    const [failedLogin, setFailedLogin] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
+
     const navigate = useNavigate()
 
     const appData = useOutletContext()
 
-    const charityLogin = appData.charityLogin
-    const setCharityLogin = appData.setCharityLogin 
+    //See if a charity is logged in
+    const charityLoggedIn = appData.charityLoggedIn 
+    const setCharityLoggedIn = appData.setCharityLoggedIn
 
-    const setLoggedInCharity = appData.setLoggedInCharity
+    //Access where the charity will be held
+    const loggedCharity = appData.charity
+    const onCharityLogin = appData.onCharityLogin 
 
-    const [charityName, setCharityName] = useState("")
-    const [charityPassword, setCharityPassword] = useState("")
-    const [showPassword, setShowPassword] = useState(false)
-
-    const handlePassword = (e) => {
-        e.preventDefault()
-        setShowPassword(!showPassword)
-    }
-
+    //Hanlde login
     const handleSubmit = (e) => {
         e.preventDefault()
         fetch("/charitylogin", {
@@ -29,32 +31,43 @@ function CharitySignIn(){
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({charityName, charityPassword}),
+            body: JSON.stringify({charityNameInput, charityPassword}),
         })
         .then((r) => {
-            console.log(r)
             if(r.ok) {
-                setCharityLogin(!charityLogin)
-                navigate("/")
                 return r.json()
             } else {
-                throw new Error("Invalid Login")
+                setFailedLogin(true)
+                r.json().then((err) => setErrors(err.errors))
             }
         })
-        .then((user) => {
-            console.log(user)
-            setLoggedInCharity(user)
+        .then(user => {
+            if(user) {
+                onCharityLogin(user)
+                setCharityLoggedIn(true)
+                navigate("/")
+            }
         })
-        .catch((error) => console.error(error))
     }
+
+    console.log(charityLoggedIn)
 
     return(
         <div className="charityLoginPage">
+            {failedLogin?
+                <div className="failedLogin">
+                    <h1>Failed Login</h1>
+                    <h3>Username and/or Password are Incorrect</h3>
+                    <h3>Please Try Again</h3>
+                </div>
+                :
+                null
+            }
             <form onSubmit={handleSubmit} className="charityLoginForm">
                 <input
                     type="text"
-                    value={charityName}
-                    onChange={(e) => setCharityName(e.target.value)}
+                    value={charityNameInput}
+                    onChange={(e) => setCharityNameInput(e.target.value)}
                     className="charityNameText"
                     placeholder="Enter Charities Name"
                 />
@@ -67,7 +80,10 @@ function CharitySignIn(){
                         className="charityPasswordText"
                         placeholder="Enter Charities Password"
                     />
-                    <button onClick={handlePassword} className="charityPasswordButton">
+                    <button 
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="charityPasswordButton"
+                    >
                         <h3>👁️</h3>
                     </button>
                 </div>

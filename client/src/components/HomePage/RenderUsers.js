@@ -2,11 +2,14 @@ import { Link } from "react-router-dom"
 
 import "./RenderUsers.css"
 
-function RenderUsers({users}){
+function RenderUsers({
+    users,
+    id
+}){
     return(
         <>
             <Link
-                to={`users/${users.id}`}
+                to={`users/${id}`}
             >
                 <div className="homePgUserImgContainer">
                     <img className="homePgUserImg" src={users.user_icon}/>
