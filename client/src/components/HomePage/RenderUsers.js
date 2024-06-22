@@ -12,7 +12,11 @@ function RenderUsers({
                 to={`users/${id}`}
             >
                 <div className="homePgUserImgContainer">
-                    <img className="homePgUserImg" src={users.user_icon}/>
+                    <img 
+                        className="homePgUserImg" 
+                        src={users.user_icon}
+                        alt="userImgHome"
+                    />
                 </div>
             </Link>
         </>

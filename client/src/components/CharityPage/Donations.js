@@ -15,7 +15,11 @@ function Donations({
                     <Link
                         to={`/users/${userId}`}
                     >
-                        <img className="donorImg" src={userImg}/>
+                        <img 
+                            className="donorImg" 
+                            src={userImg}
+                            alt="userImg"
+                        />
                     </Link>
                     <h3>{userName} Donated £{donatedAmount}</h3>
                     <h6>{donationDate}</h6>

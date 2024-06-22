@@ -11,7 +11,11 @@ function RenderedCharities({
                 to={`/charities/${id}`}
             >
                 <div className="homePgCharityImgContainer">
-                    <img className="homePgCharityImg" src={charity.charity_icon}/>
+                    <img 
+                        className="homePgCharityImg" 
+                        src={charity.charity_icon}
+                        alt="homeCharityImage"
+                    />
                 </div>
             </Link>
         </div>

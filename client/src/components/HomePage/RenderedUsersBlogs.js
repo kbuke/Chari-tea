@@ -8,7 +8,11 @@ function RenderedUsersBlogs({blogs}){
                 to={`blogpost/${blogs.id}`}
             >
                 <div className="homePgUserBlogImgContainer">
-                    <img className="homePgUserBlogImg" src={blogs.cover_img}/>
+                    <img 
+                        className="homePgUserBlogImg" 
+                        src={blogs.cover_img}
+                        alt="userImagesBlogs"
+                    />
                     <div className="homePageUserBlogTitleContainer">
                         <h3 className="homePageUserBlogTitle">{blogs.blog_title}</h3>
                     </div>

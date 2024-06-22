@@ -32,7 +32,11 @@ function UserInfo({
 
     return(
         <div className="userLogoContainer">
-            <img className="userPgLogo" src={userImg}/>
+            <img 
+                className="userPgLogo" 
+                src={userImg}
+                alt="userImg"
+            />
             <h1 className="userPgName">{userName}</h1>
             <h2 className="userEmail">{userEmail}</h2>
             <h3 className="userSignUpDate">Joined: {userSignUp}</h3>

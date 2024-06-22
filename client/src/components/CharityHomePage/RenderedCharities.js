@@ -34,12 +34,14 @@ function RenderedCharities({
                         className="hoverImg"
                         src={charityImg}
                         onMouseLeave={hoverFalse}
+                        alt="renderedCharity"
                     />
                 ) : (
                     <img 
                         className="noHover"
                         src={charityImg}
                         onMouseEnter={hoverTrue}
+                        alt="hoveredCharity"
                     />
                 )}
                 <h2>{charityName}</h2>

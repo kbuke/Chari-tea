@@ -104,7 +104,11 @@ function CharityReview({
                 <Link
                     to={`/users/${userId}`}
                 >
-                    <img className="userImg" src={userImg}/>
+                    <img 
+                        className="userImg" 
+                        src={userImg}
+                        alt="userImage"
+                    />
                     <h6 className="reviewUser">{userName}</h6>
                 </Link>
                 {editingReview ? 

@@ -32,12 +32,14 @@ function RenderedUsers({
                         className="hoverImg"
                         src={userImg}
                         onMouseLeave={hoverFalse}
+                        alt="userProfileImg"
                     />
                 ) : (
                     <img
                         className="noHover"
                         src={userImg}
                         onMouseEnter={hoverTrue}
+                        alt="userProfileImg"
                     />
                 )}
                 <h2>{userName}</h2>

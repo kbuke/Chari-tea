@@ -10,7 +10,11 @@ function UserBlogs({blogImg, blogTitle, blogId}){
             <Link
                 to={`/blogpost/${blogId}`}
             >
-                <img className="blogImg" src={blogImg}/>
+                <img 
+                    className="blogImg" 
+                    src={blogImg}
+                    alt="userBlogAccount"
+                />
                 <h3 className="blogTitle">{blogTitle}</h3>
             </Link>
         </div>

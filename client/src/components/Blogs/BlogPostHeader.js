@@ -40,7 +40,11 @@ function BlogPostHeader({
                             `/charities/${authorId}`
                         }
                     >
-                        <img className="blogAuthorImg" src={authorImg}/>
+                        <img 
+                            className="blogAuthorImg" 
+                            src={authorImg}
+                            alt="blogImage"
+                        />
                     </Link>
                 </>
                 <h3>{blogViews} 👀</h3>

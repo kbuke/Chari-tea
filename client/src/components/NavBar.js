@@ -161,7 +161,11 @@ function NavBar({
             <NavLink
                 to={`/users/${user ? user.id : null}`}
             >
-                <img className="loggedInImg" src={user? user.user_icon : null}/>
+                <img 
+                    className="loggedInImg" 
+                    src={user? user.user_icon : null}
+                    alt="loggedImg"
+                />
             </NavLink>
         </div>
         :
@@ -180,7 +184,11 @@ function NavBar({
                 to={`/charities/${charity ? charity.id : null}`}
             >
                 <div className= "loggedInIcon" >
-                    <img className="loggedInImg" src={charity ? charity.charity_icon : null}/>
+                    <img 
+                        className="loggedInImg" 
+                        src={charity ? charity.charity_icon : null}
+                        alt="loggedImg"
+                    />
                  </div>
             </NavLink>
         </div>

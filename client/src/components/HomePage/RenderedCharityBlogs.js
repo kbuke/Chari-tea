@@ -8,7 +8,11 @@ function RenderedCharityBlogs({blogs}){
             <Link
                 to={`/blogpost/${blogs.id}`}
             >
-                <img src={blogs.cover_img} className="homePageBlogImg"/>
+                <img 
+                    src={blogs.cover_img} 
+                    className="homePageBlogImg"
+                    alt="homeBlogImg"
+                />
                 <div className="homePageBlogTitleContainer">
                     <h3 className="homePageBlogTitle">{blogs.blog_title}</h3>
                 </div>

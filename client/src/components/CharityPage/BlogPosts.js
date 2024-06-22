@@ -11,7 +11,11 @@ function BlogPosts({
             <Link
                 to={`/blogpost/${blogId}`}
             >
-                <img className="blogImg" src={blogImg}/>
+                <img 
+                    className="blogImg" 
+                    src={blogImg}
+                    alt="blogImage"
+                />
                 <h3 className="blogTitle">{blogTitle}</h3>
             </Link>
         </div>

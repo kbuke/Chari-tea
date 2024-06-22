@@ -22,7 +22,11 @@ function UserBlogs({
                 to={`/blogpost/${blogId}`}
                 onClick={handleBlogSelect}
             >
-                <img className="blogImgCard" src={blogImg}/>
+                <img 
+                    className="blogImgCard" 
+                    src={blogImg}
+                    alt="userBlogCard"
+                />
                 <h2>{blogTitle}</h2>
             </Link>
             <div className="blogInfoGrid">

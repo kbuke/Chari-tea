@@ -28,7 +28,11 @@ function CharityLogo({
     return(
         <>
             <div className='charityLogoContainer'>
-                <img className='charityLogo' src={charityLogo}/>
+                <img 
+                    className='charityLogo' 
+                    src={charityLogo}
+                    alt='charityLogo'
+                />
                 <h1 className='charityName'>{charityName}</h1>
                 <h2 className='charityLocation'>📍 {charityLocation}</h2>
                 <h3 className='charityDescription'>{charityDescription}</h3>

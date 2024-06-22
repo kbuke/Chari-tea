@@ -22,7 +22,11 @@ function CharityBlogs({
                 to={`/blogpost/${blogId}`}
                 onClick={handleBlogSelect}
             >
-                <img className="blogImgCard" src={blogImg}/>
+                <img 
+                    className="blogImgCard" 
+                    src={blogImg}
+                    alt="blogCard"
+                />
                 <h2>{blogName}</h2>
             </Link>
             <div className="blogInfoGrid">
