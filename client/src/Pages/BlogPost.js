@@ -21,7 +21,6 @@ function BlogPost() {
   const setAllBlogs = appData.setBlogs;
 
   const userLoggedIn = appData.userLoggedIn;
-  const charityLoggedIn = appData.charityLoggedIn;
 
   const loggedUser = appData.user;
   const loggedCharity = appData.charity;
@@ -47,10 +46,10 @@ function BlogPost() {
   console.log(specificBlog);
 
   //Get info for blog header
-  const blogTitle = specificBlog?.blog_title || null;
-  const blogDate = specificBlog?.blog_date || null;
-  const blogViews = specificBlog?.blog_views || null;
-  const blogId = specificBlog?.id || null;
+  const blogTitle = blogInfo?.blog_title || null;
+  const blogDate = blogInfo?.blog_date || null;
+  const blogViews = blogInfo?.blog_views || null;
+  const blogId = blogInfo?.id || null;
 
   const authorId = specificBlog?.user_id ?? specificBlog?.charity_id;
 

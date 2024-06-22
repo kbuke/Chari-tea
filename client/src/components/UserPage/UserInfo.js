@@ -20,7 +20,7 @@ function UserInfo({
         :
         null 
     
-    const writeUserBlog = loggedInUserId == userId ?
+    const writeUserBlog = loggedInUserId === userId ?
         <button 
             className="writeUserBlog"
             onClick={navBlog}

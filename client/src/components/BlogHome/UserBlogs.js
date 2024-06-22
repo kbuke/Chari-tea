@@ -35,7 +35,11 @@ function UserBlogs({
                     to={`/users/${userId}`}
                     onClick={handleBlogSelect}
                 >
-                    <img className="userBlogInfoImg" src={userImg}/>
+                    <img 
+                        className="userBlogInfoImg" 
+                        src={userImg}
+                        alt="userBlogImg"
+                    />
                 </Link>
                 <h6>{slicedDate}</h6>
             </div>

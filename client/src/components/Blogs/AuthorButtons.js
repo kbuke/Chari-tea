@@ -28,11 +28,10 @@ function AuthorButtons({
         if(r.ok){
           setAllBlogs((blogs) => 
             blogs.filter((blog) => blog.id !== blogId))
-          {userLoggedIn ? 
+          userLoggedIn ? 
             navigate(`/users/${authorId}`)
             :
             navigate(`/charities/${authorId}`)
-          }
         }
       })
     }

@@ -6,8 +6,6 @@ import { useNavigate, useOutletContext } from "react-router-dom"
 function UserSignIn(){
     const[usernameInput, setUsernameInput] = useState("")
     const[userPassword, setUserPassword] = useState("")
-    const[errors, setErrors] = useState([])
-    const[isLoading, setIsLoading] = useState(false)
     const[failedLogin, setFailedLogin] = useState(false)
     const[showPassword, setShowPassword] = useState(false)
 
@@ -27,7 +25,6 @@ function UserSignIn(){
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        setIsLoading(true)
         fetch("/userlogin", {
             method: "POST",
             headers: {
@@ -35,12 +32,10 @@ function UserSignIn(){
             },
             body: JSON.stringify({ usernameInput, userPassword }),
         }).then((r) => {
-            setIsLoading(false);
             if (r.ok) {
                 return r.json()
             } else {
                 setFailedLogin(true)
-                r.json().then((err) => setErrors(err.errors))
             }
         })
         .then((user) => {

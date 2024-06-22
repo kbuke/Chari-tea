@@ -18,7 +18,7 @@ function CharityLogo({
         navigate('/newblog')
     }
 
-    const writeCharityBlog = loggedInCharityId == charityId ?
+    const writeCharityBlog = loggedInCharityId === charityId ?
         <button className='writeCharityBlog' onClick={navBlog}>
             Write New Blog
         </button>

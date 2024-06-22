@@ -1,5 +1,3 @@
-import { useState } from "react"
-import { useSearchParams } from "react-router-dom"
 
 import "./EditBlog.css"
 
@@ -7,8 +5,6 @@ import "./EditBlog.css"
 function EditBlog({
     blogContent,
     blogTitle,
-    allBlogs,
-    setAllBlogs,
     setEditBlogTitle,
     setEditBlogContext
 }){

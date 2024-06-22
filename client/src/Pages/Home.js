@@ -3,7 +3,7 @@ import { useOutletContext } from "react-router-dom"
 import "./Home.css"
 import CharityInfo from "../components/HomePage/CharityInfo";
 import UserInfoHomePage from "../components/HomePage/UserInfoHomePage";
-import NoLogin from "./NoLogin";
+
 
 function Home(){
 

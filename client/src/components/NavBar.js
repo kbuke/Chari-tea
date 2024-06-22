@@ -1,4 +1,4 @@
-import { useState } from "react"
+
 import "./NavBar.css"
 import { NavLink } from "react-router-dom"
 
@@ -253,7 +253,11 @@ function NavBar({
                     to="/"
                     onClick={onHome}
                 >
-                    <img src={logo} className="logo"/>
+                    <img 
+                        src={logo} 
+                        className="logo"
+                        alt="charityLogo"
+                    />
                 </NavLink>
 
             </div>

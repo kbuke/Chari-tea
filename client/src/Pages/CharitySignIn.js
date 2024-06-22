@@ -7,7 +7,6 @@ import { useState } from "react"
 function CharitySignIn(){
     const [charityNameInput, setCharityNameInput] = useState("")
     const [charityPassword, setCharityPassword] = useState("")
-    const [errors, setErrors] = useState([])
     const [failedLogin, setFailedLogin] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
 
@@ -20,7 +19,6 @@ function CharitySignIn(){
     const setCharityLoggedIn = appData.setCharityLoggedIn
 
     //Access where the charity will be held
-    const loggedCharity = appData.charity
     const onCharityLogin = appData.onCharityLogin 
 
     //Hanlde login
@@ -38,7 +36,6 @@ function CharitySignIn(){
                 return r.json()
             } else {
                 setFailedLogin(true)
-                r.json().then((err) => setErrors(err.errors))
             }
         })
         .then(user => {

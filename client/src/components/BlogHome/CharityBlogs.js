@@ -35,7 +35,11 @@ function CharityBlogs({
                     to={`/charities/${charityId}`}
                     onClick={handleBlogSelect}
                 >
-                    <img className="charityBlogInfoImg" src={charityImg}/>
+                    <img 
+                        className="charityBlogInfoImg" 
+                        src={charityImg}
+                        alt=""
+                    />
                 </Link>
                 <h6>{sliceDate}</h6>
             </div>

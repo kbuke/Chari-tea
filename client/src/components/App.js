@@ -2,8 +2,6 @@ import { useEffect, useState } from "react"
 import { Outlet } from "react-router-dom"
 import NavBar from "./NavBar"
 import "./App.css"
-import UserSignIn from "../Pages/UserSignIn"
-import NoLogin from "../Pages/NoLogin"
 
 function App(){
   const [charities, setCharities] = useState([])

@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 
 import "./NewDonation.css"
 
@@ -9,7 +8,6 @@ function NewDonation({
     setAllDonations,
     setDonation
 }){
-    const navigate = useNavigate()
 
     const[currentDonation, setCurrentDonation] = useState("")
 

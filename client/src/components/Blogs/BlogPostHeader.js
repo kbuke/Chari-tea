@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import "./BlogPostHeader.css";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 function BlogPostHeader({
     specificBlog,
@@ -25,7 +24,7 @@ function BlogPostHeader({
         .catch(error => {
             console.error('Error:', error);
         });
-    }, []);
+    }, [blogId]);
         
     
     return(

@@ -1,6 +1,6 @@
 
 
-import { useEffect, useImperativeHandle, useState } from "react"
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { useOutletContext } from "react-router-dom"
 
@@ -42,7 +42,7 @@ function User(){
             throw r
         })
         .then(userInfo => setUserInfo(userInfo))
-    }, [])
+    }, [specificUserId])
 
     //Handle User Top
     const userImg = userInfo.user_icon
@@ -146,7 +146,7 @@ function User(){
 
 
     const specificRaised = amountRaised ? 
-        amountRaised.filter(user => user.user_id == userInfo.id) 
+        amountRaised.filter(user => user.user_id === userInfo.id) 
     : 
     null;
 
@@ -172,7 +172,7 @@ function User(){
                     {renderedBlogs}
                 </div>
                 <div className="blogToggleButtons">
-                    {userBlogsNumber == 0 ?
+                    {userBlogsNumber === 0 ?
                         <button className="noPrevButton">
                             Recent Blogs
                         </button>
@@ -206,7 +206,7 @@ function User(){
                         {renderedCharities}
                     </div>
                     <div className="charityDonorButtons">
-                        {userCharities == 0 ?
+                        {userCharities === 0 ?
                             <button className="noLess">
                                 Less Charities
                             </button>

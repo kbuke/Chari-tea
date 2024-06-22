@@ -4,7 +4,6 @@ import { Link, useOutletContext } from "react-router-dom"
 import "./UserSignUpSignIn.css"
 
 import UserSignUp from "../components/UserSignUp/UserSignUp"
-import { useState } from "react"
 
 
 function UserSignUpSignIn(){

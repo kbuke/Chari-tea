@@ -20,7 +20,7 @@ function CharityReview({
     const[editTitle, setEditTitle] = useState(reviewTitle)
     const[editContent, setEditContent] = useState(charityReview)
 
-    const checkUser = userId == loggedUserId ? true : false 
+    const checkUser = userId === loggedUserId ? true : false 
     
     //Handle Edit
     const handleReviewEdit = () => {
