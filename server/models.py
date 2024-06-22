@@ -2,6 +2,7 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy import event
 
 from config import db, bcrypt
 
@@ -94,6 +95,7 @@ class Donation(db.Model, SerializerMixin):
     #Add validations
     @validates("amount_donated")
     def validate_donation(self, key, amount):
+        
         if 0 < amount:
             return amount 
         raise ValueError("The amount donated must be higher than £0.00")
@@ -147,6 +149,7 @@ class BlogPost(db.Model, SerializerMixin):
         if value is None and other_value is None:
             raise ValueError("Either user_id or charity_id must be set.")
         return value
+
 
    
 

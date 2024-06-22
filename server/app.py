@@ -10,6 +10,7 @@ from flask_restful import Resource
 from config import app, db, api
 # Add your model imports
 from models import Charity, User, Donation, CharityReview, BlogPost
+from sqlalchemy import event
 
 
 # Views go here!
@@ -20,7 +21,7 @@ def index():
 
 class Charities(Resource):
     def get(self):
-        charities = [charity.to_dict(rules=("-reviews",)) for charity in Charity.query.all()]
+        charities = [charity.to_dict(rules=("-reviews", "-donations", "-blogs",)) for charity in Charity.query.all()]
         return charities, 200
     
     def post(self):
@@ -73,7 +74,7 @@ class CharityId(Resource):
 
 class Users(Resource):
     def get(self):
-        user = [users.to_dict(rules=("-reviews",)) for users in User.query.all()]
+        user = [users.to_dict(rules=("-reviews", "-blogs", "-donations", "-_password_hash",)) for users in User.query.all()]
         return user, 200
     
     def post(self):
@@ -88,7 +89,7 @@ class Users(Resource):
             
             db.session.add(new_user)
             db.session.commit()
-            session['user_id'] = user.id
+            session['user_id'] = new_user.id
             return new_user.to_dict(), 201 
         except ValueError:
             return {
@@ -100,7 +101,7 @@ class UsersId(Resource):
     def get(self, id):
         user = User.query.filter(User.id==id).first()
         if user:
-            return make_response(user.to_dict(rules=("-donations.charity.reviews", "-donations.charity.charity_signup", "-donations.charity.charity_name", "donations.charity.charity_name", "-donations.charity.charity_location",  "-donations.charity_id", "-donations.date_of_donation", "-donations.id", "-donations.user_id", "-donations.charity.charity_description",  "-reviews.charity", "-donations.charity._password_hash",)), 200)
+            return make_response(user.to_dict(rules=("-donations.charity.reviews", "-donations.charity.charity_signup", "-donations.charity.charity_name", "donations.charity.charity_name", "-donations.charity.charity_location",  "-donations.charity_id", "-donations.date_of_donation", "-donations.id", "-donations.user_id", "-donations.charity.charity_description",  "-donations.amount_donated", "-reviews.charity", "-donations.charity._password_hash",)), 200)
         return {
             "error": "user not found"
         }, 404
@@ -125,16 +126,20 @@ class UsersId(Resource):
 
 class Donations(Resource):
     def get(self):
-        donation = [donations.to_dict(rules=("-user", "-charity", )) for donations in Donation.query.all()]
+        donation = [donations.to_dict() for donations in Donation.query.all()]
         return donation, 200
     
     def post(self):
+        user_id = session.get('user_id')
+        if not user_id:
+            return{"message": "Unauthorized user"}, 401
+
         json = request.get_json()
         try:
             new_donation = Donation(
-                amount_donated = json.get("floatDonation"),
-                user_id = json.get("userId"),
-                charity_id = json.get("charityId")
+                amount_donated = json.get("amount_donated"),
+                user_id = user_id,
+                charity_id = json.get("charity_id")
             )
             db.session.add(new_donation)
             db.session.commit()
@@ -150,13 +155,17 @@ class Reviews(Resource):
         return review, 200
     
     def post(self):
+        user_id = session.get('user_id')
+        if not user_id:
+            return{"message": "Unauthorized user"}, 401
+
         json = request.get_json()
         try:
             new_review = CharityReview(
-                review_title=json.get("reviewTitle"),
-                charity_review=json.get("reviewContent"),
-                user_id=json.get("userId"),
-                charity_id=json.get("charityId")
+                review_title=json.get("review_title"),
+                charity_review=json.get("charity_review"),
+                user_id=user_id,
+                charity_id=json.get("charity_id")
             )
             db.session.add(new_review)
             db.session.commit()
@@ -214,27 +223,29 @@ class Blog(Resource):
     def post(self):
         json_data = request.get_json()
         try:
-            user_id = json_data.get("userId")
-            charity_id = json_data.get("charityId")
-            if user_id != None:
+            user_id = session.get("user_id")
+            charity_id = session.get("charity_id")
+
+            if user_id:
                 new_blog = BlogPost(
-                    blog_title=json_data.get("blogTitle"),
-                    blog_content = json_data.get("blogContent"),
-                    cover_img = json_data.get("blogImg"),
-                    blog_views = int(json_data.get("blogViews")),
-                    user_id = json_data.get("userId"),
+                    blog_title=json_data.get("blog_title"),
+                    blog_content = json_data.get("blog_content"),
+                    cover_img = json_data.get("cover_img"),
+                    blog_views = 0,
+                    user_id = user_id,
                     # charity_id = json_data.get("charityId")
                 )
                 db.session.add(new_blog)
                 db.session.commit()
                 return new_blog.to_dict(), 201
+
             elif charity_id:
                 new_blog = BlogPost(
-                    blog_title=json_data.get("blogTitle"),
-                    blog_content = json_data.get("blogContent"),
-                    cover_img = json_data.get("blogImg"),
-                    blog_views = int(json_data.get("blogViews")),
-                    charity_id = json_data.get("charityId")
+                    blog_title=json_data.get("blog_title"),
+                    blog_content = json_data.get("blog_content"),
+                    cover_img = json_data.get("cover_img"),
+                    blog_views = 0,
+                    charity_id = charity_id
                 )
                 db.session.add(new_blog)
                 db.session.commit()
@@ -305,13 +316,14 @@ class CheckCharitySession(Resource):
 class UserLogin(Resource):
     def post(self):
         json_data = request.get_json()
-        username = json_data.get('username')
+        username = json_data.get('usernameInput')
         password = json_data.get('userPassword')
         
         if not username or not password:
             return {'error': 'Username and password required'}, 400
 
         user = User.query.filter(User.username == username).first()
+      
         
         if user and user.authenticate(password):
             session['user_id'] = user.id
@@ -322,7 +334,7 @@ class UserLogin(Resource):
 class CharityLogin(Resource):
     def post(self):
         json_data = request.get_json()
-        charity_name = json_data.get("charityName")
+        charity_name = json_data.get("charityNameInput")
         password = json_data.get("charityPassword")
 
         if not charity_name or not password:
@@ -338,8 +350,9 @@ class CharityLogin(Resource):
 
 class UserLogout(Resource):
     def delete(self):
-        if session.get('user_id'):
-            session.pop('user_id', None)
+        user_id=session.get('user_id')
+        if user_id:
+            session.pop('user_id')
             return {}, 204
         return {"message": "Unauthorized"}, 401
 
@@ -361,22 +374,23 @@ class IncrementBlogViews(Resource):
             "error": "Blog not found"
         }, 404
 
+
     
 api.add_resource(Charities, "/charities")
 api.add_resource(CharityId, "/charities/<int:id>")
 api.add_resource(Users, '/users')
 api.add_resource(UsersId, '/users/<int:id>')
-api.add_resource(Reviews, '/reviews')
+api.add_resource(Reviews, '/reviews', endpoint='reviews')
 api.add_resource(ReviewsId, '/reviews/<int:id>')
 api.add_resource(Blog, '/blogs')
 api.add_resource(BlogById, '/blogs/<int:id>')
-api.add_resource(UserLogin, '/userlogin')
-api.add_resource(CharityLogin, '/charitylogin')
-api.add_resource(CheckUserSession, '/usercheck_session')
+api.add_resource(UserLogin, '/userlogin', endpoint="userlogin")
+api.add_resource(CharityLogin, '/charitylogin', endpoint="charitylogin")
+api.add_resource(CheckUserSession, '/usercheck_session', endpoint='usercheck_session')
 api.add_resource(CheckCharitySession, '/charitycheck_session')
-api.add_resource(UserLogout, '/userlogout')
+api.add_resource(UserLogout, '/userlogout', endpoint='userlogout')
 api.add_resource(CharityLogout, '/charitylogout')
-api.add_resource(Donations, '/donations')
+api.add_resource(Donations, '/donations', endpoint='donations')
 api.add_resource(IncrementBlogViews, '/blogs/<int:id>/increment-views')
 
 if __name__ == '__main__':

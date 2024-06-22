@@ -123,6 +123,12 @@ if __name__ == '__main__':
             user_id=1
         )
 
+        kbuke13_donation3 = Donation(
+            amount_donated=15,
+            charity_id=2,
+            user_id=1
+        )
+
         zhirji15_donation = Donation(
             amount_donated=10.00,
             charity_id=1,
@@ -165,7 +171,7 @@ if __name__ == '__main__':
             user_id=5
         )
 
-        db.session.add_all([kbuke13_donation, kbuke13_donation2, zhirji15_donation, gbuke02_donation, abuke28_donation, vbuke07_donation, kmcror11_donation, jhirji_donation, vbuke07_donation_two])
+        db.session.add_all([kbuke13_donation, kbuke13_donation2, kbuke13_donation3, zhirji15_donation, gbuke02_donation, abuke28_donation, vbuke07_donation, kmcror11_donation, jhirji_donation, vbuke07_donation_two])
         db.session.commit()
 
         print("Seeding Reviews")
@@ -206,6 +212,14 @@ if __name__ == '__main__':
             blog_title="ThirD Test",
             blog_content="show up",
             cover_img="https://www.unicef.org/southafrica/sites/unicef.org.southafrica/files/styles/hero_tablet/public/ZAF-REAL-SA-KZN-25-1222.jpg.webp?itok=AghFfnIU",
+            blog_views=0,
+            charity_id=1
+        )
+
+        s7Blog4 = BlogPost(
+            blog_title="Hope This Works",
+            blog_content="please work",
+            cover_img="https://images.squarespace-cdn.com/content/v1/558c54c2e4b084bef1ce886c/1567737485494-K14APTBPNZFY27F8CLMV/IMG_1664.JPG",
             blog_views=0,
             charity_id=1
         )
@@ -289,7 +303,7 @@ if __name__ == '__main__':
             blog_views=0,
             user_id=6
         )
-        db.session.add_all([s7Blog, s7Blog2, s7Blog3, unicefBlog, wwfBlog, shootingStarBlog, kbuke13_blog2, unicefBlog2, zhirji15_blog, kmcror11_blog, vbuke07_blog, abuke28_blog, gbuke64_blog])
+        db.session.add_all([s7Blog, s7Blog2, s7Blog3, s7Blog4, unicefBlog, wwfBlog, shootingStarBlog, kbuke13_blog2, unicefBlog2, zhirji15_blog, kmcror11_blog, vbuke07_blog, abuke28_blog, gbuke64_blog])
         db.session.commit()
 
         print("Seeding complete!")
