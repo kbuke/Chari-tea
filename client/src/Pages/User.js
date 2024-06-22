@@ -7,7 +7,6 @@ import { useOutletContext } from "react-router-dom"
 import "./User.css"
 
 import UserInfo from "../components/UserPage/UserInfo"
-import UserActivity from "../components/UserPage/UserActivity"
 import UserDonations from "../components/UserPage/UserDonations"
 import UserBlogs from "../components/UserPage/UserBlogs"
 
