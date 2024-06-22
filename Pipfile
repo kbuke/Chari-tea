@@ -17,7 +17,7 @@ gunicorn = "*"
 psycopg2_binary = "*"
 honcho = "*"
 flask_bcrypt = "1.0.1"
-python_dotenv = "0.21.0"
+
 
 [requires]
 python_full_version = "3.8.13"
