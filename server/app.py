@@ -19,7 +19,7 @@ from sqlalchemy import event
 
 @app.route('/')
 def index():
-    return '<h1>Project Server</h1>'
+    return render_template("index.html")
 
 class Charities(Resource):
     def get(self):
