@@ -13,6 +13,8 @@ from models import Charity, User, Donation, CharityReview, BlogPost
 from sqlalchemy import event
 
 
+
+
 # Views go here!
 
 @app.route('/')
@@ -373,6 +375,10 @@ class IncrementBlogViews(Resource):
         return {
             "error": "Blog not found"
         }, 404
+
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("index.html")
 
 
     
