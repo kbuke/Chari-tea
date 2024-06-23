@@ -21,7 +21,7 @@ app = Flask(
     static_folder='../client/build',
     template_folder='../client/build'
 )
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(DATABASE_URI)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 app.secret_key = b'\x9f\x1f\xc2\xc8\xb1\x00\x1aJ\xf6z\xe3np\x15\x91\xd4'
