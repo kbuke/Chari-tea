@@ -12,11 +12,13 @@ import CharitySignUp from "./Pages/CharitySignUp";
 import CharitySignIn from "./Pages/CharitySignIn";
 import NewBlog from "./Pages/NewBlog";
 import NoLogin from "./Pages/NoLogin";
+import ErrorPage from "./Pages/ErrorPage";
 
 const routes = [
     {
         path: "/",
         element: <App />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 path: "/",

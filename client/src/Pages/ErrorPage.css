@@ -1,0 +1,8 @@
+.errorPageContainer{
+    margin-left: 250px;
+}
+
+.errorMessage{
+    text-decoration: underline;
+    font-weight: bold;
+}
