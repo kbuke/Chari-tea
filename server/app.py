@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, make_response, session, render_template
+from flask import request, make_response, session, render_template, url_for
 from flask_restful import Resource
 
 # Local imports
@@ -20,6 +20,10 @@ from sqlalchemy import event
 @app.route('/')
 def index():
     return render_template("index.html")
+
+@app.route("/favicon.ico")
+def favicon():
+    return url_for('static', filename='data:,')
 
 class Charities(Resource):
     def get(self):

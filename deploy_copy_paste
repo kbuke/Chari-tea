@@ -2,3 +2,5 @@ charit_tea_database (name)
 
 
 postgresql://chari_tea_database_user:6qmwtH9FkYeWY2JzC6zxHjNEETiolDSK@dpg-cps05788fa8c738v4g3g-a.frankfurt-postgres.render.com/chari_tea_db
+
+postgresql://chari_tea_database_user:6qmwtH9FkYeWY2JzC6zxHjNEETiolDSK@dpg-cps05788fa8c738v4g3g-a/chari_tea_db
