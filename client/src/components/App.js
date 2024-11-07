@@ -27,7 +27,7 @@ function App(){
 
   //Get all charities
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/charities")
+    fetch("/charities")
     .then(r => {
       if(r.ok) {
         return r.json()
@@ -39,7 +39,7 @@ function App(){
 
   //Get all users
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/users")
+    fetch("/users")
     .then(r => {
       if(r.ok) {
         return r.json()
@@ -51,7 +51,7 @@ function App(){
 
   //Get all blogs
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/blogs")
+    fetch("/blogs")
     .then(r => {
       if(r.ok) {
         return r.json()
@@ -63,7 +63,7 @@ function App(){
 
   //Get all reviews
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/reviews")
+    fetch("/reviews")
     .then(r => {
       if(r.ok) {
         return r.json()
@@ -75,7 +75,7 @@ function App(){
 
   //Get all donations
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/donations")
+    fetch("/donations")
     .then(r => {
       if(r.ok) {
         return r.json()

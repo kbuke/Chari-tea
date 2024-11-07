@@ -77,6 +77,15 @@ class CharityId(Resource):
             "error": "Review not found"
         }, 404
 
+        def delete(self, id):
+            charity_info = Charity.query.filter(Charity.id == id).first()
+            if charity_info:
+                db.session.delete(charity_info)
+                db.session.commit()
+            return{
+                {"error" : ["charity not found "]}, 404
+            }
+
 
 class Users(Resource):
     def get(self):
@@ -396,7 +405,7 @@ api.add_resource(Blog, '/blogs')
 api.add_resource(BlogById, '/blogs/<int:id>')
 api.add_resource(UserLogin, '/userlogin', endpoint="userlogin")
 api.add_resource(CharityLogin, '/charitylogin', endpoint="charitylogin")
-api.add_resource(CheckUserSession, '/usercheck_session', endpoint='usercheck_session')
+api.add_resource(CheckUserSession, '/usercheck_session')
 api.add_resource(CheckCharitySession, '/charitycheck_session')
 api.add_resource(UserLogout, '/userlogout', endpoint='userlogout')
 api.add_resource(CharityLogout, '/charitylogout')

@@ -6,8 +6,6 @@ from sqlalchemy import event
 
 from config import db, bcrypt
 
-
-
 class Charity(db.Model, SerializerMixin):
     __tablename__ = "charities"
 
@@ -90,7 +88,14 @@ class Donation(db.Model, SerializerMixin):
     charity_id = db.Column(db.Integer, db.ForeignKey("charities.id"))
 
     #Serialize rules
-    serialize_rules = ("-user.donations", "-user.reviews", "-user.blogs", "-charity.donations", "charity.reviews", "-charity.blogs",)
+    serialize_rules = (
+        "-user.donations", 
+        "-user.reviews", 
+        "-user.blogs", 
+        "-charity.donations", 
+        "charity.reviews", 
+        "-charity.blogs",
+    )
 
     #Add validations
     @validates("amount_donated")
